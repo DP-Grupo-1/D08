@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
-import org.aspectj.weaver.patterns.TypePatternQuestions.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
@@ -14,10 +13,9 @@ import org.springframework.util.Assert;
 
 import repositories.RendezvousRepository;
 import security.LoginService;
-import domain.Manager;
+import domain.Comment;
+import domain.Question;
 import domain.Rendezvous;
-import domain.Tag;
-import domain.Trip;
 
 @Service
 @Transactional
@@ -49,7 +47,7 @@ public class RendezvousService {
 		final User user = this.userService.findByPrincipal();
 		Assert.notNull(user);
 
-		final Collection<User> attendants = new ArrayList<String>();
+		final Collection<User> attendants = new ArrayList<User>();
 		final Collection<Announcement> announcements = new ArrayList<Announcement>();
 		final Collection<Question> questions = new ArrayList<Question>();
 		final Collection<Rendezvous> rendezvouses = new ArrayList<Rendezvous>();

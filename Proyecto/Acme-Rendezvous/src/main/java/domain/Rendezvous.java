@@ -16,7 +16,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 
-import org.aspectj.weaver.patterns.TypePatternQuestions.Question;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -37,7 +36,7 @@ public class Rendezvous extends DomainEntity {
 	//-------------------------------------Relaciones-------------------------------------------
 
 	private Collection<Announcement>	announcements;
-	private Collection<Question>		questions;								// No está usando nuestro dominio Question
+	private Collection<Question>		questions;
 	private Collection<Rendezvous>		rendezvouses;
 	private Collection<RSVP>			rsvps;
 	private Collection<Comment>			comments;
