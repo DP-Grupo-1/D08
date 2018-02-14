@@ -19,8 +19,8 @@
 
 	<!-- Artifact identification and properties -->
 
-	<groupId>Sample</groupId>
-	<artifactId>Sample</artifactId>
+	<groupId>Acme-Rendezvous</groupId>
+	<artifactId>Acme-Rendezvous</artifactId>
 	<version>0.0.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 	
@@ -30,9 +30,9 @@
 
 	<!-- Indexing information -->
 
-	<name>Sample</name>
-	<url>http://www.example.com</url>
-	<description>This is a sample project.</description>
+	<name>Acme-Rendezvous</name>
+	<url>http://www.Acme-Rendezvous.com</url>
+	<description>This is a Acme-Rendezvous project.</description>
 	
 	<!-- Build commands -->
 
