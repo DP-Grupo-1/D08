@@ -42,16 +42,15 @@
 			
 				
 		
-			<b>	<spring:message	code="comment.date" />: </b>
-				<jstl:out  value="${comment.date}" /> <br>	
+			<b>	<spring:message	code="reply.date" />: </b>
+				<jstl:out  value="${reply.date}" /> <br>	
 
 
-			<b>	<spring:message	code="comment.text" />: </b>
-				<jstl:out  value="${comment.text}" /> <br>	
+			<b>	<spring:message	code="reply.text" />: </b>
+				<jstl:out  value="${reply.text}" /> <br>	
 				
 				
-			<b>	<spring:message	code="comment.picture" />: </b>
-			<jstl:out  value="${comment.picture}" /> <br>	
+
 		
 		
 		

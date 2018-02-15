@@ -20,7 +20,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <security:authorize access="hasRole('USER')">
-<form:form action="comment/user/edit.do" modelAttribute="comment">
+<form:form action="reply/user/edit.do" modelAttribute="reply">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
@@ -28,24 +28,17 @@
 
 	
 	<form:label path="date">
-		<spring:message code="comment.date" />:
+		<spring:message code="reply.date" />:
 	</form:label>
 	<form:input path="date" />
 	<form:errors cssClass="error" path="date" />
 	<br />
 	
 	<form:label path="text">
-		<spring:message code="comment.text" />:
+		<spring:message code="reply.text" />:
 	</form:label>
 	<form:input path="text" />
 	<form:errors cssClass="error" path="text" />
-	<br />
-	
-	<form:label path="picture">
-		<spring:message code="comment.picture" />:
-	</form:label>
-	<form:input path="picture" />
-	<form:errors cssClass="error" path="picture" />
 	<br />
 	
 	
@@ -53,15 +46,15 @@
 
 	
 	<input type="submit" name="save"
-		value="<spring:message code="comment.save" />" />&nbsp; 
-    <jstl:if test="${comment.id != 0}">
+		value="<spring:message code="reply.save" />" />&nbsp; 
+    <jstl:if test="${reply.id != 0}">
 		<input type="submit" name="delete"
-			value="<spring:message code="comment.delete" />"
-			onclick="return confirm('<spring:message code="comment.confirm.delete" />')" />&nbsp;
+			value="<spring:message code="reply.delete" />"
+			onclick="return confirm('<spring:message code="reply.confirm.delete" />')" />&nbsp;
 	</jstl:if>
 	<input type="button" name="cancel"
-		value="<spring:message code="comment.cancel" />"
-		onclick="javascript: relativeRedir('comment/list.do');" />
+		value="<spring:message code="reply.cancel" />"
+		onclick="javascript: relativeRedir('reply/list.do');" />
 	<br />
 
 </form:form>
