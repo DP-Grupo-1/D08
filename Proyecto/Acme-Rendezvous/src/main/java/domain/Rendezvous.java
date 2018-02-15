@@ -19,7 +19,6 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.core.userdetails.User;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -32,6 +31,7 @@ public class Rendezvous extends DomainEntity {
 	private String						picture;
 	private Double						locationLatitude, locationLongitude;
 	private boolean						finalMode, adultOnly;
+	private Flag						flag;
 
 	//-------------------------------------Relaciones-------------------------------------------
 
@@ -100,28 +100,6 @@ public class Rendezvous extends DomainEntity {
 		this.locationLongitude = locationLongitude;
 	}
 
-	@NotNull
-	@Valid
-	@ManyToOne(optional = false)
-	public User getCreator() {
-		return this.creator;
-	}
-
-	public void setCreator(final User creator) {
-		this.creator = creator;
-	}
-
-	@Valid
-	@NotNull
-	@ManyToMany(mappedBy = "rendezvouses")
-	public Collection<User> getAttendants() {
-		return this.attendants;
-	}
-
-	public void setAttendants(final Collection<User> attendants) {
-		this.attendants = attendants;
-	}
-
 	public boolean getFinalMode() {
 		return this.finalMode;
 	}
@@ -136,6 +114,15 @@ public class Rendezvous extends DomainEntity {
 
 	public void setAdultOnly(final boolean adultOnly) {
 		this.adultOnly = adultOnly;
+	}
+
+	@NotNull
+	public Flag getFlag() {
+		return this.flag;
+	}
+
+	public void setFlag(final Flag flag) {
+		this.flag = flag;
 	}
 
 	//-----------------------------Getters y Setters Relaciones---------------------------------
@@ -193,5 +180,27 @@ public class Rendezvous extends DomainEntity {
 
 	public void setComment(final Collection<Comment> comments) {
 		this.comments = comments;
+	}
+
+	@NotNull
+	@Valid
+	@ManyToOne(optional = false)
+	public User getCreator() {
+		return this.creator;
+	}
+
+	public void setCreator(final User creator) {
+		this.creator = creator;
+	}
+
+	@Valid
+	@NotNull
+	@ManyToMany(mappedBy = "rendezvouses")
+	public Collection<User> getAttendants() {
+		return this.attendants;
+	}
+
+	public void setAttendants(final Collection<User> attendants) {
+		this.attendants = attendants;
 	}
 }

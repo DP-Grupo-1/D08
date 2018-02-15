@@ -3,19 +3,19 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.RendezvousRepository;
-import security.LoginService;
+import domain.Administrator;
 import domain.Comment;
+import domain.Flag;
 import domain.Question;
 import domain.Rendezvous;
+import domain.User;
 
 @Service
 @Transactional
@@ -44,9 +44,6 @@ public class RendezvousService {
 
 		final Rendezvous result = new Rendezvous();
 
-		final User user = this.userService.findByPrincipal();
-		Assert.notNull(user);
-
 		final Collection<User> attendants = new ArrayList<User>();
 		final Collection<Announcement> announcements = new ArrayList<Announcement>();
 		final Collection<Question> questions = new ArrayList<Question>();
@@ -62,6 +59,7 @@ public class RendezvousService {
 		result.setComment(comments);
 		result.setFinalMode(false);
 		result.setAdultOnly(false);
+		result.setFlag(Flag.ACTIVE);
 
 		return result;
 	}
@@ -74,16 +72,12 @@ public class RendezvousService {
 		final User user = this.userService.findByPrincipal();
 		Assert.notNull(user);
 
-		final Date moment = new Date(System.currentTimeMillis() - 1000);
-		Assert.isTrue(rendezvous.getMoment().after(moment));
-
 		Assert.isTrue(rendezvous.getFinalMode() == false);
+		Assert.isTrue(rendezvous.getFlag() != Flag.DELETED);
 
 		if (rendezvous.getId() == 0) {
 			result.setCreator(user);
-			result.getAttendants().add(user);
-			final RSVP rs = this.rsvpService.create(result);
-			result.getRsvps().add(rs);
+			final RSVP rs = this.rsvpService.create(result.getId());
 			result = this.rendezvousRepository.save(rendezvous);
 			user.getRendezvouses().add(result);
 		} else
@@ -93,23 +87,24 @@ public class RendezvousService {
 	}
 
 	public void delete(final Rendezvous rendezvous) {
-		
+
 		Assert.notNull(rendezvous);
 		Assert.notNull(this.rendezvousRepository.findOne(rendezvous.getId()));
-		
-		Assert.isTrue(rendezvous.getFinalMode() == false);
-		
-		if(user==null){
-			final Collection<User> users = this.userService.findAll();
-			for(final User u : users){
-				u.getRendezvouses().remove(rendezvous);
-				final Collection<RSVP> rsvps = u.getRsvps();
-				for(final RSVP rs : rsvps)
-					rs.getRendezvous()
-			}
+
+		final Administrator admin = this.administratorService.findByPrincipal();
+		final User user = this.userService.findByPrincipal();
+
+		if (admin != null) {
+			for (final Rendezvous r : this.rendezvousRepository.findAll())
+				r.getRendezvouses().remove(rendezvous);
+			for (final RSVP rs : rendezvous.getRsvps())
+				rs.rsvpService.delete();
+			rendezvous.getCreator().getRendezvouses().remove(rendezvous);
 			this.rendezvousRepository.delete(rendezvous);
-		}else{
-			// La idea es que se marque la reunión como "eliminada" y que no se pueda actualizar
+		} else {
+			Assert.isTrue(rendezvous.getFinalMode() == false);
+			Assert.isTrue(rendezvous.getFlag() != Flag.DELETED);
+			rendezvous.setFlag(Flag.DELETED);
 		}
 	}
 	public Collection<Rendezvous> findAll() {
