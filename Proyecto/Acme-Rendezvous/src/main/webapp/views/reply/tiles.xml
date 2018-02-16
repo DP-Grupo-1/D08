@@ -16,18 +16,18 @@
        
 <tiles-definitions>
 
-		<definition name="comment/list" extends="master.page">	
-		<put-attribute name="title" value="List Comments" />
-		<put-attribute name="body" value="/views/comment/list.jsp" />
+		<definition name="reply/list" extends="master.page">	
+		<put-attribute name="title" value="List Replies" />
+		<put-attribute name="body" value="/views/reply/list.jsp" />
 	</definition>
 	
-	<definition name="comment/user/edit" extends="master.page">	
-		<put-attribute name="title" value="Edit Comment" />
-		<put-attribute name="body" value="/views/comment/edit.jsp" />
+	<definition name="reply/user/edit" extends="master.page">	
+		<put-attribute name="title" value="Edit Reply" />
+		<put-attribute name="body" value="/views/reply/edit.jsp" />
 	</definition>
 	
-	<definition name="comment/display" extends="master.page">	
-		<put-attribute name="title" value="Display Comment" />
-		<put-attribute name="body" value="/views/comment/display.jsp" />
+	<definition name="reply/display" extends="master.page">	
+		<put-attribute name="title" value="Display Reply" />
+		<put-attribute name="body" value="/views/respuesta/display.jsp" />
 	</definition>
 </tiles-definitions>

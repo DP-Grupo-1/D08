@@ -16,7 +16,7 @@ public class User extends Actor {
 
 	//Relationships-----------------------------------------------------------
 	private Collection<Question>	questions;
-	private Reply					reply;
+	private Collection<Reply>					replies;
 	private Collection<Comment>		comments;
 	private Collection<Rendezvous>	rendezvouses;
 	private Collection<RSVP>		rsvps;
@@ -32,12 +32,12 @@ public class User extends Actor {
 	}
 
 	@OneToMany
-	public Reply getReply() {
-		return this.reply;
+	public Collection<Reply> getReplies() {
+		return this.replies;
 	}
 
-	public void setReply(final Reply reply) {
-		this.reply = reply;
+	public void setReplies(final Collection<Reply> replies) {
+		this.replies = replies;
 	}
 
 	@OneToMany
