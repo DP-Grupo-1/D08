@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import domain.Question;
+import domain.Rendezvous;
+import domain.User;
 import repositories.QuestionRepository;
 
 @Service
@@ -17,7 +19,7 @@ public class QuestionService {
 	// Managed repository -----------------------------------------------------
 
 		@Autowired
-		private QuestionRepository			QuestionRepository;
+		private QuestionRepository			questionRepository;
 		
 		@Autowired
 		private RendezvousService		rendezvousService;
@@ -45,28 +47,33 @@ public class QuestionService {
 			result.setAnswers(answers);
 			result.setCreator(principal);
 			result.setRendezvous(rendezvous);
+			
+			return result;
 		}
 		
 		public Question findOne(int questionId){
-			Question question = this.QuestionRepository.findOne(questionId);
+			Question question = this.questionRepository.findOne(questionId);
 			return question;
 		}
 		
-		public Question saveQuestion(Question question){
-			Question saved = this.QuestionRepository.save(question);
+		public Collection<Question> saveQuestion(Collection<Question> questions){
+			Collection<Question> saved = new ArrayList<Question>();
+			for(Question question:questions){
+				Question savedQuestion = this.questionRepository.save(question);
+				saved.add(savedQuestion);
+			}
+			
 			return saved;
 		}
 		
-		public Question saveAnswer(String answer, Question question){
-			Collection<String> answers = question.getAnswers();
-			answers.add(answer);
-			question.setAnswers(answers);
-			Question saved = this.QuestionRepository.save(question);
+		public Question save(Question question){
+			
+			Question saved = this.questionRepository.save(question);
 			return saved;
 		}
 		
 		public Collection<Question> findAllByPrincipalAndRendezvous(int principalId, int rendezvousId){
-			return this.QuestionRepository.findAllByPrincipalAndRendezvous(principalId, rendezvousId);
+			return this.questionRepository.findAllByPrincipalAndRendezvous(principalId, rendezvousId);
 		}
 		
 		
