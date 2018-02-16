@@ -22,7 +22,7 @@
 
 <!-- Listing grid -->
 <jstl:choose> 
-<jstl:when test="${rendezvous.adultOnly == true && isAuthenticated() && user.age>=18}">
+<jstl:when test="${rendezvous.adultOnly == false || isAuthenticated() && user.age>=18}">
 <!-- Attributes -->
 
 	<display:table pagesize="5" class="displaytag" keepStatus="true"
@@ -51,7 +51,28 @@
 		<display:column property="moment"
 			title="${momentHeader}" titleKey="rendezvous.moment"
 			sortable="true" format="{0,date,${momentFormat }}" />
-	
+   	    
+   	    
+   	    <spring:message code="rendezvous.creator" var="creatorHeader" />
+        <display:column title="${creatorHeader}" sortable="true">
+        <a href="profile/personalData/list.do?actorId=<jstl:out value="${row.creator.id}"/>"><jstl:out value="${row.creator.name} ${row.creator.surname}"/></a>
+        </display:column> 
+   	    
+   	    
+   	    <display:column >
+		<a  href="user/list.do?rendezvousId=${row.id}"><spring:message code="rendezvous.users" /></a>
+        </display:column>
+			
+			
+			<spring:message code="rendezvous.adultOnly" var="adultOnlyHeader" />
+		<display:column property="adultOnly" title="${adultOnlyHeader}"
+			sortable="true" />
+			
+			
+			<spring:message code="rendezvous.flag" var="flagHeader" />
+		<display:column property="flag" title="${flagHeader}"
+			sortable="true" />
+
 
 	</display:table>
 </jstl:when>

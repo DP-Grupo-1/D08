@@ -30,13 +30,13 @@ public class RendezvousService {
 	// Supporting services ------------------------------------------
 
 	@Autowired
-	private UserRepository			userService;
+	private UserService				userService;
 
 	@Autowired
-	private AdministratorRepository	administratorService;
+	private AdministratorService	administratorService;
 
 	@Autowired
-	private RSVPRepository			rsvpService;
+	private RSVPService				rsvpService;
 
 
 	// Simple CRUD methods ------------------------------------------
