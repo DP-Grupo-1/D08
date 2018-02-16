@@ -27,7 +27,7 @@
 	<base href="${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/" />
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<link rel="shortcut icon" href="favicon.ico"/> 
-	<title>Display Husts</title>
+	<title>Display Rendezvous</title>
 </head>
 
 <body>
@@ -40,42 +40,18 @@
 		
 			
 	
-			<b>	<spring:message	code="notaAviso.trackNumber" />: </b>
-				<jstl:out  value="${notaAviso.trackNumber}" /> <br>	
+			<b>	<spring:message	code="rendezvous.trackNumber" />: </b>
+				<jstl:out  value="${rendezvous.trackNumber}" /> <br>	
 			 <form:errors cssClass="error"/> 
 			 
-			<b>	<spring:message	code="notaAviso.title" />: </b>
-				<jstl:out  value="${notaAviso.title}" /> <br>	
+			<b>	<spring:message	code="rendezvous.title" />: </b>
+				<jstl:out  value="${rendezvous.title}" /> <br>	
 				
-			<b>	<spring:message	code="notaAviso.description" />: </b>
-				<jstl:out  value="${notaAviso.description}" /> <br>	
+			<b>	<spring:message	code="rendezvous.description" />: </b>
+				<jstl:out  value="${rendezvous.description}" /> <br>	
 				
-
-				<jstl:if test="${notaAviso.gauge==1}">
-					<jstl:set var = "gaugeColor" value = "lime" />
-				</jstl:if>
-				
-				<jstl:if test="${notaAviso.gauge==2}">
-				<jstl:set var = "gaugeColor" value = "tomato" />
-				</jstl:if>
-				
-				<jstl:if test="${notaAviso.gauge==3}">
-				<jstl:set var = "gaugeColor" value = "burlywood" />
-				</jstl:if>
-				
-
-				
-					<b>	<spring:message	code="notaAviso.gauge" />: </b>
-					
-				<span style="color: ${gaugeColor}">
-					<jstl:out value="${word}" /> 
-				</span> 
-				
-				<br>
-				
-		
-			<b>	<spring:message	code="notaAviso.displayMoment" />: </b>
-				<jstl:out  value="${notaAviso.displayMoment}" /> <br>	
+			<b>	<spring:message	code="rendezvous.displayMoment" />: </b>
+				<jstl:out  value="${rendezvous.displayMoment}" /> <br>	
 		
 				
 			

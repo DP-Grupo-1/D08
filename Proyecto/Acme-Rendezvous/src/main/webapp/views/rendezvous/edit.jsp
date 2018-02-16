@@ -19,54 +19,84 @@
 <%@taglib prefix="security"	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<security:authorize access="hasRole('MANAGER')">
-<form:form action="notaAviso/manager/edit.do" modelAttribute="notaAviso">
+<security:authorize access="hasRole('USER')">
+<form:form action="rendezvous/user/edit.do" modelAttribute="rendezvous">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-	<form:hidden path="trackNumber" />
-	<form:hidden path="trip" />
+	<form:hidden path="flag" />
+	<form:hidden path="rsvps" />
+	<form:hidden path="creator" />
+	<form:hidden path="attendants" />
+	<form:hidden path="announcements" />
+	<form:hidden path="questions" />
+	<form:hidden path="rendezvouses" />
+	<form:hidden path="rsvps" />
+	<form:hidden path="comments" />
 	
 
-	<form:label path="title">
-		<spring:message code="notaAviso.title" />:
+	<form:label path="name">
+		<spring:message code="rendezvous.name" />:
 	</form:label>
-	<form:input path="title" />
-	<form:errors cssClass="error" path="title" />
+	<form:input path="name" />
+	<form:errors cssClass="error" path="name" />
 	<br />
 	
 	<form:label path="description">
-		<spring:message code="notaAviso.description" />:
+		<spring:message code="rendezvous.description" />:
 	</form:label>
 	<form:input path="description" />
 	<form:errors cssClass="error" path="description" />
 	<br />
 	
-	<form:label path="gauge">
-		<spring:message code="notaAviso.gauge" />:
+	<form:label path="moment">
+		<spring:message code="rendezvous.moment" />:
 	</form:label>
-	<form:input path="gauge" />
-	<form:errors cssClass="error" path="gauge" />
+	<form:input path="moment" />
+	<form:errors cssClass="error" path="moment" />
 	<br />
 	
-	<form:label path="displayMoment">
-		<spring:message code="notaAviso.displayMoment" />:
+	<form:label path="picture">
+		<spring:message code="rendezvous.picture" />:
 	</form:label>
-	<form:input path="displayMoment" />
-	<form:errors cssClass="error" path="displayMoment" />
+	<form:input path="picture" />
+	<form:errors cssClass="error" path="picture" />
 	<br />
 	
+	<form:label path="locationLatitude">
+		<spring:message code="rendezvous.locationLatitude" />:
+	</form:label>
+	<form:input path="locationLatitude" />
+	<form:errors cssClass="error" path="locationLatitude" />
+	<br />
+	
+	<form:label path="locationLongitude">
+		<spring:message code="rendezvous.locationLongitude" />:
+	</form:label>
+	<form:input path="locationLongitude" />
+	<form:errors cssClass="error" path="locationLongitude" />
+	<br />
+	
+	<spring:message code="rendezvous.finalMode" />:
+	<input type="checkbox" name="finalMode"
+		value="<spring:message code="rendezvous.finalMode"/>" />
+	<br>
+	
+	<spring:message code="rendezvous.adultOnly" />:
+	<input type="checkbox" name="adultOnly"
+		value="<spring:message code="rendezvous.adultOnly"/>" />
+	<br>
+	
+	<jstl:if test="${rendezvous.finalMode==false || rendezvous.flag!=Flag.DELETED}">
+		<input type="submit" name="save"
+			value="<spring:message code="rendezvous.save"/>" />&nbsp;
+	<input type="submit" name="delete"
+			value="<spring:message code="rendezvous.delete"/>" />&nbsp;
+    </jstl:if> 
 
-	<input type="submit" name="save"
-		value="<spring:message code="notaAviso.save" />" />&nbsp; 
-    <jstl:if test="${notaAviso.id != 0}">
-		<input type="submit" name="delete"
-			value="<spring:message code="notaAviso.delete" />"
-			onclick="return confirm('<spring:message code="notaAviso.confirm.delete" />')" />&nbsp;
-	</jstl:if>
 	<input type="button" name="cancel"
-		value="<spring:message code="notaAviso.cancel" />"
-		onclick="javascript: relativeRedir('notaAviso/manager/list.do');" />
+		value="<spring:message code="rendezvous.cancel" />"
+		onclick="javascript: relativeRedir('rendezvous/user/list.do');" />
 	<br />
 
 </form:form>
