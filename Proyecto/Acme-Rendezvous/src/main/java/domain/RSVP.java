@@ -14,7 +14,7 @@ public class RSVP extends DomainEntity {
 	//Relaciones
 	
 	private User user;
-	private Rendevouz rendevouz;	
+	private Rendezvous rendezvous;	
 	
 	//GetterSetters Relaciones
 	@Valid
@@ -32,11 +32,11 @@ public class RSVP extends DomainEntity {
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)
-	public Rendevouz getRendevouz() {
-		return this.rendevouz;
+	public Rendezvous getRendezvous() {
+		return this.rendezvous;
 	}
 	
-	public void setRendevouz(Rendevouz rendevouz) {
-		this.rendevouz=rendevouz;
+	public void setRendevouz(Rendezvous rendezvous) {
+		this.rendezvous=rendezvous;
 	}
 }
