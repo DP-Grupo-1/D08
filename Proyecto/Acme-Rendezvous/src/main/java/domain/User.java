@@ -34,14 +34,9 @@ public class User extends Actor {
 	}
 
 	@OneToMany
-<<<<<<< HEAD
+
 	public Collection<Reply> getReplies() {
 		return this.replies;
-=======
-	@Valid
-	public Reply getReply() {
-		return this.reply;
->>>>>>> c9627f0e25e9d8a8a905503162178b0a9e6e284d
 	}
 
 	public void setReplies(final Collection<Reply> replies) {
