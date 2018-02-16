@@ -7,8 +7,8 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-
-import org.aspectj.weaver.patterns.TypePatternQuestions.Question;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -22,7 +22,9 @@ public class User extends Actor {
 	private Collection<RSVP>		rsvps;
 
 
+	@Valid
 	@OneToMany
+	@NotNull
 	public Collection<Question> getQuestions() {
 		return this.questions;
 	}
@@ -32,6 +34,7 @@ public class User extends Actor {
 	}
 
 	@OneToMany
+	@Valid
 	public Reply getReply() {
 		return this.reply;
 	}
@@ -41,6 +44,8 @@ public class User extends Actor {
 	}
 
 	@OneToMany
+	@Valid
+	@NotNull
 	public Collection<Comment> getComments() {
 		return this.comments;
 	}
@@ -49,6 +54,8 @@ public class User extends Actor {
 		this.comments = comments;
 	}
 	@OneToMany
+	@Valid
+	@NotNull
 	public Collection<Rendezvous> getRendezvouses() {
 		return this.rendezvouses;
 	}
@@ -56,7 +63,9 @@ public class User extends Actor {
 	public void setRendezvouses(final Collection<Rendezvous> rendezvouses) {
 		this.rendezvouses = rendezvouses;
 	}
+	@Valid
 	@OneToMany(mappedBy = "user")
+	@NotNull
 	public Collection<RSVP> getRsvps() {
 		return this.rsvps;
 	}
