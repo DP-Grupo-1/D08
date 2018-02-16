@@ -13,6 +13,8 @@ import domain.Category;
 import domain.Comment;
 import domain.Manager;
 import domain.NotaAviso;
+import domain.Rendezvous;
+import domain.User;
 
 import repositories.CommentRepository;
 
@@ -80,6 +82,10 @@ public class CommentService {
 		final Collection<Comment> res = this.commentRepository.findAll();
 		Assert.notNull(res);
 		return res;
+	}
+	
+	public Collection<Comment> findByRendezvous(Integer rendezvousId){
+		return commentRepository.findByRendezvous(rendezvousId);
 	}
 
 }

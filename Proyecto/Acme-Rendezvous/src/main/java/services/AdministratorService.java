@@ -54,4 +54,20 @@ public class AdministratorService {
 		res = this.administratorRepository.findOne(administratorId);
 		return res;
 	}
+	public Administrator findByUsserAccount(final UserAccount userAccount) {
+		Assert.notNull(userAccount);
+		Administrator res;
+		res = this.administratorRepository.findByUserAccountId(userAccount.getId());
+		Assert.notNull(res);
+		return res;
+	}
+	public Administrator findByPrincipal() {
+		Administrator res;
+		final UserAccount userAccount = LoginService.getPrincipal();
+		Assert.notNull(userAccount);
+		res = this.findByUsserAccount(userAccount);
+		Assert.notNull(res);
+		return res;
+	}
+
 }
