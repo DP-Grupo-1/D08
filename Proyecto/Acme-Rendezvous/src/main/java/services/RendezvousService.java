@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import repositories.RSVPRepository;
 import repositories.RendezvousRepository;
 import domain.Administrator;
 import domain.Comment;
 import domain.Flag;
 import domain.Question;
+import domain.RSVP;
 import domain.Rendezvous;
 import domain.User;
 
@@ -68,7 +68,7 @@ public class RendezvousService {
 	public Rendezvous save(final Rendezvous rendezvous) {
 
 		Assert.notNull(rendezvous);
-		final Rendezvous result;
+		Rendezvous result;
 
 		final User user = this.userService.findByPrincipal();
 		Assert.notNull(user);
@@ -77,9 +77,9 @@ public class RendezvousService {
 		Assert.isTrue(rendezvous.getFlag() != Flag.DELETED);
 
 		if (rendezvous.getId() == 0) {
-			result.setCreator(user);
-			final RSVP rs = this.rsvpService.create(result.getId());
 			result = this.rendezvousRepository.save(rendezvous);
+			result.setCreator(user);
+			this.rsvpService.create(result.getId());
 			user.getRendezvouses().add(result);
 		} else
 			result = this.rendezvousRepository.save(rendezvous);
@@ -99,10 +99,10 @@ public class RendezvousService {
 			for (final Rendezvous r : this.rendezvousRepository.findAll())
 				r.getRendezvouses().remove(rendezvous);
 			for (final RSVP rs : rendezvous.getRsvps())
-				rs.rsvpService.delete();
+				this.rsvpService.delete(rs);
 			rendezvous.getCreator().getRendezvouses().remove(rendezvous);
 			this.rendezvousRepository.delete(rendezvous);
-		} else {
+		} else if (user != null) {
 			Assert.isTrue(rendezvous.getFinalMode() == false);
 			Assert.isTrue(rendezvous.getFlag() != Flag.DELETED);
 			rendezvous.setFlag(Flag.DELETED);
