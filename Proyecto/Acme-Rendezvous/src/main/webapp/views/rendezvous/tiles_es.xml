@@ -17,26 +17,24 @@
        
 <tiles-definitions>
 
-	<definition name="notaAviso/manager/list" extends="master.page">	
-		<put-attribute name="title" value="Listar Notas" />
-		<put-attribute name="body" value="/views/notaAviso/list.jsp" />
+	<definition name="rendezvous/user/list" extends="master.page">	
+		<put-attribute name="title" value="Listar Rendezvouses" />
+		<put-attribute name="body" value="/views/rendezvous/list.jsp" />
 	</definition>
 	
-	<definition name="notaAviso/manager/edit" extends="master.page">	
-		<put-attribute name="title" value="Editar Nota" />
-		<put-attribute name="body" value="/views/notaAviso/edit.jsp" />
+	<definition name="rendezvous/user/edit" extends="master.page">	
+		<put-attribute name="title" value="Editar Rendezvous" />
+		<put-attribute name="body" value="/views/rendezvous/edit.jsp" />
 	</definition>
 	
-	<definition name="notaAviso/manager/create" extends="master.page">
-		<put-attribute name="title" value="Escribir una nueva Nota" />
-		<put-attribute name="body" value="/views/notaAviso/edit.jsp" />
+	<definition name="rendezvous/user/create" extends="master.page">
+		<put-attribute name="title" value="Crear una nueva Rendezvous" />
+		<put-attribute name="body" value="/views/rendezvous/edit.jsp" />
 	</definition>
 	
-	<definition name="notaAviso/display" extends="master.page">	
-		<put-attribute name="title" value="Mostrar Nota" />
-		<put-attribute name="body" value="/views/notaAviso/display.jsp" />
+	<definition name="rendezvous/display" extends="master.page">	
+		<put-attribute name="title" value="Mostrar Rendezvous" />
+		<put-attribute name="body" value="/views/rendezvous/display.jsp" />
 	</definition>
 	
-	
-
 </tiles-definitions>

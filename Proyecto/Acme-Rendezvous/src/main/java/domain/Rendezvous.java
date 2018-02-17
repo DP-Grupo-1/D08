@@ -160,7 +160,7 @@ public class Rendezvous extends DomainEntity {
 		this.rendezvouses = rendezvouses;
 	}
 
-	@OneToMany
+	@OneToMany(mappedBy = "rendezvous")
 	@NotNull
 	@Valid
 	public Collection<RSVP> getRsvps() {

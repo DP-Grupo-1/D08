@@ -20,31 +20,31 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<!-- Listing grid -->
 <jstl:choose> 
 <jstl:when test="${rendezvous.adultOnly == false || isAuthenticated() && user.age>=18}">
-<!-- Attributes -->
+
+<!-- Listing grid -->
 
 	<display:table pagesize="5" class="displaytag" keepStatus="true"
 		name="rendezvouses" requestURI="${requestURI}" id="row">
 
 		<!-- Display -->
+		
 			<display:column>
 				<a href="rendezvous/display.do?rendezvousId=${row.id}">
 					<spring:message code="rendezvous.list.display" />
 				</a>
 			</display:column>
 		
+<!-- Attributes -->
 		
 		<spring:message code="rendezvous.name" var="nameHeader" />
 		<display:column property="name" title="${nameHeader}"
 			sortable="true" />
 			
-			
 		<spring:message code="rendezvous.description" var="descriptionHeader" />
 		<display:column property="description" title="${descriptionHeader}"
-			sortable="true" />
-				
+			sortable="true" />		
 
 		<spring:message code="rendezvous.moment" var="momentHeader" />
     	<spring:message code="rendezvous.moment.format" var="momentFormat" />
@@ -52,29 +52,32 @@
 			title="${momentHeader}" titleKey="rendezvous.moment"
 			sortable="true" format="{0,date,${momentFormat }}" />
    	    
-   	    
    	    <spring:message code="rendezvous.creator" var="creatorHeader" />
         <display:column title="${creatorHeader}" sortable="true">
-        <a href="profile/personalData/list.do?actorId=<jstl:out value="${row.creator.id}"/>"><jstl:out value="${row.creator.name} ${row.creator.surname}"/></a>
+        <a href="profile/personalData/list.do?actorId=<jstl:out value="${row.creator.id}"/>">
+        <jstl:out value="${row.creator.name} ${row.creator.surname}"/></a>
         </display:column> 
    	    
-   	    
    	    <display:column >
-		<a  href="user/list.do?rendezvousId=${row.id}"><spring:message code="rendezvous.users" /></a>
+		<a  href="user/list.do?rendezvousId=${row.id}"><spring:message code="rendezvous.attendants" /></a>
         </display:column>
+        	
+		<spring:message code="rendezvous.adultOnly" var="adultOnlyHeader" />
+		<display:column property="adultOnly" title="${adultOnlyHeader}" sortable="true" />
 			
-			
-			<spring:message code="rendezvous.adultOnly" var="adultOnlyHeader" />
-		<display:column property="adultOnly" title="${adultOnlyHeader}"
-			sortable="true" />
-			
-			
-			<spring:message code="rendezvous.flag" var="flagHeader" />
-		<display:column property="flag" title="${flagHeader}"
-			sortable="true" />
-
+		<spring:message code="rendezvous.flag" var="flagHeader" />
+		<display:column property="flag" title="${flagHeader}" sortable="true" />
 
 	</display:table>
+	
+	<!-- Action links -->
+
+    <security:authorize access="hasRole('USER')">
+	   <div>
+		  <a href="rendezvous/user/create.do"><spring:message code="rendezvous.create" /></a>
+	   </div>
+    </security:authorize>
+	
 </jstl:when>
 <jstl:otherwise>
 <spring:message code="rendezvous.restricted" />
