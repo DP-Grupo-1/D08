@@ -137,7 +137,7 @@
     </display:column> 
    	    
    	<display:column >
-   	<a  href="user/list.do?rendezvousId=${row.id}"><spring:message code="rendezvous.users" /></a>
+   	<a  href="user/list.do?rendezvousId=${row.id}"><spring:message code="rendezvous.attendants" /></a>
     </display:column>
 
 	<spring:message code="rendezvous.adultOnly" var="rendezvousAdultOnlyHeader" />
@@ -153,27 +153,26 @@
 <h1>Comments</h1>
 <display:table pagesize="5" class="displaytag" keepStatus="true"
 	name="rendezvous.comments" requestURI="${requestURI}" id="row">
+	
+	<spring:message code="comment.moment" var="commentMomentHeader" />
+    <spring:message code="comment.moment.format" var="commentMomentFormat" />
+	<display:column property="moment" title="${commentMomentHeader}" 
+	    titleKey="comment.moment"
+		sortable="true" format="{0,date,${commentMomentFormat }}" />
 
-	<spring:message code="rendezvous.comment.title" var="commentTitleHeader" />
-	<display:column property="title" title="${commentTitleHeader}"
+	<spring:message code="comment.text" var="commentTextHeader" />
+	<display:column property="text" title="${commentTextHeader}"
 		sortable="true">
 	</display:column>
 
-	<spring:message code="rendezvous.comment.description"
-		var="commentDescriptionHeader" />
-	<display:column property="description"
-		title="${commentDescriptionHeader}" sortable="true">
-	</display:column>
-
-	<spring:message code="rendezvous.comment.price" var="commentPriceHeader" />
-	<display:column property="price" title="${commentPriceHeader}"
+	<spring:message code="comment.picture" var="commentPictureHeader" />
+	<display:column property="picture" title="${commentPictureHeader}"
 		sortable="true">
 	</display:column>
 
-	<spring:message code="rendezvous.comment.number" var="commentNumberHeader" />
-	<display:column property="number" title="${commentNumberHeader}"
-		sortable="true">
-	</display:column>
+	<display:column >
+   	<a  href="reply/list.do?commentId=${row.id}"><spring:message code="comment.replies" /></a>
+    </display:column>
 	
 </display:table>
 
