@@ -21,7 +21,8 @@ import domain.Rendezvous;
 @Repository
 public interface RendezvousRepository extends JpaRepository<Rendezvous, Integer> {
 
-	//Requisito 4.2: Lista de reuniones o quedadas a las que el usuario va a asistir o ya ha asistido.
+	//Requisito 4.2: Lista de reuniones o quedadas a las que el usuario va a asistir
+	//o ya ha asistido.
 	@Query("select r from Rendezvous r join r.rsvps rs where rs.user.id = ?1")
 	Collection<Rendezvous> findByUserId(int userId);
 
@@ -37,11 +38,17 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous, Integer>
 	@Query("select avg(r.attendants.size), stddev(r.attendants.size) from Rendezvous r")
 	Double[] avgStddevUsersPerRendezvous();
 
-	//Requisito 6.3 punto 4: La media y la desviación estándar de reuniones que son RSVPd por usuario.
+	//Requisito 6.3 punto 4: La media y la desviación estándar de reuniones que son RSVPd 
+	//por usuario.
 	@Query("select avg(u.rsvps.size), stddev(u.rsvps.size) from User u")
 	Double[] avgStddevRSVPsPerUser();
 
 	//Requisito 6.3 punto 5: Top 10 de reuniones en las que más usuarios han RSPVd.
 	@Query("select r from Rendezvous r order by count(r.rsvps) DESC LIMIT 10")
 	Collection<Rendezvous> top10RendezvousesByRSVPs();
+
+	//Requisito 17.2 punto 2: Las reuniones cuyo número de anuncios está por encima del 75% 
+	//de la media del número de anuncios por reunión.
+	@Query("select r from Rendezvous r order by count(r.rsvps) DESC LIMIT 10")
+	Collection<Rendezvous> above75AverageOfAnnouncementsPerRendezvous();
 }

@@ -21,6 +21,9 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
+<jstl:choose> 
+<jstl:when test="${rendezvous.adultOnly == false || isAuthenticated() && user.age>=18}">
+
 <!-- 									Rendezvous											-->
 <h1>Rendezvous</h1>
 <display:table pagesize="5" class="displaytag" keepStatus="true"
@@ -72,29 +75,57 @@
 	
 </display:table>
 
+<security:authorize access="hasRole('USER')">
+  <display:column>
+  	<jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
+	     <a href="rendezvous/user/edit.do?rendezvousId=${row.id}">
+	       <spring:message code="rendezvous.edit" />
+	     </a>	
+   	</jstl:if>
+   </display:column>
+</security:authorize> 
+
+<!-- 
+<security:authorize access="hasRole('USER')">
+		<display:column>
+			<jstl:choose>
+				<jstl:when test="${enrolled}">
+					<a href="survivalClass/explorer/disenroll.do?survivalClassId=${row.id}" 
+					   onclick="javascript: return confirm('<spring:message code="survivalClass.confirm.disenroll" />')">
+						<spring:message code="survivalClass.disenroll" />
+					</a>					
+				</jstl:when>
+				<jstl:otherwise>
+					<a href="survivalClass/explorer/enroll.do?survivalClassId=${row.id}">
+					    <spring:message code="survivalClass.enroll" />
+					</a>
+				</jstl:otherwise>
+			</jstl:choose>
+		</display:column>
+	</security:authorize>       -->
 
 <!-- 									Announcements											-->
 <h1>Announcements</h1>
 <display:table pagesize="5" class="displaytag" keepStatus="true"
 	name="rendezvous.announcements" requestURI="${requestURI}" id="row">
 
-	<spring:message code="rendezvous.announcement.title" var="announcementTitleHeader" />
+	<spring:message code="announcement.title" var="announcementTitleHeader" />
 	<display:column property="title" title="${announcementTitleHeader}"
 		sortable="true">
 	</display:column>
 
-	<spring:message code="rendezvous.announcement.description"
+	<spring:message code="announcement.description"
 		var="announcementDescriptionHeader" />
 	<display:column property="description"
 		title="${announcementDescriptionHeader}" sortable="true">
 	</display:column>
 
-	<spring:message code="rendezvous.announcement.price" var="announcementPriceHeader" />
+	<spring:message code="announcement.price" var="announcementPriceHeader" />
 	<display:column property="price" title="${announcementPriceHeader}"
 		sortable="true">
 	</display:column>
 
-	<spring:message code="rendezvous.announcement.number" var="announcementNumberHeader" />
+	<spring:message code="announcement.number" var="announcementNumberHeader" />
 	<display:column property="number" title="${announcementNumberHeader}"
 		sortable="true">
 	</display:column>
@@ -180,6 +211,14 @@
 
 <security:authorize access="hasRole('USER')">
   <div>
+  <jstl:if test="${¿Qué poner para que sólo comenten aquellos que hayan RSVPd a la Rendezvous?}">
 	<a href="comment/user/create.do"><spring:message code="comment.create" /></a>
+  </jstl:if>
   </div>
 </security:authorize>
+
+</jstl:when>
+<jstl:otherwise>
+<spring:message code="rendezvous.restricted" />
+</jstl:otherwise>
+</jstl:choose>
