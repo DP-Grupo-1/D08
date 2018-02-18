@@ -12,7 +12,6 @@
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-	<form:hidden path="answers" />
 	<form:hidden path="creator" />
 	<form:hidden path="rendezvous" />
 	<form:hidden path="answerers" />

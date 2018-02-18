@@ -56,7 +56,7 @@ public class QuestionService {
 			return question;
 		}
 		
-		public Collection<Question> saveQuestion(Collection<Question> questions){
+		public Collection<Question> saveQuestions(Collection<Question> questions){
 			Collection<Question> saved = new ArrayList<Question>();
 			for(Question question:questions){
 				Question savedQuestion = this.questionRepository.save(question);
@@ -66,7 +66,7 @@ public class QuestionService {
 			return saved;
 		}
 		
-		public Question save(Question question){
+		public Question saveQuestion(Question question){
 			
 			Question saved = this.questionRepository.save(question);
 			return saved;
@@ -74,6 +74,10 @@ public class QuestionService {
 		
 		public Collection<Question> findAllByPrincipalAndRendezvous(int principalId, int rendezvousId){
 			return this.questionRepository.findAllByPrincipalAndRendezvous(principalId, rendezvousId);
+		}
+
+		public Collection<Question> findAllByrendezvous(int rendezvousId) {
+			return this.questionRepository.findAllByRendezvous(rendezvousId);
 		}
 		
 		
