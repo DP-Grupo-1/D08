@@ -88,7 +88,7 @@ public class ReplyUserController extends AbstractController {
 
 					
 					final UserAccount useraccount = LoginService.getPrincipal();
-					final User user= this.userService.findByUserAccount(user);
+					final User user= this.userService.findByUserAccount(useraccount);
 
 					Collection<Reply> replies = user.getReplies();
 					replies.add(respuesta);

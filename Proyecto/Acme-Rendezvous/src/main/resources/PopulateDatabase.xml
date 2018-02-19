@@ -113,6 +113,8 @@
 		<property name="phoneNumber" value="658478521" />
 		<property name="email" value="fabgar@gmail.com" />
 	</bean>
+	
+	
 	<!-- User -->
 		<bean id="user1" class="domain.User">
 		<property name="name" value="Carlos" />
@@ -149,6 +151,8 @@
 			</list>
 		</property>
 	</bean>
+	
+	
 <!--  Comment -->
 	<bean id="comment1" class="domain.Comment">
 		<property name="text" value="Hola, que tal" />
@@ -160,6 +164,18 @@
 			</list>
 		</property>
 	</bean>
+	
+<<<<<<< HEAD
+=======
+	<!--  Announcement -->
+	<bean id="announcement1" class="domain.Announcement">
+		<property name="moment" value="2018/05/21 23:59" />
+		<property name="title" value="Cita a ciegas" />
+		<property name="description" value="Cita sin conocer a la otra persona" />
+	</bean>
+	
+	
+>>>>>>> 73689d715bf58182dd3b268a78b6ab5a25aacb48
 <!--  Question -->
 	<bean id="question1" class="domain.Question">
 		<property name="question" value="¿Qué te parece el fútbol?" />
@@ -187,5 +203,26 @@
 		<property name="rendezvous" ref="rendezvous1" />
 		<property name="user" ref="user1" />
 		</bean>
+
+		
+<!-- Announcements -->
+	<bean id="announcement1" class="domain.Announcement">
+		<property name="moment" value="2018/05/10 18:00" />
+		<property name="title" value="announcement1" />
+		<property name="description" value="description1" />
+	</bean>
+	
+	<bean id="announcement2" class="domain.Announcement">
+		<property name="moment" value="2018/05/10 20:00" />
+		<property name="title" value="announcement2" />
+		<property name="description" value="description2" />
+	</bean>
+	
+	<bean id="announcement3" class="domain.Announcement">
+		<property name="moment" value="2018/05/15 19:00" />
+		<property name="title" value="announcement3" />
+		<property name="description" value="description3" />
+	</bean>
+	
 		
 </beans>

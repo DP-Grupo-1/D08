@@ -16,11 +16,6 @@
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
        
 <tiles-definitions>
-
-    <definition name="rendezvous/list" extends="master.page">	
-		<put-attribute name="title" value="List Rendezvouses" />
-		<put-attribute name="body" value="/views/rendezvous/list.jsp" />
-	</definition>
 	
 	<definition name="rendezvous/user/list" extends="master.page">	
 		<put-attribute name="title" value="List Rendezvouses" />
@@ -28,11 +23,6 @@
 	</definition>
 	
 	<definition name="rendezvous/user/edit" extends="master.page">	
-		<put-attribute name="title" value="Edit Rendezvous" />
-		<put-attribute name="body" value="/views/rendezvous/edit.jsp" />
-	</definition>
-	
-	<definition name="rendezvous/administrator/edit" extends="master.page">	
 		<put-attribute name="title" value="Edit Rendezvous" />
 		<put-attribute name="body" value="/views/rendezvous/edit.jsp" />
 	</definition>
