@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.ReplyService;
+import services.CommentService;
+
 import domain.Reply;
 
 @Controller
@@ -18,7 +19,7 @@ import domain.Reply;
 public class ReplyController extends AbstractController {
 
 	@Autowired
-	private ReplyService	replyService;
+	private CommentService	commentService;
 
 
 	//Listing
@@ -26,7 +27,7 @@ public class ReplyController extends AbstractController {
 	public ModelAndView list(@RequestParam(required = false) final Integer commentId) {
 		ModelAndView res;
 		Collection<Reply> replies;
-		replies = this.replyService.findByCommentId(commentId);
+		replies = this.commentService.findByCommentId(commentId);
 
 		//POR HACER LA QUERY EN COMMENT REPOSITORY
 
