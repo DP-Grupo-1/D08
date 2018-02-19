@@ -59,7 +59,7 @@ public class Comment extends DomainEntity {
 	
 	@NotNull
 	@Valid
-	@OneToMany(mappedBy = "comment")
+	@OneToMany
 	public Collection<Reply> getReplies() {
 		return replies;
 	}
