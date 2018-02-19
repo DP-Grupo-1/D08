@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.RendezvousService;
+import services.UserService;
 import domain.Rendezvous;
 
 @Controller
@@ -20,6 +21,9 @@ public class RendezvousController extends AbstractController {
 	//Services ----------------------------------------------------------
 	@Autowired
 	RendezvousService	rendezvousService;
+
+	@Autowired
+	UserService			userService;
 
 
 	//Constructors ------------------------------------------------------
