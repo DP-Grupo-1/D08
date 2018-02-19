@@ -16,6 +16,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+
 import domain.Rendezvous;
 
 @Repository
@@ -51,5 +52,7 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous, Integer>
 	//de la media del número de anuncios por reunión.
 	@Query("select r from Rendezvous r where avg(r.announcements.size)>0.75")
 	Collection<Rendezvous> above75AverageOfAnnouncementsPerRendezvous();
-
+	
+	
+	
 }

@@ -17,7 +17,7 @@
 <script type="text/javascript" src="scripts/menu.js"></script>
 
 <div>
-	<img src="images/logo.png" alt="Getting-Started Co., Inc." />
+	<img src="images/logo.png" alt="Acme-Rendezvous Co., Inc." />
 </div>
 
 <div id="menu">

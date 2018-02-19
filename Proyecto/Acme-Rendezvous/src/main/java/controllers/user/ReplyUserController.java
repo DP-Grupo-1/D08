@@ -19,6 +19,7 @@ import security.UserAccount;
 import services.CommentService;
 import services.RendezvousService;
 import services.ReplyService;
+import services.UserService;
 import controllers.AbstractController;
 import domain.Comment;
 import domain.Rendezvous;
@@ -87,7 +88,7 @@ public class ReplyUserController extends AbstractController {
 
 					
 					final UserAccount useraccount = LoginService.getPrincipal();
-					final User user= this.userService.findByUserAccount(user);
+					final User user= this.userService.findByUserAccount(useraccount);
 
 					Collection<Reply> replies = user.getReplies();
 					replies.add(respuesta);
