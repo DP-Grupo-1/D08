@@ -18,6 +18,7 @@ import security.LoginService;
 import security.UserAccount;
 import services.CommentService;
 import services.RendezvousService;
+import services.UserService;
 import controllers.AbstractController;
 import domain.Comment;
 import domain.Rendezvous;
@@ -99,7 +100,7 @@ public class CommentUserController extends AbstractController {
 
 					
 					final UserAccount useraccount = LoginService.getPrincipal();
-					final User user= this.userService.findByUserAccount(user);
+					final User user= this.userService.findByUserAccount(useraccount);
 
 					Collection<Comment> comments = user.getComments();
 					comments.add(commentario);

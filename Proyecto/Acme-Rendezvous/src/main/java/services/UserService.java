@@ -15,6 +15,7 @@ import security.LoginService;
 import security.UserAccount;
 import domain.Comment;
 import domain.Question;
+import domain.RSVP;
 import domain.Rendezvous;
 import domain.User;
 
