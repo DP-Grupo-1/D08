@@ -2,6 +2,7 @@
 package controllers;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.RendezvousService;
+<<<<<<< HEAD
 import services.UserService;
+=======
+import domain.Flag;
+>>>>>>> ab26a804d38129dc072e0417cf133055b5138530
 import domain.Rendezvous;
 
 @Controller
@@ -38,12 +43,15 @@ public class RendezvousController extends AbstractController {
 
 		rendezvouses = this.rendezvousService.findAll();
 
+		for (final Rendezvous r : rendezvouses)
+			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE)
+				r.setFlag(Flag.PASSED);
+
 		result = new ModelAndView("rendezvous/list");
 		result.addObject("rendezvouses", rendezvouses);
 		result.addObject("requestURI", "rendezvous/list.do");
 
 		return result;
-
 	}
 
 	//Display ------------------------------------------------------------
@@ -59,13 +67,15 @@ public class RendezvousController extends AbstractController {
 		}
 
 		rendezvous = this.rendezvousService.findOne(rendezvousId);
+		if (rendezvous.getMoment().before(new Date()) && rendezvous.getFlag() == Flag.ACTIVE)
+			rendezvous.setFlag(Flag.PASSED);
 
 		result.addObject("rendezvous", rendezvous);
-
 		result.addObject("requestURI", "rendezvous/display.do");
 
 		return result;
 	}
+
 	//Creation ----------------------------------------------------------
 
 	//Edition -----------------------------------------------------------

@@ -50,6 +50,12 @@
 		<security:intercept-url pattern="/profile/action-1.do" access="isAuthenticated()" /> 
 		<security:intercept-url pattern="/profile/action-2.do" access="isAuthenticated()" /> 
 		<security:intercept-url pattern="/profile/action-3.do" access="isAuthenticated()" /> 
+		
+		<security:intercept-url pattern="/rendezvous/list.do" access="permitAll" />
+		<security:intercept-url pattern="/rendezvous/user/list.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/rendezvous/display.do" access="permitAll" />
+		<security:intercept-url pattern="/rendezvous/user/edit.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/rendezvous/administrator/edit.do" access="hasRole('ADMINISTRATOR')" />
 	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 

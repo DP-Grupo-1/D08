@@ -1,7 +1,9 @@
 
 package controllers.user;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.validation.Valid;
 
@@ -17,6 +19,10 @@ import org.springframework.web.servlet.ModelAndView;
 import services.RendezvousService;
 import services.UserService;
 import controllers.AbstractController;
+import domain.Flag;
+import domain.RSVP;
+import domain.Rendezvous;
+import domain.User;
 
 @Controller
 @RequestMapping("/rendezvous/user")
@@ -33,35 +39,37 @@ public class RendezvousUserController extends AbstractController {
 
 	//Listing ----------------------------------------------------
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list() {														//Listeo de viajes
+	public ModelAndView list() {
 		ModelAndView result;
-		Collection<Trip> trips;
-		final Manager logged = this.managerService.findByPrincipal();
+		final Collection<Rendezvous> rendezvouses = new ArrayList<Rendezvous>();
+		final User logged = this.userService.findByPrincipal();
 
-		trips = logged.getTrips();
+		for (final RSVP rs : logged.getRsvps())
+			rendezvouses.add(rs.getRendezvous());
 
-		result = new ModelAndView("trip/list");
-		result.addObject("trips", trips);
-		result.addObject("requestURI", "trip/manager/list.do");
+		for (final Rendezvous r : rendezvouses)
+			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE)
+				r.setFlag(Flag.PASSED);
+
+		result = new ModelAndView("rendezvous/list");
+		result.addObject("rendezvouses", rendezvouses);
+		result.addObject("requestURI", "rendezvous/user/list.do");
 
 		return result;
 	}
 
-	// create----------------------------------------------------------------
+	//Create----------------------------------------------------------------
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result = null;
 
 		try {
-			final Manager manager = this.managerService.findByPrincipal();
-			Assert.notNull(manager);
-			final Trip trip = this.tripService.create();
+			final User user = this.userService.findByPrincipal();
+			Assert.notNull(user);
+			final Rendezvous rendezvous = this.rendezvousService.create();
 
-			final Stage stage = this.stageService.create(trip);
-
-			result = this.createEditModelAndView(trip);
-			result.addObject("trip", trip);
-			result.addObject("stage", stage);
+			result = this.createEditModelAndView(rendezvous);
+			result.addObject("rendezvous", rendezvous);
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/");
 		}
@@ -72,105 +80,60 @@ public class RendezvousUserController extends AbstractController {
 	//Edition----------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final int tripId) {
+	public ModelAndView edit(@RequestParam final int rendezvousId) {
 
 		ModelAndView result;
-		Trip trip;
+		Rendezvous rendezvous;
 
-		trip = this.tripService.findOne(tripId);
-		Assert.notNull(trip);
-		result = this.createEditModelAndView(trip);
-		result.addObject("trip", trip);
+		rendezvous = this.rendezvousService.findOne(rendezvousId);
+		Assert.notNull(rendezvous);
+		result = this.createEditModelAndView(rendezvous);
+		result.addObject("rendezvous", rendezvous);
 		return result;
 	}
+
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Trip trip, final BindingResult binding) {
+	public ModelAndView save(@Valid final Rendezvous rendezvous, final BindingResult binding) {
 		ModelAndView result;
 
 		if (binding.hasErrors())
-			result = this.createEditModelAndView(trip);
+			result = this.createEditModelAndView(rendezvous);
 		else
 			try {
-				final Trip saved = this.tripService.save(trip);
-				result = new ModelAndView("redirect:../display.do?tripId=" + saved.getId());
+				final Rendezvous saved = this.rendezvousService.save(rendezvous);
+				result = new ModelAndView("redirect:../display.do?rendezvousId=" + saved.getId());
 			} catch (final Throwable error) {
-				result = this.createEditModelAndView(trip, "trip.comit.error");
-
+				result = this.createEditModelAndView(rendezvous, "rendezvous.comit.error");
 			}
-
 		return result;
-
 	}
+
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(@Valid final Trip trip, final BindingResult binding) {
+	public ModelAndView delete(@Valid final Rendezvous rendezvous, final BindingResult binding) {
 
 		ModelAndView result;
 
 		try {
-
-			this.tripService.delete(trip);
-			result = new ModelAndView("redirect:../../welcome/index.do");
-
+			this.rendezvousService.deleteByUser(rendezvous);
+			result = new ModelAndView("redirect:../display.do?rendezvousId=" + rendezvous.getId());
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndView(rendezvous, "rendezvous.comit.error");
 		}
-
-		catch (final Throwable oops) {
-			result = this.createEditModelAndView(trip, "trip.comit.error");
-
-		}
-		return result;
-	}
-
-	@RequestMapping(value = "/cancellationReason", method = RequestMethod.GET)
-	public ModelAndView cancel(@RequestParam final int tripId) {
-
-		ModelAndView result;
-		Trip trip;
-
-		trip = this.tripService.findOne(tripId);
-		Assert.notNull(trip);
-		result = new ModelAndView("trip/manager/cancellationReason");
-		result.addObject("trip", trip);
-		result.addObject("tripId", tripId);
-
-		return result;
-
-	}
-
-	@RequestMapping(value = "/cancellationReason", method = RequestMethod.POST, params = "cancelTrip")
-	public ModelAndView cancelTrip(@Valid final Trip trip, final BindingResult binding) {
-		ModelAndView result;
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(trip);
-		else
-			try {
-				this.tripService.cancel(trip);
-
-				result = new ModelAndView("redirect:../display.do?tripId=" + trip.getId());
-			} catch (final Throwable error) {
-				result = this.createEditModelAndView(trip, "trip.comit.error");
-
-			}
-
 		return result;
 	}
 
 	// Ancillary methods -----------------------------------------
-	protected ModelAndView createEditModelAndView(final Trip trip) {
+	protected ModelAndView createEditModelAndView(final Rendezvous rendezvous) {
 		ModelAndView result;
-		result = this.createEditModelAndView(trip, null);
+		result = this.createEditModelAndView(rendezvous, null);
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final Trip trip, final String message) {
+	protected ModelAndView createEditModelAndView(final Rendezvous rendezvous, final String message) {
 		ModelAndView result;
-		final Collection<LegalText> legalTexts = this.legalTextService.findAllFinal();
-		final Collection<Category> categories = this.categoryService.findAll();
-		final Collection<Ranger> rangers = this.rangerService.findAll();
-		result = new ModelAndView("trip/manager/edit");
-		result.addObject("trip", trip);
-		result.addObject("rangers", rangers);
-		result.addObject("categories", categories);
-		result.addObject("legalTexts", legalTexts);
+
+		result = new ModelAndView("rendezvous/user/edit");
+		result.addObject("rendezvous", rendezvous);
 		result.addObject("message", message);
 		return result;
 	}

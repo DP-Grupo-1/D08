@@ -88,27 +88,35 @@ public class RendezvousService {
 		return result;
 	}
 
-	public void delete(final Rendezvous rendezvous) {
+	public void deleteByUser(final Rendezvous rendezvous) {
+
+		Assert.notNull(rendezvous);
+		Assert.notNull(this.rendezvousRepository.findOne(rendezvous.getId()));
+
+		final User user = this.userService.findByPrincipal();
+		Assert.notNull(user);
+
+		Assert.isTrue(rendezvous.getFinalMode() == false);
+		Assert.isTrue(rendezvous.getFlag() != Flag.DELETED);
+		rendezvous.setFlag(Flag.DELETED);
+	}
+
+	public void deleteByAdmin(final Rendezvous rendezvous) {
 
 		Assert.notNull(rendezvous);
 		Assert.notNull(this.rendezvousRepository.findOne(rendezvous.getId()));
 
 		final Administrator admin = this.administratorService.findByPrincipal();
-		final User user = this.userService.findByPrincipal();
+		Assert.notNull(admin);
 
-		if (admin != null) {
-			for (final Rendezvous r : this.rendezvousRepository.findAll())
-				r.getRendezvouses().remove(rendezvous);
-			for (final RSVP rs : rendezvous.getRsvps())
-				this.rsvpService.delete(rs);
-			rendezvous.getCreator().getRendezvouses().remove(rendezvous);
-			this.rendezvousRepository.delete(rendezvous);
-		} else if (user != null) {
-			Assert.isTrue(rendezvous.getFinalMode() == false);
-			Assert.isTrue(rendezvous.getFlag() != Flag.DELETED);
-			rendezvous.setFlag(Flag.DELETED);
-		}
+		for (final Rendezvous r : this.rendezvousRepository.findAll())
+			r.getRendezvouses().remove(rendezvous);
+		for (final RSVP rs : rendezvous.getRsvps())
+			this.rsvpService.delete(rs);
+		rendezvous.getCreator().getRendezvouses().remove(rendezvous);
+		this.rendezvousRepository.delete(rendezvous);
 	}
+
 	public Collection<Rendezvous> findAll() {
 		final Collection<Rendezvous> result = this.rendezvousRepository.findAll();
 		return result;
