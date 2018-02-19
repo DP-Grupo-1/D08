@@ -100,7 +100,7 @@ public class CommentUserController extends AbstractController {
 
 					
 					final UserAccount useraccount = LoginService.getPrincipal();
-					final User user= this.userService.findByUserAccount(user);
+					final User user= this.userService.findByUserAccount(useraccount);
 
 					Collection<Comment> comments = user.getComments();
 					comments.add(commentario);
