@@ -72,8 +72,36 @@
     <display:column >
 	<a  href="user/list.do?rendezvousId=${row.id}"><spring:message code="rendezvous.attendants" /></a>
     </display:column>
+    
+    <spring:message code="rendezvous.comments" var="commentsHeader" />
+    <display:column>
+  		<a href="comment/list.do?rendezvousId=${row.id}">
+ 			<spring:message code="rendezvous.comments" />
+ 		</a>	
+    </display:column>
 	
 </display:table>
+
+<display:column>
+  	<a href="rendezvous/attend.do?rendezvousId=${row.id}">
+	  	<spring:message code="rendezvous.attend" />
+	</a>	
+  	
+  	<a href="rendezvous/noAttend.do?rsvpId=${id}">
+	  	<spring:message code="recipe.noAttend" />
+	</a>	
+	 	
+</display:column>
+
+<!-- Action links -->
+
+<security:authorize access="hasRole('USER')">
+  <div>
+  <jstl:if test="${¿Qué poner para que sólo comenten aquellos que hayan RSVPd a la Rendezvous?}">
+	<a href="comment/user/create.do"><spring:message code="comment.create" /></a>
+  </jstl:if>
+  </div>
+</security:authorize>
 
 <security:authorize access="hasRole('USER')">
   <display:column>
@@ -178,44 +206,6 @@
 	<display:column property="flag" title="${rendezvousFlagHeader}" sortable="true" />
 
 </display:table>
-
-
-<!-- 									Comments											-->
-<h1>Comments</h1>
-<display:table pagesize="5" class="displaytag" keepStatus="true"
-	name="rendezvous.comments" requestURI="${requestURI}" id="row">
-	
-	<spring:message code="comment.moment" var="commentMomentHeader" />
-    <spring:message code="comment.moment.format" var="commentMomentFormat" />
-	<display:column property="moment" title="${commentMomentHeader}" 
-	    titleKey="comment.moment"
-		sortable="true" format="{0,date,${commentMomentFormat }}" />
-
-	<spring:message code="comment.text" var="commentTextHeader" />
-	<display:column property="text" title="${commentTextHeader}"
-		sortable="true">
-	</display:column>
-
-	<spring:message code="comment.picture" var="commentPictureHeader" />
-	<display:column property="picture" title="${commentPictureHeader}"
-		sortable="true">
-	</display:column>
-
-	<display:column >
-   	<a  href="reply/list.do?commentId=${row.id}"><spring:message code="comment.replies" /></a>
-    </display:column>
-	
-</display:table>
-
-<!-- Action links -->
-
-<security:authorize access="hasRole('USER')">
-  <div>
-  <jstl:if test="${¿Qué poner para que sólo comenten aquellos que hayan RSVPd a la Rendezvous?}">
-	<a href="comment/user/create.do"><spring:message code="comment.create" /></a>
-  </jstl:if>
-  </div>
-</security:authorize>
 
 </jstl:when>
 <jstl:otherwise>
