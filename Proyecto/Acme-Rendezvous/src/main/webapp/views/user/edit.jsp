@@ -27,7 +27,7 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 
-<acme:textbox code=".name" path="name"/>
+<acme:textbox code="user.name" path="name"/>
 <acme:textbox code="user.surname" path="surname"/>
 <acme:textbox code="user.postalAddress" path="postalAddress"/>
 <acme:textbox code="user.phoneNumber" path="phoneNumber"/>
