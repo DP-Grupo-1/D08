@@ -26,22 +26,19 @@ public class Rendezvous extends DomainEntity {
 
 	//-------------------------------------Atributos--------------------------------------------
 
-	private String						name, description;
-	private Date						moment;
-	private String						picture;
-	private Double						locationLatitude, locationLongitude;
-	private boolean						finalMode, adultOnly;
-	private Flag						flag;
+	private String					name, description;
+	private Date					moment;
+	private String					picture;
+	private Double					locationLatitude, locationLongitude;
+	private boolean					finalMode, adultOnly;
+	private Flag					flag;
 
 	//-------------------------------------Relaciones-------------------------------------------
 
-	private Collection<Announcement>	announcements;
-	private Collection<Question>		questions;
-	private Collection<Rendezvous>		rendezvouses;
-	private Collection<RSVP>			rsvps;
-	private Collection<Comment>			comments;
-	private User						creator;
-	private Collection<User>			attendants;
+	private Collection<Rendezvous>	rendezvouses;
+	private Collection<Comment>		comments;
+	private User					creator;
+	private Collection<User>		attendants;
 
 
 	//-----------------------------Getters y Setters Atributos----------------------------------
@@ -130,45 +127,12 @@ public class Rendezvous extends DomainEntity {
 	@OneToMany
 	@NotNull
 	@Valid
-	public Collection<Announcement> getAnnouncements() {
-		return this.announcements;
-	}
-
-	public void setAnnouncements(final Collection<Announcement> announcements) {
-		this.announcements = announcements;
-	}
-
-	@OneToMany
-	@NotNull
-	@Valid
-	public Collection<Question> getQuestions() {
-		return this.questions;
-	}
-
-	public void setQuestions(final Collection<Question> questions) {
-		this.questions = questions;
-	}
-
-	@OneToMany
-	@NotNull
-	@Valid
 	public Collection<Rendezvous> getRendezvouses() {
 		return this.rendezvouses;
 	}
 
 	public void setRendezvouses(final Collection<Rendezvous> rendezvouses) {
 		this.rendezvouses = rendezvouses;
-	}
-
-	@OneToMany(mappedBy = "rendezvous")
-	@NotNull
-	@Valid
-	public Collection<RSVP> getRsvps() {
-		return this.rsvps;
-	}
-
-	public void setRSVP(final Collection<RSVP> rsvps) {
-		this.rsvps = rsvps;
 	}
 
 	@OneToMany

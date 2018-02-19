@@ -19,6 +19,8 @@
 <%@taglib prefix="security"	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
+
 <security:authorize access="hasRole('USER')">
 <form:form action="rendezvous/user/edit.do" modelAttribute="rendezvous">
 
@@ -35,47 +37,17 @@
 	<form:hidden path="comments" />
 	
 
-	<form:label path="name">
-		<spring:message code="rendezvous.name" />:
-	</form:label>
-	<form:input path="name" />
-	<form:errors cssClass="error" path="name" />
-	<br />
-	
-	<form:label path="description">
-		<spring:message code="rendezvous.description" />:
-	</form:label>
-	<form:input path="description" />
-	<form:errors cssClass="error" path="description" />
-	<br />
-	
-	<form:label path="moment">
-		<spring:message code="rendezvous.moment" />:
-	</form:label>
-	<form:input path="moment" />
-	<form:errors cssClass="error" path="moment" />
-	<br />
-	
-	<form:label path="picture">
-		<spring:message code="rendezvous.picture" />:
-	</form:label>
-	<form:input path="picture" />
-	<form:errors cssClass="error" path="picture" />
-	<br />
-	
-	<form:label path="locationLatitude">
-		<spring:message code="rendezvous.locationLatitude" />:
-	</form:label>
-	<form:input path="locationLatitude" />
-	<form:errors cssClass="error" path="locationLatitude" />
-	<br />
-	
-	<form:label path="locationLongitude">
-		<spring:message code="rendezvous.locationLongitude" />:
-	</form:label>
-	<form:input path="locationLongitude" />
-	<form:errors cssClass="error" path="locationLongitude" />
-	<br />
+    <acme:textbox code="rendezvous.name" path="name"/>
+    
+    <acme:textbox code="rendezvous.description" path="description"/>
+    
+    <acme:textbox code="rendezvous.moment" path="moment"/>
+    
+    <acme:textbox code="rendezvous.picture" path="picture"/>
+    
+    <acme:textbox code="rendezvous.locationLatitude" path="locationLatitude"/>
+    
+    <acme:textbox code="rendezvous.locationLongitude" path="locationLongitude"/>
 	
 	<spring:message code="rendezvous.finalMode" />:
 	<input type="checkbox" name="finalMode"
