@@ -19,6 +19,7 @@ import security.UserAccount;
 import services.CommentService;
 import services.RendezvousService;
 import services.ReplyService;
+import services.UserService;
 import controllers.AbstractController;
 import domain.Comment;
 import domain.Rendezvous;

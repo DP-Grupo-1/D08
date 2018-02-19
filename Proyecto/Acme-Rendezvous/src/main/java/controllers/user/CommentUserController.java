@@ -18,6 +18,7 @@ import security.LoginService;
 import security.UserAccount;
 import services.CommentService;
 import services.RendezvousService;
+import services.UserService;
 import controllers.AbstractController;
 import domain.Comment;
 import domain.Rendezvous;
