@@ -69,9 +69,68 @@
     <display:column >
 	<a  href="user/list.do?rendezvousId=${row.id}"><spring:message code="rendezvous.attendants" /></a>
     </display:column>
+    
+    <spring:message code="rendezvous.comments" var="commentsHeader" />
+    <display:column>
+  		<a href="comment/list.do?rendezvousId=${row.id}">
+ 			<spring:message code="rendezvous.comments" />
+ 		</a>	
+    </display:column>
 	
 </display:table>
 
+<<<<<<< HEAD
+<display:column>
+  	<a href="rendezvous/attend.do?rendezvousId=${row.id}">
+	  	<spring:message code="rendezvous.attend" />
+	</a>	
+  	
+  	<a href="rendezvous/noAttend.do?rsvpId=${id}">
+	  	<spring:message code="recipe.noAttend" />
+	</a>	
+	 	
+</display:column>
+
+<!-- Action links -->
+
+<security:authorize access="hasRole('USER')">
+  <div>
+  <jstl:if test="${¿Qué poner para que sólo comenten aquellos que hayan RSVPd a la Rendezvous?}">
+	<a href="comment/user/create.do"><spring:message code="comment.create" /></a>
+  </jstl:if>
+  </div>
+</security:authorize>
+
+<security:authorize access="hasRole('USER')">
+  <display:column>
+  	<jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
+	     <a href="rendezvous/user/edit.do?rendezvousId=${row.id}">
+	       <spring:message code="rendezvous.edit" />
+	     </a>	
+   	</jstl:if>
+   </display:column>
+</security:authorize> 
+
+<!-- 
+<security:authorize access="hasRole('USER')">
+		<display:column>
+			<jstl:choose>
+				<jstl:when test="${enrolled}">
+					<a href="survivalClass/explorer/disenroll.do?survivalClassId=${row.id}" 
+					   onclick="javascript: return confirm('<spring:message code="survivalClass.confirm.disenroll" />')">
+						<spring:message code="survivalClass.disenroll" />
+					</a>					
+				</jstl:when>
+				<jstl:otherwise>
+					<a href="survivalClass/explorer/enroll.do?survivalClassId=${row.id}">
+					    <spring:message code="survivalClass.enroll" />
+					</a>
+				</jstl:otherwise>
+			</jstl:choose>
+		</display:column>
+	</security:authorize>       -->
+=======
+>>>>>>> 28d9a609cf28a9a6133fc2f52172735e6f73fd1d
 
 <!-- 									Announcements											-->
 <h1>Announcements</h1>
@@ -148,6 +207,13 @@
 
 </display:table>
 
+<<<<<<< HEAD
+</jstl:when>
+<jstl:otherwise>
+<spring:message code="rendezvous.restricted" />
+</jstl:otherwise>
+</jstl:choose>
+=======
 
 <!-- 									Comments											-->
 <h1>Comments</h1>
@@ -183,3 +249,4 @@
 	<a href="comment/user/create.do"><spring:message code="comment.create" /></a>
   </div>
 </security:authorize>
+>>>>>>> 28d9a609cf28a9a6133fc2f52172735e6f73fd1d

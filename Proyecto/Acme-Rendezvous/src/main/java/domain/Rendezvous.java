@@ -36,7 +36,6 @@ public class Rendezvous extends DomainEntity {
 	//-------------------------------------Relaciones-------------------------------------------
 
 	private Collection<Announcement>	announcements;
-	private Collection<Question>		questions;
 	private Collection<Rendezvous>		rendezvouses;
 	private Collection<RSVP>			rsvps;
 	private Collection<Comment>			comments;
@@ -136,17 +135,6 @@ public class Rendezvous extends DomainEntity {
 
 	public void setAnnouncements(final Collection<Announcement> announcements) {
 		this.announcements = announcements;
-	}
-
-	@OneToMany
-	@NotNull
-	@Valid
-	public Collection<Question> getQuestions() {
-		return this.questions;
-	}
-
-	public void setQuestions(final Collection<Question> questions) {
-		this.questions = questions;
 	}
 
 	@OneToMany
