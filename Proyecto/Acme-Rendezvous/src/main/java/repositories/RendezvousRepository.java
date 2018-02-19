@@ -16,7 +16,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-
+import domain.RSVP;
 import domain.Rendezvous;
 
 @Repository
@@ -24,11 +24,11 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous, Integer>
 
 	//Requisito 4.2: Lista de reuniones o quedadas a las que el usuario va a asistir
 	//o ya ha asistido.
-	@Query("select r from Rendezvous r join r.rsvps rs where rs.user.id = ?1")
+	@Query("select r.rendezvous from RSVP r where r.user.id = ?1")
 	Collection<Rendezvous> findByUserId(int userId);
 
-	//Requisito 6.3 punto 1: La media y la desviación estándar de reuniones por usuario.
-	@Query("select avg(u.rendezvouses.size), stddev(u.rendezvouses.size) from User u")
+	//Requisito 6.3 punto 1: La media y la desviación estándar de reuniones creadas por usuario.
+	@Query("select avg(r.rendezvouses.size where ), stddev(u.rendezvouses.size) from User u")
 	Double[] avgStddevRendezvousPerUser();
 
 	//Requisito 6.3 punto 2: Ratio de usuarios que han creado al menos una reunión.
@@ -52,7 +52,11 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous, Integer>
 	//de la media del número de anuncios por reunión.
 	@Query("select r from Rendezvous r where avg(r.announcements.size)>0.75")
 	Collection<Rendezvous> above75AverageOfAnnouncementsPerRendezvous();
-	
-	
-	
+
+	@Query("select r1 from Rendezvous r1 join r1.rendezvouses r2 where r2.id = ?1")
+	Rendezvous findRendezvousParent(int rendezvousId);
+
+	@Query("select r1 from RSVP r1 join r1.rendezvouses r2 where r2.id = ?1")
+	Collection<RSVP> findRSVPs(int rendezvousId);
+
 }

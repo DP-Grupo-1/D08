@@ -2,22 +2,21 @@
 package controllers;
 
 import java.util.Collection;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import services.RSVPService;
 import services.RendezvousService;
-<<<<<<< HEAD
 import services.UserService;
-=======
-import domain.Flag;
->>>>>>> ab26a804d38129dc072e0417cf133055b5138530
 import domain.Rendezvous;
+import domain.User;
 
 @Controller
 @RequestMapping("/rendezvous")
@@ -29,6 +28,9 @@ public class RendezvousController extends AbstractController {
 
 	@Autowired
 	UserService			userService;
+
+	@Autowired
+	RSVPService			rsvpService;
 
 
 	//Constructors ------------------------------------------------------
@@ -42,10 +44,6 @@ public class RendezvousController extends AbstractController {
 		Collection<Rendezvous> rendezvouses;
 
 		rendezvouses = this.rendezvousService.findAll();
-
-		for (final Rendezvous r : rendezvouses)
-			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE)
-				r.setFlag(Flag.PASSED);
 
 		result = new ModelAndView("rendezvous/list");
 		result.addObject("rendezvouses", rendezvouses);
@@ -67,11 +65,34 @@ public class RendezvousController extends AbstractController {
 		}
 
 		rendezvous = this.rendezvousService.findOne(rendezvousId);
-		if (rendezvous.getMoment().before(new Date()) && rendezvous.getFlag() == Flag.ACTIVE)
-			rendezvous.setFlag(Flag.PASSED);
 
 		result.addObject("rendezvous", rendezvous);
 		result.addObject("requestURI", "rendezvous/display.do");
+
+		return result;
+	}
+
+	//Attends ------------------------------------------------------------
+
+	@RequestMapping(value = "/attend", method = RequestMethod.GET)
+	public ModelAndView like(@RequestParam final int rendezvousId, final RedirectAttributes redirectAttrs) {
+		ModelAndView result;
+
+		try {
+			final User user = this.userService.findByPrincipal();
+			Assert.notNull(user);
+			this.rsvpService.create(rendezvousId);
+
+			redirectAttrs.addFlashAttribute("message", "rendezvous.commit.ok");
+			redirectAttrs.addFlashAttribute("msgType", "success");
+		} catch (final Throwable oops) {
+			System.out.println(oops.getLocalizedMessage());
+			System.out.println(oops.getMessage());
+			redirectAttrs.addFlashAttribute("message", "rendezvous.commit.error");
+			redirectAttrs.addFlashAttribute("msgType", "danger");
+		}
+
+		result = new ModelAndView("redirect:/rendezvous/display.do");
 
 		return result;
 	}

@@ -3,7 +3,6 @@ package controllers.user;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 
 import javax.validation.Valid;
 
@@ -19,8 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 import services.RendezvousService;
 import services.UserService;
 import controllers.AbstractController;
-import domain.Flag;
-import domain.RSVP;
 import domain.Rendezvous;
 import domain.User;
 
@@ -41,15 +38,10 @@ public class RendezvousUserController extends AbstractController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
-		final Collection<Rendezvous> rendezvouses = new ArrayList<Rendezvous>();
+		Collection<Rendezvous> rendezvouses = new ArrayList<Rendezvous>();
 		final User logged = this.userService.findByPrincipal();
 
-		for (final RSVP rs : logged.getRsvps())
-			rendezvouses.add(rs.getRendezvous());
-
-		for (final Rendezvous r : rendezvouses)
-			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE)
-				r.setFlag(Flag.PASSED);
+		rendezvouses = this.rendezvousService.findByUserId(logged.getId());
 
 		result = new ModelAndView("rendezvous/list");
 		result.addObject("rendezvouses", rendezvouses);

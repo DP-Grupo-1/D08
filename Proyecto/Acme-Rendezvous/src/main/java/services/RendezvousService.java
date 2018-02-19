@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,10 +12,8 @@ import org.springframework.util.Assert;
 
 import repositories.RendezvousRepository;
 import domain.Administrator;
-import domain.Announcement;
 import domain.Comment;
 import domain.Flag;
-import domain.Question;
 import domain.RSVP;
 import domain.Rendezvous;
 import domain.User;
@@ -47,17 +46,11 @@ public class RendezvousService {
 		final Rendezvous result = new Rendezvous();
 
 		final Collection<User> attendants = new ArrayList<User>();
-		final Collection<Announcement> announcements = new ArrayList<Announcement>();
-		final Collection<Question> questions = new ArrayList<Question>();
 		final Collection<Rendezvous> rendezvouses = new ArrayList<Rendezvous>();
-		final Collection<RSVP> rsvps = new ArrayList<RSVP>();
 		final Collection<Comment> comments = new ArrayList<Comment>();
 
 		result.setAttendants(attendants);
-		result.setAnnouncements(announcements);
-		result.setQuestions(questions);
 		result.setRendezvouses(rendezvouses);
-		result.setRSVP(rsvps);
 		result.setComment(comments);
 		result.setFinalMode(false);
 		result.setAdultOnly(false);
@@ -81,7 +74,6 @@ public class RendezvousService {
 			result = this.rendezvousRepository.save(rendezvous);
 			result.setCreator(user);
 			this.rsvpService.create(result.getId());
-			user.getRendezvouses().add(result);
 		} else
 			result = this.rendezvousRepository.save(rendezvous);
 
@@ -91,7 +83,7 @@ public class RendezvousService {
 	public void deleteByUser(final Rendezvous rendezvous) {
 
 		Assert.notNull(rendezvous);
-		Assert.notNull(this.rendezvousRepository.findOne(rendezvous.getId()));
+		Assert.notNull(this.findOne(rendezvous.getId()));
 
 		final User user = this.userService.findByPrincipal();
 		Assert.notNull(user);
@@ -104,26 +96,35 @@ public class RendezvousService {
 	public void deleteByAdmin(final Rendezvous rendezvous) {
 
 		Assert.notNull(rendezvous);
-		Assert.notNull(this.rendezvousRepository.findOne(rendezvous.getId()));
+		Assert.notNull(this.findOne(rendezvous.getId()));
 
 		final Administrator admin = this.administratorService.findByPrincipal();
 		Assert.notNull(admin);
 
-		for (final Rendezvous r : this.rendezvousRepository.findAll())
-			r.getRendezvouses().remove(rendezvous);
-		for (final RSVP rs : rendezvous.getRsvps())
-			this.rsvpService.delete(rs);
-		rendezvous.getCreator().getRendezvouses().remove(rendezvous);
+		this.findRendezvousParent(rendezvous.getId()).getRendezvouses().remove(rendezvous);
+		final Collection<RSVP> rsvps = this.findRSVPs(rendezvous.getId());
+		for (final RSVP r : rsvps)
+			this.rsvpService.delete(r);
+
 		this.rendezvousRepository.delete(rendezvous);
 	}
 
 	public Collection<Rendezvous> findAll() {
 		final Collection<Rendezvous> result = this.rendezvousRepository.findAll();
+
+		for (final Rendezvous r : result)
+			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE)
+				r.setFlag(Flag.PASSED);
+
 		return result;
 	}
 
 	public Rendezvous findOne(final int rendezvousId) {
 		final Rendezvous result = this.rendezvousRepository.findOne(rendezvousId);
+
+		if (result.getMoment().before(new Date()) && result.getFlag() == Flag.ACTIVE)
+			result.setFlag(Flag.PASSED);
+
 		return result;
 	}
 
@@ -132,6 +133,11 @@ public class RendezvousService {
 	public Collection<Rendezvous> findByUserId(final int userId) {
 		Collection<Rendezvous> result;
 		result = this.rendezvousRepository.findByUserId(userId);
+
+		for (final Rendezvous r : result)
+			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE)
+				r.setFlag(Flag.PASSED);
+
 		return result;
 	}
 
@@ -156,14 +162,26 @@ public class RendezvousService {
 	}
 
 	public Collection<Rendezvous> top10RendezvousesByRSVPs() {
-		final Collection<Rendezvous> result = this.rendezvousRepository.top10RendezvousesByRSVPs();
+		final Collection<Rendezvous> result;
+		result = this.rendezvousRepository.top10RendezvousesByRSVPs();
 		return result;
 	}
+
+	private Rendezvous findRendezvousParent(final int id) {
+		final Rendezvous result = this.rendezvousRepository.findRendezvousParent(id);
+		return result;
+	}
+
+	private Collection<RSVP> findRSVPs(final int id) {
+		final Collection<RSVP> result = this.rendezvousRepository.findRSVPs(id);
+		return result;
+	}
+
 	//COMMENT
-	
-	public Collection<Comment> findByRendezvous(Integer rendezvousId) {
-		Collection<Comment> comments = new ArrayList<Comment>();
-		Rendezvous rendezvous = rendezvousRepository.findOne(rendezvousId);
+
+	public Collection<Comment> findByRendezvous(final Integer rendezvousId) {
+		final Collection<Comment> comments = new ArrayList<Comment>();
+		final Rendezvous rendezvous = this.rendezvousRepository.findOne(rendezvousId);
 		Assert.notNull(rendezvous);
 		comments.addAll(rendezvous.getComments());
 		return comments;

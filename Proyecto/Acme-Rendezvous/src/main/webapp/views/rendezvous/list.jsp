@@ -20,9 +20,6 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<jstl:choose> 
-<jstl:when test="${rendezvous.adultOnly == false || isAuthenticated() && user.age>=18}">
-
 <!-- Listing grid -->
 
 	<display:table pagesize="5" class="displaytag" keepStatus="true"
@@ -77,9 +74,3 @@
 		  <a href="rendezvous/user/create.do"><spring:message code="rendezvous.create" /></a>
 	   </div>
     </security:authorize>
-	
-</jstl:when>
-<jstl:otherwise>
-<spring:message code="rendezvous.restricted" />
-</jstl:otherwise>
-</jstl:choose>

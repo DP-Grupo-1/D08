@@ -27,13 +27,9 @@
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	<form:hidden path="flag" />
-	<form:hidden path="rsvps" />
 	<form:hidden path="creator" />
 	<form:hidden path="attendants" />
-	<form:hidden path="announcements" />
-	<form:hidden path="questions" />
 	<form:hidden path="rendezvouses" />
-	<form:hidden path="rsvps" />
 	<form:hidden path="comments" />
 	
 
