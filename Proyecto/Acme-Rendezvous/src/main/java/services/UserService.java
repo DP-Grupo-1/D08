@@ -16,7 +16,6 @@ import security.UserAccount;
 import domain.Comment;
 import domain.Question;
 import domain.RSVP;
-import domain.Rendezvous;
 import domain.User;
 
 @Service
@@ -33,11 +32,9 @@ public class UserService {
 		final User res = new User();
 		final Collection<Question> questions = new ArrayList<>();
 		final Collection<Comment> comments = new ArrayList<>();
-		final Collection<Rendezvous> rendezvouses = new ArrayList<>();
 		final Collection<RSVP> rsvps = new ArrayList<>();
 		res.setQuestions(questions);
 		res.setComments(comments);
-		res.setRendezvouses(rendezvouses);
 		res.setRsvps(rsvps);
 		return res;
 	}

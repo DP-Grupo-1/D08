@@ -16,9 +16,9 @@ public class User extends Actor {
 
 	//Relationships-----------------------------------------------------------
 	private Collection<Question>	questions;
-	private Collection<Reply>					replies;
+	private Collection<Reply>		replies;
 	private Collection<Comment>		comments;
-	private Collection<Rendezvous>	rendezvouses;
+
 	private Collection<RSVP>		rsvps;
 
 
@@ -34,7 +34,6 @@ public class User extends Actor {
 	}
 
 	@OneToMany
-
 	public Collection<Reply> getReplies() {
 		return this.replies;
 	}
@@ -53,16 +52,7 @@ public class User extends Actor {
 	public void setComments(final Collection<Comment> comments) {
 		this.comments = comments;
 	}
-	@OneToMany
-	@Valid
-	@NotNull
-	public Collection<Rendezvous> getRendezvouses() {
-		return this.rendezvouses;
-	}
 
-	public void setRendezvouses(final Collection<Rendezvous> rendezvouses) {
-		this.rendezvouses = rendezvouses;
-	}
 	@Valid
 	@OneToMany(mappedBy = "user")
 	@NotNull
