@@ -159,5 +159,14 @@ public class RendezvousService {
 		final Collection<Rendezvous> result = this.rendezvousRepository.top10RendezvousesByRSVPs();
 		return result;
 	}
+	//COMMENT
+	
+	public Collection<Comment> findByRendezvous(Integer rendezvousId) {
+		Collection<Comment> comments = new ArrayList<Comment>();
+		Rendezvous rendezvous = rendezvousRepository.findOne(rendezvousId);
+		Assert.notNull(rendezvous);
+		comments.addAll(rendezvous.getComments());
+		return comments;
+	}
 
 }

@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -13,6 +14,7 @@ import repositories.CommentRepository;
 import domain.Administrator;
 import domain.Comment;
 import domain.Rendezvous;
+import domain.Reply;
 import domain.User;
 
 @Service
@@ -78,8 +80,12 @@ public class CommentService {
 		return res;
 	}
 
-	public Collection<Comment> findByRendezvous(Integer rendezvousId) {
-		return this.commentRepository.findByRendezvous(rendezvousId);
+	public Collection<Reply> findByCommentId(Integer commentId){
+		Collection<Reply> replies = new ArrayList<Reply>();
+		Comment comment= commentRepository.findOne(commentId);
+		Assert.notNull(comment);
+		replies.addAll(comment.getReplies());
+		return replies;
 	}
 
 }

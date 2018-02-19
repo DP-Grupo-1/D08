@@ -11,14 +11,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.CommentService;
+import services.RendezvousService;
 import domain.Comment;
 
 @Controller
 @RequestMapping("/comment")
 public class CommentController extends AbstractController {
 
+	
 	@Autowired
-	private CommentService	commentService;
+	private RendezvousService rendezvousService;
 
 
 	//Listing
@@ -26,7 +28,7 @@ public class CommentController extends AbstractController {
 	public ModelAndView list(@RequestParam(required = false) final Integer rendezvousId) {
 		ModelAndView res;
 		Collection<Comment> comments;
-		comments = this.commentService.findByRendezvous(rendezvousId);
+		comments = this.rendezvousService.findByRendezvous(rendezvousId);
 
 		//POR HACER LA QUERY EN COMMENT REPOSITORY
 
