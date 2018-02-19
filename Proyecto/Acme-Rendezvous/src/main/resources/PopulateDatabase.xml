@@ -160,6 +160,15 @@
 			</list>
 		</property>
 	</bean>
+	
+	<!--  Announcement -->
+	<bean id="announcement1" class="domain.Announcement">
+		<property name="moment" value="2018/05/21 23:59" />
+		<property name="title" value="Cita a ciegas" />
+		<property name="description" value="Cita sin conocer a la otra persona" />
+	</bean>
+	
+	
 <!--  Question -->
 	<bean id="question1" class="domain.Question">
 		<property name="question" value="¿Qué te parece el fútbol?" />
