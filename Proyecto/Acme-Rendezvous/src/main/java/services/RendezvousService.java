@@ -11,6 +11,7 @@ import org.springframework.util.Assert;
 
 import repositories.RendezvousRepository;
 import domain.Administrator;
+import domain.Announcement;
 import domain.Comment;
 import domain.Flag;
 import domain.Question;
