@@ -1,9 +1,12 @@
+The average and the standard deviation of announcements per rendezvous:
+
 select avg(r.announcements.size),
 sqrt(sum(r.announcements.size * r.announcements.size) / count(r.announcements.size) -
-(avg(r.announcements.size) * avg(r.announcements.size))) from Rendezvous r
+(avg(r.announcements.size) * avg(r.announcements.size))) from Rendezvous r;
+
 
 
 The rendezvouses that whose number of announcements is above 75% the
-average number of announcements per rendezvous
+average number of announcements per rendezvous:
 
-select r from Rendezvous r where r.announcements.size > (0.75*avg(r.announcements.size))
+select r from Rendezvous r where r.announcements.size > (0.75*avg(r.announcements.size));
