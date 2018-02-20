@@ -51,7 +51,7 @@ public class RendezvousService {
 
 		result.setAttendants(attendants);
 		result.setRendezvouses(rendezvouses);
-		result.setComment(comments);
+		result.setComments(comments);
 		result.setFinalMode(false);
 		result.setAdultOnly(false);
 		result.setFlag(Flag.ACTIVE);

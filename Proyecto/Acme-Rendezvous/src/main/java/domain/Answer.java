@@ -14,11 +14,7 @@ import org.hibernate.validator.constraints.NotBlank;
 @Access(AccessType.PROPERTY)
 public class Answer extends DomainEntity {
 
-	// Constructors -----------------------------------------------------------
-
-	public Answer() {
-		super();
-	}
+	
 
 
 	// Attributes -------------------------------------------------------------

@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import domain.RSVP;
-import domain.Rendezvous;
 import domain.User;
 
 import repositories.RSVPRepository;
@@ -29,8 +28,7 @@ public class RSVPService{
 	@Autowired
 	private UserService userService;
 	
-	@Autowired
-	private RendezvousService rendezvousService;
+
 	
 	
 	//Simple CRUD methods------------------------------------------------------------------
@@ -38,10 +36,10 @@ public class RSVPService{
 	public RSVP create(final int rendezvousId) {
 		
 		final RSVP res = new RSVP();
-		final Rendezvous rendezvous = rendezvousService.findOne(rendezvousId);
+	
 		User user = this.userService.findByPrincipal();
 		res.setUser(user);
-		res.setRendevouz(rendezvous);
+		
 		
 		return res;
 	}

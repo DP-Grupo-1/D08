@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import domain.Answer;
 import domain.Question;
 import domain.Rendezvous;
 import domain.User;
@@ -40,10 +41,8 @@ public class QuestionService {
 			Question result;
 			result = new Question();
 			Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
-			Collection<User> answerers = new ArrayList<User>();
-			Collection<String> answers = new ArrayList<String>();
+			Collection<Answer> answers = new ArrayList<Answer>();
 			User principal = this.userService.findByPrincipal();
-			result.setAnswerers(answerers);
 			result.setAnswers(answers);
 			result.setCreator(principal);
 			result.setRendezvous(rendezvous);

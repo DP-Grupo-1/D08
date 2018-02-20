@@ -142,7 +142,7 @@ public class Rendezvous extends DomainEntity {
 		return this.comments;
 	}
 
-	public void setComment(final Collection<Comment> comments) {
+	public void setComments(final Collection<Comment> comments) {
 		this.comments = comments;
 	}
 
@@ -159,7 +159,7 @@ public class Rendezvous extends DomainEntity {
 
 	@Valid
 	@NotNull
-	@ManyToMany(mappedBy = "rendezvouses")
+	@ManyToMany
 	public Collection<User> getAttendants() {
 		return this.attendants;
 	}

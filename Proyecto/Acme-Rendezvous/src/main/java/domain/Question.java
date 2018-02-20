@@ -18,11 +18,8 @@ import org.hibernate.validator.constraints.NotBlank;
 @Access(AccessType.PROPERTY)
 public class Question extends DomainEntity {
 
-	// Constructors -----------------------------------------------------------
-
-	public Question() {
-		super();
-	}
+	
+	
 
 
 	// Attributes -------------------------------------------------------------
@@ -44,6 +41,7 @@ public class Question extends DomainEntity {
 	private User				creator;
 	private Rendezvous			rendezvous;
 	private Collection<Answer>	answers;
+
 
 
 	@Valid

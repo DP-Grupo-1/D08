@@ -41,9 +41,9 @@ public class AnswerService {
 		return result;
 	}
 
-	public Question findOne(final int questionId) {
-		final Question question = this.questionRepository.findOne(questionId);
-		return question;
+	public Answer findOne(final int answerId) {
+		final Answer answer = this.answerRepository.findOne(answerId);
+		return answer;
 	}
 
 	public Answer save(final Answer answer, final Question question) {
@@ -57,18 +57,18 @@ public class AnswerService {
 		return saved;
 	}
 
-	public Question saveQuestion(final Question question) {
-
-		final Question saved = this.questionRepository.save(question);
-		return saved;
-	}
-
-	public Collection<Question> findAllByPrincipalAndRendezvous(final int principalId, final int rendezvousId) {
-		return this.questionRepository.findAllByPrincipalAndRendezvous(principalId, rendezvousId);
-	}
-
-	public Collection<Question> findAllByrendezvous(final int rendezvousId) {
-		return this.questionRepository.findAllByRendezvous(rendezvousId);
-	}
+//	public Question saveQuestion(final Question question) {
+//
+//		final Question saved = this.questionRepository.save(question);
+//		return saved;
+//	}
+//
+//	public Collection<Question> findAllByPrincipalAndRendezvous(final int principalId, final int rendezvousId) {
+//		return this.questionRepository.findAllByPrincipalAndRendezvous(principalId, rendezvousId);
+//	}
+//
+//	public Collection<Question> findAllByrendezvous(final int rendezvousId) {
+//		return this.questionRepository.findAllByRendezvous(rendezvousId);
+//	}
 
 }
