@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import domain.RSVP;
+import domain.Rendezvous;
 import domain.User;
 
 import repositories.RSVPRepository;
@@ -28,6 +29,9 @@ public class RSVPService{
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private RendezvousService rendezvousService;
+	
 
 	
 	
@@ -36,14 +40,12 @@ public class RSVPService{
 	public RSVP create(final int rendezvousId) {
 		
 		final RSVP res = new RSVP();
-	
+		Rendezvous rendezvous = rendezvousService.findOne(rendezvousId);
 		User user = this.userService.findByPrincipal();
 		res.setUser(user);
-<<<<<<< HEAD
-		
-=======
+
 		res.setRendezvous(rendezvous);
->>>>>>> 36ae6a21e98edf453294de8131562877e6553fc0
+
 		
 		return res;
 	}
