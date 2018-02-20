@@ -80,6 +80,7 @@
  		</a>	
     </display:column>
     
+    <!--
     <security:authorize access="hasRole('USER')">
 	<jstl:if test="${hasUserRSVPd==false}">
 		<spring:message code="rendezvous.rsvp.attend" var="attendHeader" />
@@ -89,18 +90,24 @@
 		</display:column>
 	</jstl:if>
     </security:authorize>
+    -->
 	
 </display:table>
 
 <security:authorize access="hasRole('USER')">
 <display:column>
+<jstl:choose> 
+<jstl:when test="${hasUserRSVPd==false}">
   	<a href="rendezvous/attend.do?rendezvousId=${row.id}">
 	  	<spring:message code="rendezvous.attend" />
 	</a>	
-  	
+</jstl:when>
+<jstl:otherwise>
   	<a href="rendezvous/noAttend.do?rsvpId=${id}">
 	  	<spring:message code="recipe.noAttend" />
 	</a>	
+</jstl:otherwise>
+</jstl:choose>
 </display:column>
 </security:authorize> 
 
@@ -164,7 +171,7 @@
 <!-- 							 Rendezvouses linked										-->
 <h1>Rendezvouses linked</h1>
 <display:table pagesize="5" class="displaytag" keepStatus="true"
-	name="rendezvous.stories" requestURI="${requestURI}" id="row">
+	name="rendezvous.rendezvouses" requestURI="${requestURI}" id="row">
 	
 	<!-- Display -->
 		
