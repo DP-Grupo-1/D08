@@ -100,10 +100,67 @@
 		<property name="user" ref="user1" />
 		<property name="attendants">
 			<list>
+				<ref bean="user1" />
+			</list>
+		</property>
+	</bean>
+
+
+<bean id="rendezvous2" class="domain.Rendezvous">
+		<property name="name" value="Rendezvous 2" />
+		<property name="description" value="Description rendezvous 2" />
+		<property name="moment" value="2018/06/30 20:30" />
+		<property name="picture" value="picture4.png" />
+		<property name="locationLatitude" value="20.5" />
+		<property name="locationLongitude" value="70.0" />
+		<property name="announcements">
+			<list>
+				<ref bean="announcement2" />
+			</list>
+		</property>
+
+		<property name="questions">
+			<list>
+				<ref bean="question2" />
+			</list>
+		</property>
+
+		<property name="rendezvouses">
+			<list>
+			</list>
+		</property>
+
+		<property name="rsvps">
+			<list>
+				<ref bean="rsvp2" />
+			</list>
+		</property>
+
+		<property name="comments">
+			<list>
+				<ref bean="comment2" />
+			</list>
+		</property>
+		<property name="user" ref="user2" />
+		<property name="attendants">
+			<list>
 				<ref bean="user2" />
 			</list>
 		</property>
 	</bean>
+
+
+		<!--  RSVP -->
+	<bean id="rspv1" class="domain.RSVP">
+		<property name="rendezvous" ref="rendezvous1" />
+		<property name="user" ref="user1" />
+	</bean>
+	
+	<bean id="rspv2" class="domain.RSVP">
+		<property name="rendezvous" ref="rendezvous2" />
+		<property name="user" ref="user2" />
+	</bean>
+
 
 	<!-- Administrator -->
 	<bean id="administrator1" class="domain.Administrator">
@@ -141,13 +198,50 @@
 
 		<property name="rsvps">
 			<list>
-				<ref bean="rsvp2" />
+				<ref bean="rsvp1" />
 			</list>
 		</property>
 
 		<property name="comments">
 			<list>
 				<ref bean="comment1" />
+			</list>
+		</property>
+	</bean>
+	
+	
+	<bean id="user2" class="domain.User">
+		<property name="name" value="Pedro" />
+		<property name="surname" value="Ruiz Penegordo" />
+		<property name="postalAddress" value="45100" />
+		<property name="phoneNumber" value="636456111" />
+		<property name="email" value="perpe@gmail.com" />
+		<property name="questions">
+			<list>
+				<ref bean="question2" />
+			</list>
+		</property>
+		<property name="replys">
+			<list>
+				<ref bean="reply2" />
+			</list>
+		</property>
+
+		<property name="rendezvouses">
+			<list>
+				<ref bean="rendezvous2" />
+			</list>
+		</property>
+
+		<property name="rsvps">
+			<list>
+				<ref bean="rsvp2" />
+			</list>
+		</property>
+
+		<property name="comments">
+			<list>
+				<ref bean="comment2" />
 			</list>
 		</property>
 	</bean>
@@ -165,11 +259,31 @@
 		</property>
 	</bean>
 	
-
+	<bean id="comment2" class="domain.Comment">
+		<property name="text" value="Comentario 2" />
+		<property name="picture" value="picture2.png" />
+		<property name="moment" value="2018/05/15 14:00" />
+		<property name="replys">
+			<list>
+				<ref bean="reply2" />
+			</list>
+		</property>
+	</bean>
+	
+	
+	<!--  Replies -->
+	<bean id="reply1" class="domain.Reply">
+		<property name="text" value="No me parece correcto" />
+		<property name="moment" value="2018/05/26 15:30" />
+	</bean>
+	
+	<bean id="reply2" class="domain.Reply">
+		<property name="text" value="Ok" />
+		<property name="moment" value="2018/05/15 19:30" />
+	</bean>
 	
 	
 	
-
 <!--  Question -->
 	<bean id="question1" class="domain.Question">
 		<property name="question" value="¿Qué te parece el fútbol?" />
@@ -178,25 +292,33 @@
 				<value>Me encanta</value>
 			</list>
 		</property>
+		<property name="creator" ref="user1" />
+		<property name="answerers">
+			<list>
+				<ref bean="user2" />
+			</list>
+			</property>
+		<property name="rendezvous" ref="rendezvous1" />
+		</bean>
+		
+		
+		<bean id="question2" class="domain.Question">
+		<property name="question" value="¿Te gusta Belén Esteban?" />
+		<property name="answers">
+			<list>
+				<value>La adoro</value>
+			</list>
+		</property>
 		<property name="creator" ref="user2" />
 		<property name="answerers">
 			<list>
 				<ref bean="user1" />
 			</list>
 			</property>
-		<property name="rendezvous" ref="rendezvous1" />
+		<property name="rendezvous" ref="rendezvous2" />
 		</bean>
 		
-		<!--  Reply -->
-		<bean id="reply1" class="domain.Reply">
-		<property name="text" value="No me parece correcto" />
-		<property name="moment" value="2018/03/23" />
-		</bean>
-		<!--  RSVP -->
-		<bean id="rspv1" class="domain.RSVP">
-		<property name="rendezvous" ref="rendezvous1" />
-		<property name="user" ref="user1" />
-		</bean>
+		
 
 		
 <!-- Announcements -->

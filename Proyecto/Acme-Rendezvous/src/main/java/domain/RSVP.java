@@ -1,3 +1,4 @@
+
 package domain;
 
 import javax.persistence.Access;
@@ -10,12 +11,13 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Access(AccessType.PROPERTY)
 public class RSVP extends DomainEntity {
-	
+
 	//Relaciones
-	
-	private User user;
-	private Rendezvous rendezvous;	
-	
+
+	private User		user;
+	private Rendezvous	rendezvous;
+
+
 	//GetterSetters Relaciones
 	@Valid
 	@NotNull
@@ -23,20 +25,19 @@ public class RSVP extends DomainEntity {
 	public User getUser() {
 		return this.user;
 	}
-	
+
 	public void setUser(User user) {
-		this.user=user;
+		this.user = user;
 	}
-	
-	
+
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)
 	public Rendezvous getRendezvous() {
 		return this.rendezvous;
 	}
-	
-	public void setRendevouz(Rendezvous rendezvous) {
-		this.rendezvous=rendezvous;
+
+	public void setRendezvous(Rendezvous rendezvous) {
+		this.rendezvous = rendezvous;
 	}
 }
