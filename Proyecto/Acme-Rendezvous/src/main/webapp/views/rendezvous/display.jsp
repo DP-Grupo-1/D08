@@ -79,9 +79,20 @@
  			<spring:message code="rendezvous.comments" />
  		</a>	
     </display:column>
+    
+    <security:authorize access="hasRole('USER')">
+	<jstl:if test="${hasUserRSVPd==false}">
+		<spring:message code="rendezvous.rsvp.attend" var="attendHeader" />
+		<display:column title="${attendHeader}">
+			<a href="rsvp/user/create.do?rendezvousId=${row.id}"><spring:message
+					code="rendezvous.rsvp.attend" /></a>
+		</display:column>
+	</jstl:if>
+    </security:authorize>
 	
 </display:table>
 
+<security:authorize access="hasRole('USER')">
 <display:column>
   	<a href="rendezvous/attend.do?rendezvousId=${row.id}">
 	  	<spring:message code="rendezvous.attend" />
@@ -90,8 +101,8 @@
   	<a href="rendezvous/noAttend.do?rsvpId=${id}">
 	  	<spring:message code="recipe.noAttend" />
 	</a>	
-	 	
 </display:column>
+</security:authorize> 
 
 <!-- Action links -->
 
@@ -104,25 +115,6 @@
    	</jstl:if>
    </display:column>
 </security:authorize> 
-
-<!-- 
-<security:authorize access="hasRole('USER')">
-		<display:column>
-			<jstl:choose>
-				<jstl:when test="${enrolled}">
-					<a href="survivalClass/explorer/disenroll.do?survivalClassId=${row.id}" 
-					   onclick="javascript: return confirm('<spring:message code="survivalClass.confirm.disenroll" />')">
-						<spring:message code="survivalClass.disenroll" />
-					</a>					
-				</jstl:when>
-				<jstl:otherwise>
-					<a href="survivalClass/explorer/enroll.do?survivalClassId=${row.id}">
-					    <spring:message code="survivalClass.enroll" />
-					</a>
-				</jstl:otherwise>
-			</jstl:choose>
-		</display:column>
-	</security:authorize>       -->
 
 <!-- 									Announcements											-->
 <!-- 

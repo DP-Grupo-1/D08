@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import services.RSVPService;
 import services.RendezvousService;
 import services.UserService;
+import domain.RSVP;
 import domain.Rendezvous;
 import domain.User;
 
@@ -72,10 +73,10 @@ public class RendezvousController extends AbstractController {
 		return result;
 	}
 
-	//Attends ------------------------------------------------------------
+	//Attend ------------------------------------------------------------
 
 	@RequestMapping(value = "/attend", method = RequestMethod.GET)
-	public ModelAndView like(@RequestParam final int rendezvousId, final RedirectAttributes redirectAttrs) {
+	public ModelAndView attend(@RequestParam final int rendezvousId, final RedirectAttributes redirectAttrs) {
 		ModelAndView result;
 
 		try {
@@ -88,6 +89,29 @@ public class RendezvousController extends AbstractController {
 		} catch (final Throwable oops) {
 			System.out.println(oops.getLocalizedMessage());
 			System.out.println(oops.getMessage());
+			redirectAttrs.addFlashAttribute("message", "rendezvous.commit.error");
+			redirectAttrs.addFlashAttribute("msgType", "danger");
+		}
+
+		result = new ModelAndView("redirect:/rendezvous/display.do");
+
+		return result;
+	}
+
+	@RequestMapping(value = "/noAttend", method = RequestMethod.GET)
+	public ModelAndView noAttend(@RequestParam final int rsvpId, final RedirectAttributes redirectAttrs) {
+		ModelAndView result;
+
+		try {
+			final RSVP rsvp = this.rsvpService.findOne(rsvpId);
+			final User user = this.userService.findByPrincipal();
+			Assert.notNull(user);
+			this.rsvpService.delete(rsvp);
+
+			redirectAttrs.addFlashAttribute("message", "rendezvous.commit.ok");
+			redirectAttrs.addFlashAttribute("msgType", "success");
+		} catch (final Throwable oops) {
+
 			redirectAttrs.addFlashAttribute("message", "rendezvous.commit.error");
 			redirectAttrs.addFlashAttribute("msgType", "danger");
 		}
