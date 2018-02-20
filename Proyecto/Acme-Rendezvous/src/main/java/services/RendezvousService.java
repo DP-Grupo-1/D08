@@ -101,10 +101,13 @@ public class RendezvousService {
 		final Administrator admin = this.administratorService.findByPrincipal();
 		Assert.notNull(admin);
 
-		this.findRendezvousParent(rendezvous.getId()).getRendezvouses().remove(rendezvous);
+		final Collection<Rendezvous> rendezvouses = this.findRendezvousParents(rendezvous.getId());
+		for (final Rendezvous r : rendezvouses)
+			r.getRendezvouses().remove(rendezvous);
+
 		final Collection<RSVP> rsvps = this.findRSVPs(rendezvous.getId());
-		for (final RSVP r : rsvps)
-			this.rsvpService.delete(r);
+		for (final RSVP rsvp : rsvps)
+			this.rsvpService.delete(rsvp);
 
 		this.rendezvousRepository.delete(rendezvous);
 	}
@@ -167,8 +170,8 @@ public class RendezvousService {
 		return result;
 	}
 
-	private Rendezvous findRendezvousParent(final int id) {
-		final Rendezvous result = this.rendezvousRepository.findRendezvousParent(id);
+	private Collection<Rendezvous> findRendezvousParents(final int id) {
+		final Collection<Rendezvous> result = this.rendezvousRepository.findRendezvousParents(id);
 		return result;
 	}
 

@@ -5,19 +5,15 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import services.RSVPService;
 import services.RendezvousService;
 import services.UserService;
-import domain.RSVP;
 import domain.Rendezvous;
-import domain.User;
 
 @Controller
 @RequestMapping("/rendezvous")
@@ -66,57 +62,11 @@ public class RendezvousController extends AbstractController {
 		}
 
 		rendezvous = this.rendezvousService.findOne(rendezvousId);
+		final Collection<Rendezvous> rendezvouses = this.rendezvousService.findAll();
 
 		result.addObject("rendezvous", rendezvous);
+		result.addObject("rendezvouses", rendezvouses);
 		result.addObject("requestURI", "rendezvous/display.do");
-
-		return result;
-	}
-
-	//Attend ------------------------------------------------------------
-
-	@RequestMapping(value = "/attend", method = RequestMethod.GET)
-	public ModelAndView attend(@RequestParam final int rendezvousId, final RedirectAttributes redirectAttrs) {
-		ModelAndView result;
-
-		try {
-			final User user = this.userService.findByPrincipal();
-			Assert.notNull(user);
-			this.rsvpService.create(rendezvousId);
-
-			redirectAttrs.addFlashAttribute("message", "rendezvous.commit.ok");
-			redirectAttrs.addFlashAttribute("msgType", "success");
-		} catch (final Throwable oops) {
-			System.out.println(oops.getLocalizedMessage());
-			System.out.println(oops.getMessage());
-			redirectAttrs.addFlashAttribute("message", "rendezvous.commit.error");
-			redirectAttrs.addFlashAttribute("msgType", "danger");
-		}
-
-		result = new ModelAndView("redirect:/rendezvous/display.do");
-
-		return result;
-	}
-
-	@RequestMapping(value = "/noAttend", method = RequestMethod.GET)
-	public ModelAndView noAttend(@RequestParam final int rsvpId, final RedirectAttributes redirectAttrs) {
-		ModelAndView result;
-
-		try {
-			final RSVP rsvp = this.rsvpService.findOne(rsvpId);
-			final User user = this.userService.findByPrincipal();
-			Assert.notNull(user);
-			this.rsvpService.delete(rsvp);
-
-			redirectAttrs.addFlashAttribute("message", "rendezvous.commit.ok");
-			redirectAttrs.addFlashAttribute("msgType", "success");
-		} catch (final Throwable oops) {
-
-			redirectAttrs.addFlashAttribute("message", "rendezvous.commit.error");
-			redirectAttrs.addFlashAttribute("msgType", "danger");
-		}
-
-		result = new ModelAndView("redirect:/rendezvous/display.do");
 
 		return result;
 	}

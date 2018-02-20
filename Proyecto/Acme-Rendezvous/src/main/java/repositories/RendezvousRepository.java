@@ -54,7 +54,7 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous, Integer>
 	Collection<Rendezvous> above75AverageOfAnnouncementsPerRendezvous();
 
 	@Query("select r1 from Rendezvous r1 join r1.rendezvouses r2 where r2.id = ?1")
-	Rendezvous findRendezvousParent(int rendezvousId);
+	Collection<Rendezvous> findRendezvousParents(int rendezvousId);
 
 	@Query("select r1 from RSVP r1 join r1.rendezvouses r2 where r2.id = ?1")
 	Collection<RSVP> findRSVPs(int rendezvousId);

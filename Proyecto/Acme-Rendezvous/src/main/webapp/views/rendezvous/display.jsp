@@ -116,6 +116,21 @@
    </display:column>
 </security:authorize> 
 
+<security:authorize access="hasRole('USER')">
+<jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
+    <spring:message code="rendezvous.name" var="rendezvousName" />
+	<form:label path="rendezvous">
+		<spring:message code="rendezvous.rendezvous" />:
+	</form:label>
+	<form:select id="rendezvouses" path="rendezvous">
+		<form:option value="0" label="----" />		
+		<form:options items="${rendezvouses}" itemValue="id" itemLabel="${rendezvousName}" />
+	</form:select>
+	<form:errors cssClass="error" path="rendezvous" />
+	<br />
+</jstl:if>
+</security:authorize>
+
 <!-- 									Announcements											-->
 <!-- 
 <h1>Announcements</h1>
@@ -146,8 +161,8 @@
 </display:table>
 -->
 
-<!-- 									Rendezvouses											-->
-<h1>Rendezvouses</h1>
+<!-- 							 Rendezvouses linked										-->
+<h1>Rendezvouses linked</h1>
 <display:table pagesize="5" class="displaytag" keepStatus="true"
 	name="rendezvous.stories" requestURI="${requestURI}" id="row">
 	
@@ -189,7 +204,17 @@
 			
 	<spring:message code="rendezvous.flag" var="rendezvousFlagHeader" />
 	<display:column property="flag" title="${rendezvousFlagHeader}" sortable="true" />
-
+	
+	<security:authorize access="hasRole('USER')">
+    <display:column>
+  	<jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
+	     <a href="rendezvous/user/deleteLink.do?rendezvousId=${row.id}">
+	       <spring:message code="rendezvous.deleteLink" />
+	     </a>	
+   	</jstl:if>
+    </display:column>
+    </security:authorize> 
+  
 </display:table>
 
 </jstl:when>
