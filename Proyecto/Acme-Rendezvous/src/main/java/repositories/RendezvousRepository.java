@@ -50,7 +50,7 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous, Integer>
 
 	//Requisito 17.2 punto 2: Las reuniones cuyo número de anuncios está por encima del 75% 
 	//de la media del número de anuncios por reunión.
-	@Query("select r from Rendezvous r where avg(r.announcements.size)>0.75")
+	@Query("select r from Rendezvous r where r.announcements.size > (0.75*avg(r.announcements.size));")
 	Collection<Rendezvous> above75AverageOfAnnouncementsPerRendezvous();
 
 	@Query("select r1 from Rendezvous r1 join r1.rendezvouses r2 where r2.id = ?1")
