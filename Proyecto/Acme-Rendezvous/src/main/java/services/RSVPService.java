@@ -41,11 +41,27 @@ public class RSVPService{
 		final Rendezvous rendezvous = rendezvousService.findOne(rendezvousId);
 		User user = this.userService.findByPrincipal();
 		res.setUser(user);
-		res.setRendevouz(rendezvous);
+		res.setRendezvous(rendezvous);
 		
 		return res;
 	}
 	
+	public RSVP save(RSVP rsvp) {
+		Assert.notNull(rsvp);
+		RSVP res;
+		final RSVP aux = rsvp;
+		
+		//Iniciaciones
+		User user = userService.findByPrincipal();
+		Assert.notNull(user);
+		aux.setUser(user);
+		Rendezvous rendezvous = rendezvousService.findOne(aux.getRendezvous().getId());
+		aux.setRendezvous(rendezvous);
+		
+		res= this.RSVPRepository.save(aux);
+		
+		return res;
+	}
 
 	public void delete(RSVP rsvp) {
 
