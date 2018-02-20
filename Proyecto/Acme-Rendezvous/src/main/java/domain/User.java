@@ -15,23 +15,12 @@ import javax.validation.constraints.NotNull;
 public class User extends Actor {
 
 	//Relationships-----------------------------------------------------------
-	private Collection<Question>	questions;
-	private Collection<Reply>		replies;
-	private Collection<Comment>		comments;
 
-	private Collection<RSVP>		rsvps;
+	private Collection<Reply>	replies;
+	private Collection<Comment>	comments;
 
+	private Collection<RSVP>	rsvps;
 
-	@Valid
-	@OneToMany
-	@NotNull
-	public Collection<Question> getQuestions() {
-		return this.questions;
-	}
-
-	public void setQuestions(final Collection<Question> questions) {
-		this.questions = questions;
-	}
 
 	@OneToMany
 	public Collection<Reply> getReplies() {

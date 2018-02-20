@@ -14,7 +14,6 @@ import repositories.UserRepository;
 import security.LoginService;
 import security.UserAccount;
 import domain.Comment;
-import domain.Question;
 import domain.RSVP;
 import domain.User;
 
@@ -30,10 +29,8 @@ public class UserService {
 	//CRUD methods-------------------------------------------------------
 	public User create() {
 		final User res = new User();
-		final Collection<Question> questions = new ArrayList<>();
 		final Collection<Comment> comments = new ArrayList<>();
 		final Collection<RSVP> rsvps = new ArrayList<>();
-		res.setQuestions(questions);
 		res.setComments(comments);
 		res.setRsvps(rsvps);
 		return res;
@@ -76,5 +73,18 @@ public class UserService {
 		Assert.notNull(res);
 		return res;
 
+	}
+	public Boolean hasUserRSVP(final Integer rendezvousId) {
+		Boolean res = false;
+		final User logged = this.findByPrincipal();
+
+		Assert.notNull(logged);
+		final Integer userId = logged.getId();
+		final Collection<RSVP> rsvps = this.userRepository.hasUserRSVP(userId);
+
+		for (final RSVP r : rsvps)
+			if (r.getRendezvous().getId() == rendezvousId)
+				res = true;
+		return res;
 	}
 }
