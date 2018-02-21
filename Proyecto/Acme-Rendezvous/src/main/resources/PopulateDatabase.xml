@@ -178,10 +178,7 @@
 		<property name="phoneNumber" value="636456111" />
 		<property name="email" value="perpe@gmail.com" />
 		<property name="userAccount" ref="userAccount3" />
-<<<<<<< HEAD
 
-=======
->>>>>>> 6ca36bcb6c39306a54b3f9239de03094014a376f
 		<property name="replies">
 			<list>
 				<ref bean="reply2" />
