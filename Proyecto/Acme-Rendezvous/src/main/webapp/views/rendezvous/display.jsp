@@ -22,7 +22,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <jstl:choose> 
-<jstl:when test="${rendezvous.adultOnly == false || isAuthenticated() && user.age>=18}">
+<jstl:when test="${rendezvous.adultOnly == false || user.isAuthenticated() && user.age>=18}">
 
 <!-- 									Rendezvous											-->
 <h1>Rendezvous</h1>
@@ -139,7 +139,7 @@
 </security:authorize>
 
 <!-- 									Announcements											-->
-<!-- 
+
 <h1>Announcements</h1>
 <display:table pagesize="5" class="displaytag" keepStatus="true"
 	name="rendezvous.announcements" requestURI="${requestURI}" id="row">
@@ -166,7 +166,7 @@
 	</display:column>
 	
 </display:table>
--->
+
 
 <!-- 							 Rendezvouses linked										-->
 <h1>Rendezvouses linked</h1>

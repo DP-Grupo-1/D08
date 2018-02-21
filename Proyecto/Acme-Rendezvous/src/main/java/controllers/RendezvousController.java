@@ -56,7 +56,7 @@ public class RendezvousController extends AbstractController {
 		Rendezvous rendezvous;
 		result = new ModelAndView("rendezvous/display");
 		try {
-			final Boolean hasUserRSVPd = this.userService.hasUserRSVPd(rendezvousId);
+			final Boolean hasUserRSVPd = this.userService.hasUserRSVP(rendezvousId);
 			result.addObject("hasUserRSVPd", hasUserRSVPd);
 		} catch (final Throwable oops) {
 		}
