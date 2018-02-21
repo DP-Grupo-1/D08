@@ -15,12 +15,23 @@ import javax.validation.constraints.NotNull;
 public class User extends Actor {
 
 	//Relationships-----------------------------------------------------------
+<<<<<<< HEAD
 	private Collection<Reply>	replies;
 	private Collection<Comment>	comments;
 
 	private Collection<RSVP>	rsvps;
+=======
 
+	private Collection<Reply>	replies;
+	private Collection<Comment>	comments;
+>>>>>>> 6ca36bcb6c39306a54b3f9239de03094014a376f
 
+	private Collection<RSVP>	rsvps;
+
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6ca36bcb6c39306a54b3f9239de03094014a376f
 	@OneToMany
 	public Collection<Reply> getReplies() {
 		return this.replies;
