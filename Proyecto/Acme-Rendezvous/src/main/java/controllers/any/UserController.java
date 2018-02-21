@@ -28,6 +28,7 @@ public class UserController {
 		ModelAndView res;
 		final Collection<User> users = this.userService.findAll();
 		res = new ModelAndView("user/list");
+		res.addObject("requestURI", "user/list.do");
 		res.addObject("users", users);
 		return res;
 	}
