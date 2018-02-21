@@ -3,9 +3,13 @@ package controllers.any;
 
 import java.util.Collection;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,15 +37,7 @@ public class UserController {
 		res.addObject("users", users);
 		return res;
 	}
-	//Create-----------------------------------------------------------------
-	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public ModelAndView create() {
-		ModelAndView res;
-		final User user = this.userService.create();
-		res = new ModelAndView("user/register");
-		res.addObject(user);
-		return res;
-	}
+
 	//Display-------------------------------------------------------------------
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView display(@RequestParam final int userId) {
@@ -53,33 +49,54 @@ public class UserController {
 		res.addObject("requestURI", "user/display.do");
 		return res;
 	}
+	//Create-----------------------------------------------------------------
+	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	public ModelAndView create() {
+		ModelAndView res;
+		final User user = this.userService.create();
+		res = this.createEditModelAndView(user);
 
+		return res;
+	}
 	//Edit----------------------------------------------------------------------------
-	//	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	//	public ModelAndView edit() {
-	//		final ModelAndView res;
-	//		final User user = this.userService.findByPrincipal();
-	//		Assert.notNull(user);
-	//		res = this.createEditModelAndView(user);
-	//		return res;
-	//	}
-	//
-	//	private ModelAndView createEditModelAndView(final User user) {
-	//		ModelAndView result;
-	//
-	//		result = this.createEditModelAndView(user, null);
-	//
-	//		return result;
-	//	}
-	//
-	//	private ModelAndView createEditModelAndView(final User user, final String message) {
-	//		ModelAndView result;
-	//
-	//		result = new ModelAndView("user/edit");
-	//		result.addObject("user", user);
-	//		result.addObject("message", message);
-	//		result.addObject("requestURI", "user/edit.do");
-	//
-	//		return result;
-	//	}
+	@RequestMapping(value = "/register", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(@Valid final User user, final BindingResult binding) {
+		Assert.notNull(user);
+		ModelAndView res;
+		if (binding.hasErrors()) {
+			System.out.println(binding.getAllErrors());
+			res = this.createEditModelAndView(user);
+		} else
+			try {
+				Md5PasswordEncoder encoder;
+				String password;
+
+				encoder = new Md5PasswordEncoder();
+				password = encoder.encodePassword(user.getUserAccount().getPassword(), null);
+				user.getUserAccount().setPassword(password);
+				this.userService.save(user);
+				res = new ModelAndView("redirect:../welcome/index.do");
+			} catch (final Throwable error) {
+				res = this.createEditModelAndView(user, "user.error");
+			}
+		return res;
+
+	}
+	private ModelAndView createEditModelAndView(final User user) {
+		ModelAndView result;
+
+		result = this.createEditModelAndView(user, null);
+
+		return result;
+	}
+
+	private ModelAndView createEditModelAndView(final User user, final String message) {
+		ModelAndView result;
+
+		result = new ModelAndView("user/register");
+		result.addObject("user", user);
+		result.addObject("message", message);
+
+		return result;
+	}
 }

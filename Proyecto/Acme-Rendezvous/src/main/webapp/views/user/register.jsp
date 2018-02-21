@@ -19,19 +19,20 @@
 
 <form:hidden path="id"/>
 <form:hidden path="version"/>
-<form:hidden path="userAccount"/>
+<form:hidden path="userAccount.authorities"/>
+<form:hidden path="comments"/>
 <form:hidden path="rsvps"/>
 
 
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
-
-
+<acme:textbox code="user.username" path="userAccount.username"/>
+<acme:password code="user.password" path="userAccount.password"/>
 <acme:textbox code="user.name" path="name"/>
 <acme:textbox code="user.surname" path="surname"/>
 <acme:textbox code="user.postalAddress" path="postalAddress"/>
 <acme:textbox code="user.phoneNumber" path="phoneNumber"/>
 <acme:textbox code="user.email" path="email"/>
 
-<acme:submit name="save" code="user.save"/>
+   <input type="submit" name="save" value="<spring:message code='user.save' />" >
 <acme:cancel url="welcome/index.do" code="user.cancel"/>
 </form:form>
