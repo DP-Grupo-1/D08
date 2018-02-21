@@ -1,5 +1,5 @@
 <%--
- * edit.jsp
+ * register.jsp
  *
  * Copyright (C) 2017 Universidad de Sevilla
  * 
@@ -15,7 +15,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
-<form:form action="user/user/edit.do" modelAttribute="user">
+<form:form action="user/register.do" modelAttribute="user">
 
 <form:hidden path="id"/>
 <form:hidden path="version"/>

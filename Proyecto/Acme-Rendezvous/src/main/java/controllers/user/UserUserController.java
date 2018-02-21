@@ -44,8 +44,6 @@ public class UserUserController {
 		result = new ModelAndView("user/edit");
 		result.addObject("user", user);
 		result.addObject("message", message);
-		result.addObject("requestURI", "user/user/edit.do");
-
 		return result;
 	}
 }

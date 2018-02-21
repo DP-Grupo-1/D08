@@ -51,7 +51,7 @@
 		
 		<security:authorize access="isAnonymous()">	
 			<li><a href="security/login.do"><span><spring:message code="master.page.login" /></span></a></li>
-			<li><a href="user/edit.do"><span><spring:message code="master.page.register" /></span></a></li>
+			<li><a href="user/register.do"><span><spring:message code="master.page.register" /></span></a></li>
 		</security:authorize>
 		
 		
