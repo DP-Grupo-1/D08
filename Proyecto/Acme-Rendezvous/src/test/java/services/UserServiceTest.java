@@ -35,6 +35,36 @@ public class UserServiceTest {
 		Assert.isNull(user.getPhoneNumber());
 		Assert.isNull(user.getEmail());
 		Assert.notNull(user.getUserAccount());
+		Assert.notNull(user.getReplies());
+		Assert.notNull(user.getComments());
+		Assert.notNull(user.getRsvps());
+		System.out.println(user.getUserAccount());
+		System.out.println(user.getUserAccount().getAuthorities());
+		System.out.println(user.getReplies());
+		System.out.println(user.getRsvps());
+		System.out.println(user.getComments());
+
+	}
+
+	@Test
+	public void testSave() {
+		final User user = this.userService.create();
+		user.getUserAccount().setUsername("user33");
+		user.getUserAccount().setPassword("user33");
+		user.setName("Sample");
+		user.setSurname("Sample Sample");
+		user.setEmail("sample@gmail.com");
+		user.setPhoneNumber("632541789");
+		user.setPostalAddress(32165);
+		final User saved = this.userService.save(user);
+		Assert.isTrue(this.userService.findAll().contains(saved));
+		System.out.println(saved.getUserAccount().getUsername());
+		System.out.println(saved.getUserAccount().getPassword());
+		System.out.println(saved.getName());
+		System.out.println(saved.getSurname());
+		System.out.println(saved.getEmail());
+		System.out.println(saved.getPhoneNumber());
+		System.out.println(saved.getPostalAddress());
 
 	}
 }
