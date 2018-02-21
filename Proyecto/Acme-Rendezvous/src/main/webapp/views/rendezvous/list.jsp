@@ -51,7 +51,7 @@
    	    
    	    <spring:message code="rendezvous.creator" var="creatorHeader" />
         <display:column title="${creatorHeader}" sortable="true">
-        <a href="profile/personalData/list.do?actorId=<jstl:out value="${row.creator.id}"/>">
+        <a href="user/display.do?userId=<jstl:out value="${row.creator.id}"/>">
         <jstl:out value="${row.creator.name} ${row.creator.surname}"/></a>
         </display:column> 
    	    
