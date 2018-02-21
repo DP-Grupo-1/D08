@@ -18,7 +18,7 @@
 
 
 	
-	<h1><spring:message	code="user.display" /></h1>
+	
 	
 	
 			<b>	<spring:message	code="user.name" />: </b>
@@ -31,7 +31,7 @@
 			 <form:errors cssClass="error"/> 
 			 
 			 <b>	<spring:message	code="user.postalAddress" />: </b>
-				<jstl:out  value="${user.postalAdress}" /> <br>	
+				<jstl:out  value="${user.postalAddress}" /> <br>	
 			 <form:errors cssClass="error"/> 
 			 
 			 
