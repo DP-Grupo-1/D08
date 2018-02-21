@@ -55,15 +55,16 @@
         <jstl:out value="${row.creator.name} ${row.creator.surname}"/></a>
         </display:column> 
    	    
-   	    <display:column >
-		<a  href="user/list.do?rendezvousId=${row.id}"><spring:message code="rendezvous.attendants" /></a>
-        </display:column>
         	
 		<spring:message code="rendezvous.adultOnly" var="adultOnlyHeader" />
 		<display:column property="adultOnly" title="${adultOnlyHeader}" sortable="true" />
 			
 		<spring:message code="rendezvous.flag" var="flagHeader" />
 		<display:column property="flag" title="${flagHeader}" sortable="true" />
+		
+		 <display:column >
+			<a href="user/list.do?rendezvousId=${row.id}"><spring:message code="rendezvous.attendants" /></a>
+        </display:column>
 
 	</display:table>
 	
