@@ -46,7 +46,7 @@
 	<spring:message code="announcement.rendezvous" var="rendezvousHeader" />
 	<display:column title="${rendezvousHeader}">
 			<a href="rendezvous/display.do?announcementId=${row.id}">
-				${row.name}
+				${row.rendezvous.name}
 			</a>
 	</display:column>
 

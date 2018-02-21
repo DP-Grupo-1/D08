@@ -62,15 +62,11 @@
 		<property name="locationLongitude" value="47.3" />
 		<property name="flag" value="ACTIVE" />
 		
-		
-		
-		
 		<property name="rendezvouses">
 			<list>
 				<ref bean="rendezvous2" />
 			</list>
 		</property>
-
 		
 		<property name="comments">
 			<list>
@@ -94,15 +90,12 @@
 		<property name="locationLatitude" value="20.5" />
 		<property name="locationLongitude" value="70.0" />
 		<property name="flag" value="PASSED" />
-		
 			
-
 		<property name="rendezvouses">
 			<list>
 			</list>
 		</property>
 
-		
 		<property name="comments">
 			<list>
 				<ref bean="comment2" />
@@ -111,6 +104,7 @@
 		<property name="creator" ref="user2" />
 		<property name="attendants">
 			<list>
+			    <ref bean="user1" />
 				<ref bean="user2" />
 			</list>
 		</property>
@@ -126,6 +120,11 @@
 	<bean id="rsvp2" class="domain.RSVP">
 		<property name="rendezvous" ref="rendezvous2" />
 		<property name="user" ref="user2" />
+	</bean>
+	
+	<bean id="rsvp3" class="domain.RSVP">
+		<property name="rendezvous" ref="rendezvous2" />
+		<property name="user" ref="user1" />
 	</bean>
 
 
@@ -160,6 +159,7 @@
 		<property name="rsvps">
 			<list>
 				<ref bean="rsvp1" />
+				<ref bean="rsvp3" />
 			</list>
 		</property>
 
@@ -184,8 +184,6 @@
 				<ref bean="reply2" />
 			</list>
 		</property>
-
-		
 
 		<property name="rsvps">
 			<list>
@@ -266,14 +264,14 @@
 	</bean>
 
 
-<!-- Answer -->
+	<!-- Answer -->
 	<bean id="answer1" class="domain.Answer">
 		<property name="answer" value="Me encanta" />
 		<property name="answerer" ref="user2" />
 	</bean>
 
 
-<bean id="answer2" class="domain.Answer">
+	<bean id="answer2" class="domain.Answer">
 		<property name="answer" value="La adoro" />
 		<property name="answerer" ref="user1" />
 	</bean>
@@ -284,18 +282,21 @@
 		<property name="moment" value="2018/05/10 18:00" />
 		<property name="title" value="announcement1" />
 		<property name="description" value="description1" />
+		<property name="rendezvous" ref="rendezvous1" />
 	</bean>
 
 	<bean id="announcement2" class="domain.Announcement">
 		<property name="moment" value="2018/05/10 20:00" />
 		<property name="title" value="announcement2" />
 		<property name="description" value="description2" />
+		<property name="rendezvous" ref="rendezvous2" />
 	</bean>
 
 	<bean id="announcement3" class="domain.Announcement">
 		<property name="moment" value="2018/05/15 19:00" />
 		<property name="title" value="announcement3" />
 		<property name="description" value="description3" />
+		<property name="rendezvous" ref="rendezvous2" />
 	</bean>
 
 
