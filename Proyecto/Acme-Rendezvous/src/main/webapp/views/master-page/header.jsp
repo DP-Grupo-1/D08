@@ -58,9 +58,6 @@
 		<security:authorize access="isAuthenticated()">
 		<li><a href="#" class="parent"><span><spring:message code="master.page.profile" />(<security:authentication property="principal.username" />)</span></a>
 			<div><ul>
-				<li><a href="profile/action-1.do"><span><spring:message code="master.page.profile.action.1" /></span></a></li>
-				<li><a href="profile/action-2.do"><span><spring:message code="master.page.profile.action.2" /></span></a></li>
-				<li><a href="profile/action-3.do"><span><spring:message code="master.page.profile.action.3" /></span></a></li>
 				<li><a href="j_spring_security_logout"><span><spring:message code="master.page.logout" /></span></a></li>
 			</ul></div>
 		</li>
