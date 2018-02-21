@@ -22,6 +22,7 @@
 <form:hidden path="userAccount.authorities"/>
 <form:hidden path="comments"/>
 <form:hidden path="rsvps"/>
+<form:hidden path="replies"/>
 
 
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>

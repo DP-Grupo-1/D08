@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.UserRepository;
+import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Comment;
@@ -33,9 +34,19 @@ public class UserService {
 		final Collection<Comment> comments = new ArrayList<>();
 		final Collection<RSVP> rsvps = new ArrayList<>();
 		final Collection<Reply> replies = new ArrayList<>();
+		final UserAccount userAccount = new UserAccount();
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.USER);
+
+		Collection<Authority> authorities;
+
+		authorities = userAccount.getAuthorities();
+		authorities.add(authority);
+		userAccount.setAuthorities(authorities);
 		res.setComments(comments);
 		res.setRsvps(rsvps);
 		res.setReplies(replies);
+		res.setUserAccount(userAccount);
 		return res;
 	}
 	public User save(final User user) {
