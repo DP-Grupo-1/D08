@@ -88,4 +88,19 @@ public class RSVPService{
 		final RSVP res = this.RSVPRepository.findOne(rspvId);
 		return res;
 	}
+	//Añadimos RSVP. 
+	public void addRSVP(final int rendezvousId) {
+		Assert.notNull(rendezvousId);
+		final Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
+		//Buscamos el usuario logueado, y creamos un nuevo RSVP
+		final User user = this.userService.findByPrincipal();
+		final RSVP rsvp = this.create(rendezvousId);
+		final RSVP save = this.save(rsvp);
+		
+		//Añadimos el usuario a la lista de atendientes, y el rsvp a la lista de rsvps del usuario en cuestión.
+		Assert.notNull(user);
+		rendezvous.getAttendants().add(user);
+		user.getRsvps().add(save);
+
+	}
 }
