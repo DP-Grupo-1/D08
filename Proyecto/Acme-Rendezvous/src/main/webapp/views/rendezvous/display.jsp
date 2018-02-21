@@ -25,7 +25,7 @@
 <jstl:when test="${rendezvous.adultOnly == false || user.isAuthenticated() && user.age>=18}">
 
 <!-- 									Rendezvous											-->
-<h1>Rendezvous</h1>
+
 <display:table pagesize="5" class="displaytag" keepStatus="true"
 	name="rendezvous" requestURI="${requestURI}" id="row">
 
@@ -78,25 +78,11 @@
   		<a href="comment/list.do?rendezvousId=${row.id}">
  			<spring:message code="rendezvous.comments" />
  		</a>	
-    </display:column>
-    
-    <!--
-    <security:authorize access="hasRole('USER')">
-	<jstl:if test="${hasUserRSVPd==false}">
-		<spring:message code="rendezvous.rsvp.attend" var="attendHeader" />
-		<display:column title="${attendHeader}">
-			<a href="rsvp/user/create.do?rendezvousId=${row.id}"><spring:message
-					code="rendezvous.rsvp.attend" /></a>
-		</display:column>
-	</jstl:if>
-    </security:authorize>
-    -->
+    </display:column> 
 	
 </display:table>
 
 <security:authorize access="hasRole('USER')">
-<display:table>
-<display:column>
 <jstl:choose> 
 <jstl:when test="${hasUserRSVPd==false}">
   	<a href="rendezvous/attend.do?rendezvousId=${row.id}">
@@ -105,27 +91,30 @@
 </jstl:when>
 <jstl:otherwise>
   	<a href="rendezvous/noAttend.do?rsvpId=${id}">
-	  	<spring:message code="recipe.noAttend" />
+	  	<spring:message code="rendezvous.noAttend" />
 	</a>	
 </jstl:otherwise>
 </jstl:choose>
-</display:column>
-</display:table>
 </security:authorize> 
+<br>
 
 <!-- Action links -->
 
 <security:authorize access="hasRole('USER')">
-<display:table>
-  <display:column>
   	<jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
 	     <a href="rendezvous/user/edit.do?rendezvousId=${row.id}">
 	       <spring:message code="rendezvous.edit" />
 	     </a>	
    	</jstl:if>
-   </display:column>
-</display:table>   
-</security:authorize> 
+</security:authorize>
+<br>
+
+<security:authorize access="hasRole('ADMIN')">
+	     <a href="rendezvous/administrator/edit.do?rendezvousId=${row.id}">
+	       <spring:message code="rendezvous.edit" />
+	     </a>	
+</security:authorize>
+<br>
 
 <security:authorize access="hasRole('USER')">
 <jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">

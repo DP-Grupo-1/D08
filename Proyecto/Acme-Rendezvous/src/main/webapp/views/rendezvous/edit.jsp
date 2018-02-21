@@ -69,3 +69,50 @@
 
 </form:form>
 </security:authorize>
+
+<security:authorize access="hasRole('ADMIN')">
+<form:form action="rendezvous/user/edit.do" modelAttribute="rendezvous">
+
+    <form:hidden path="id" />
+	<form:hidden path="version" />
+	<form:hidden path="flag" />
+	<form:hidden path="creator" />
+	<form:hidden path="attendants" />
+	<form:hidden path="rendezvouses" />
+	<form:hidden path="comments" />
+	
+
+    <acme:textbox code="rendezvous.name" path="name"/>
+    
+    <acme:textbox code="rendezvous.description" path="description"/>
+    
+    <acme:textbox code="rendezvous.moment" path="moment"/>
+    
+    <acme:textbox code="rendezvous.picture" path="picture"/>
+    
+    <acme:textbox code="rendezvous.locationLatitude" path="locationLatitude"/>
+    
+    <acme:textbox code="rendezvous.locationLongitude" path="locationLongitude"/>
+	
+	<spring:message code="rendezvous.finalMode" />:
+	<input type="checkbox" name="finalMode"
+		value="<spring:message code="rendezvous.finalMode"/>" />
+	<br>
+	
+	<spring:message code="rendezvous.adultOnly" />:
+	<input type="checkbox" name="adultOnly"
+		value="<spring:message code="rendezvous.adultOnly"/>" />
+	<br>
+	
+	<input type="submit" name="save"
+		value="<spring:message code="rendezvous.save"/>" />&nbsp;
+	<input type="submit" name="delete"
+		value="<spring:message code="rendezvous.delete"/>" />&nbsp; 
+
+	<input type="button" name="cancel"
+		value="<spring:message code="rendezvous.cancel" />"
+		onclick="javascript: relativeRedir('rendezvous/user/list.do');" />
+	<br />
+
+</form:form>
+</security:authorize>

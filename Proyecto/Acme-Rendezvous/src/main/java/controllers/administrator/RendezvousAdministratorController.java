@@ -41,6 +41,22 @@ public class RendezvousAdministratorController extends AbstractController {
 		return result;
 	}
 
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(@Valid final Rendezvous rendezvous, final BindingResult binding) {
+		ModelAndView result;
+
+		if (binding.hasErrors())
+			result = this.createEditModelAndView(rendezvous);
+		else
+			try {
+				final Rendezvous saved = this.rendezvousService.save(rendezvous);
+				result = new ModelAndView("redirect:../display.do?rendezvousId=" + saved.getId());
+			} catch (final Throwable error) {
+				result = this.createEditModelAndView(rendezvous, "rendezvous.comit.error");
+			}
+		return result;
+	}
+
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
 	public ModelAndView delete(@Valid final Rendezvous rendezvous, final BindingResult binding) {
 
@@ -65,7 +81,7 @@ public class RendezvousAdministratorController extends AbstractController {
 	protected ModelAndView createEditModelAndView(final Rendezvous rendezvous, final String message) {
 		ModelAndView result;
 
-		result = new ModelAndView("rendezvous/user/edit");
+		result = new ModelAndView("rendezvous/administrator/edit");
 		result.addObject("rendezvous", rendezvous);
 		result.addObject("message", message);
 		return result;
