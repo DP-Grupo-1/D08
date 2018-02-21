@@ -32,8 +32,7 @@
 		<security:authorize access="hasRole('ADMIN')">
 		<li><a href="#" class="parent"><span><spring:message	code="master.page.administrator" /></span></a>
 			<div><ul>
-				<li><a href="administrator/action-1.do"><span><spring:message code="master.page.administrator.action.1" /></span></a>
-				<li><a href="administrator/action-2.do"><span><spring:message code="master.page.administrator.action.2" /></span></a></li>
+				<li><a href="dashboard/administrator/list.do"><span><spring:message code="master.page.administrator.action1" /></span></a></li>
 			</ul></div>
 		</li>
 		</security:authorize>
@@ -43,6 +42,7 @@
 				<div><ul>
 					<li><a href="rendezvous/user/list.do"><span><spring:message code="master.page.user.action1" /></span></a></li>
 					<li><a href="rsvp/user/list.do"><span><spring:message code="master.page.user.action2" /></span></a></li>
+					<li><a href="announcement/user/list.do"><span><spring:message code="master.page.user.action4" /></span></a></li>
 					<li><a href="question/user/list.do"><span><spring:message code="master.page.user.action3" /></span></a></li>
 				</ul></div>
 			</li>
