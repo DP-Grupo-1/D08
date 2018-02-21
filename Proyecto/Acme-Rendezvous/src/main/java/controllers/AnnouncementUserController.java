@@ -8,6 +8,7 @@
 
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.validation.Valid;
@@ -20,16 +21,29 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import repositories.AnnouncementRepository;
+import security.LoginService;
+import security.UserAccount;
 import services.AnnouncementService;
+import services.UserService;
 import domain.Announcement;
+import domain.RSVP;
+import domain.User;
 
 @Controller
 @RequestMapping("/announcement/user")
 public class AnnouncementUserController extends AbstractController {
 
+	//Repository ----------------------------------------------------------
+	@Autowired
+	private AnnouncementRepository	announcementRepository;
+
 	//Services ----------------------------------------------------------
 	@Autowired
-	private AnnouncementService	announcementService;
+	private AnnouncementService		announcementService;
+
+	@Autowired
+	private UserService				userService;
 
 
 	// Create ------------------------------------------------
@@ -45,6 +59,33 @@ public class AnnouncementUserController extends AbstractController {
 		return result;
 	}
 
+	//Listing -----------------------------------------------------------
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ModelAndView list() {
+		ModelAndView res;
+
+		UserAccount userAcc = LoginService.getPrincipal();
+		User u = this.userService.findByUserAccount(userAcc);
+
+		//Display a stream of announcements that have been posted to the rendezvouses that he or she's RSVPd
+		Collection<Integer> rendezvousesIds = new ArrayList<Integer>();
+
+		for (RSVP r : u.getRsvps()) {
+			rendezvousesIds.add(r.getRendezvous().getId());
+		}
+
+		Collection<Announcement> announcements = new ArrayList<Announcement>();
+
+		for (Integer i : rendezvousesIds) {
+			announcements.addAll(this.announcementRepository.findAnnouncementsOfMyRSVP(i));
+		}
+
+		res = new ModelAndView("announcement/list");
+		res.addObject("announcements", announcements);
+		res.addObject("requestURI", "announcement/user/list.do");
+
+		return res;
+	}
 	//Save --------------------------------------------------
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid final Announcement announcement, final BindingResult binding) {
@@ -76,20 +117,6 @@ public class AnnouncementUserController extends AbstractController {
 			result = this.createEditModelAndView(announcement, "announcement.commit.error");
 		}
 		return result;
-	}
-
-	//Listing -----------------------------------------------------------
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list() {
-		ModelAndView res;
-
-		Collection<Announcement> announcements = this.announcementService.findAll();
-
-		res = new ModelAndView("announcement/list");
-		res.addObject("announcements", announcements);
-		res.addObject("requestURI", "announcement/list.do");
-
-		return res;
 	}
 
 	protected ModelAndView createEditModelAndView(final Announcement announcement) {
