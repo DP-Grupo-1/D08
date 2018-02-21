@@ -236,3 +236,7 @@ div#menu li.back .left {
     left: 0;
     visibility: visible;
 }
+
+#logoLink img {
+	border-width: 0px;
+}

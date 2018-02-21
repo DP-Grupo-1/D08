@@ -17,7 +17,7 @@
 <script type="text/javascript" src="scripts/menu.js"></script>
 
 <div>
-	<img src="images/logo.png" alt="Acme-Rendezvous Co., Inc." />
+	<a href="" id="logoLink"><img src="images/logo.png" alt="Acme-Rendezvous Co., Inc." /></a>
 </div>
 
 <div id="menu">
