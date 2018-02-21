@@ -13,11 +13,10 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-<h1><spring:message	code="user.list" /></h1>
+
 
 <display:table name="users" id="row" class="displayTag"
 	requestURI="${requestURI}" keepStatus="true"
-	
 	pagesize="5" >
 	
 	<display:column>

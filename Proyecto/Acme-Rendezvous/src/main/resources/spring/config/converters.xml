@@ -29,7 +29,6 @@
 		<bean class="converters.AnnouncementToStringConverter" />
 		<bean class="converters.AnswerToStringConverter" />
 		<bean class="converters.CommentToStringConverter" />
-		<bean class="converters.FlagToStringConverter" />
 		<bean class="converters.QuestionToStringConverter" />
 		<bean class="converters.RendezvousToStringConverter" />
 		<bean class="converters.ReplyToStringConverter" />
@@ -42,7 +41,6 @@
 		<bean class="converters.StringToAnnouncementConverter" />
 		<bean class="converters.StringToAnswerConverter" />
 		<bean class="converters.StringToCommentConverter" /> 
-		<bean class="converters.StringToFlagConverter" />
 		<bean class="converters.StringToQuestionConverter" />
 		<bean class="converters.StringToRendezvousConverter" /> 
 		<bean class="converters.StringToReplyConverter" /> 
