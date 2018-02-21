@@ -15,7 +15,6 @@
 	<form:hidden path="answers" />
 	<form:hidden path="creator" />
 	<form:hidden path="rendezvous" />
-	<form:hidden path="answerers" />
 	
 	<acme:textbox code="question.question" path="question"/>
 	<br/>

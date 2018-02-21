@@ -13,10 +13,11 @@
 	name="question" requestURI="${requestURI}" id="row">
 	<security:authentication property="principal" var ="loggedactor"/>
 	
+	<jstl:forEach items="row.answers" var="answer">
+		<spring:message code="answer.answer" var="answerHeader" />
+		<display:column property="answer" title="${answerHeader}" sortable="true" />
 	
-	<jstl:forEach items="question.answers" var="answer">
-		<jstl:out value="${answer}"></jstl:out>
-		<br/>
+		<spring:message code="answer.answerer" var="answererHeader" />
+		<display:column property="answerer" title="${answererHeader}" sortable="true" />
 	</jstl:forEach>
-
 </display:table>

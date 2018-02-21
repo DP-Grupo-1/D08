@@ -55,17 +55,7 @@ public class QuestionService {
 			return question;
 		}
 		
-		public Collection<Question> saveQuestions(Collection<Question> questions){
-			Collection<Question> saved = new ArrayList<Question>();
-			for(Question question:questions){
-				Question savedQuestion = this.questionRepository.save(question);
-				saved.add(savedQuestion);
-			}
-			
-			return saved;
-		}
-		
-		public Question saveQuestion(Question question){
+		public Question save(Question question){
 			
 			Question saved = this.questionRepository.save(question);
 			return saved;
