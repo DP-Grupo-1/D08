@@ -8,17 +8,11 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<form:form action="${requestURI}" modelAttribute="questions">
-
-	<form:hidden path="id" />
-	<form:hidden path="version" />
-	<form:hidden path="creator" />
-	<form:hidden path="rendezvous" />
-	<form:hidden path="answerers" />
+<form:form action="${requestURI}" modelAttribute="answerQuestions">
 	
-	<jstl:forEach items="questions" var="currentQuestion">
+	<jstl:forEach items="answerQuestions.questions" var="currentQuestion" varStatus="current">
 		<jstl:out value="${currentQuestion.question}"></jstl:out>
-		<acme:textbox code="currentQuestion.answer" path="answer"/>
+		<acme:textbox code="currentQuestion.answers[${current.index}]" path="answers"/>
 		<br/>
 	</jstl:forEach>
 	<input type="submit" name="save"

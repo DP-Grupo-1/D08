@@ -1,5 +1,6 @@
 package controllers.user;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.validation.Valid;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
 import security.UserAccount;
+import services.AnswerService;
 import services.CommentService;
 import services.QuestionService;
 import services.RendezvousService;
@@ -24,6 +26,7 @@ import domain.Comment;
 import domain.Question;
 import domain.Rendezvous;
 import domain.User;
+import forms.AnswerQuestions;
 
 @Controller
 @RequestMapping("/question/user")
@@ -31,6 +34,9 @@ public class QuestionUserController extends AbstractController{
 	
 	@Autowired
 	private QuestionService			questionService;
+	
+	@Autowired
+	private AnswerService			answerService;
 	
 	@Autowired
 	private RendezvousService			rendezvousService;
@@ -72,7 +78,7 @@ public class QuestionUserController extends AbstractController{
 
 				try {
 					
-						this.questionService.saveQuestion(question);
+						this.questionService.save(question);
 						result = new ModelAndView("redirect:/welcome/index.do");
 					
 				}
@@ -83,6 +89,50 @@ public class QuestionUserController extends AbstractController{
 
 			return result;
 		}
+		
+		//Edit----------------------------------------------------------------------
+		@RequestMapping(value = "/answerQuestions", method = RequestMethod.POST, params = "answerQuestions")
+		public ModelAndView answerQuestions(@RequestParam final int rendezvousId, BindingResult binding) {
+
+			ModelAndView result;
+			Collection<Question> questions = questionService.findAllByrendezvous(rendezvousId);
+			Collection<String> answers = new ArrayList<String>();
+			for(int i=0;i<questions.size();i++){
+				answers.add(new String());
+			}
+			AnswerQuestions answerQuestions = new AnswerQuestions();
+			answerQuestions.setQuestions(questions);
+			answerQuestions.setAnswers(answers);
+
+			result = this.createEditModelAndViewAnswer(answerQuestions);
+			result.addObject("requestURI", "question/user/answerQuestions.do?rendezvousId=" + rendezvousId);
+
+			return result;
+		}
+
+		@RequestMapping(value = "/answerQuestions", method = RequestMethod.POST, params = "save")
+		public ModelAndView editQuantity(@Valid AnswerQuestions answerQuestions, BindingResult binding) {
+
+			ModelAndView result;
+
+			if (binding.hasErrors())
+				result = this.createEditModelAndViewAnswer(answerQuestions);
+			else
+
+				try {
+					
+						this.answerService.saveAll(answerQuestions.getAnswers(), answerQuestions.getQuestions());
+						result = new ModelAndView("redirect:/welcome/index.do");
+					
+				}
+
+				catch (final Throwable oops) {
+					result = this.createEditModelAndViewAnswer(answerQuestions, "question.comit.error");
+				}
+
+			return result;
+		}
+
 
 		protected ModelAndView createEditModelAndViewQuestion(final Question question) {
 			ModelAndView result;
@@ -99,51 +149,19 @@ public class QuestionUserController extends AbstractController{
 			result.addObject("message", messageCode);
 			return result;
 		}
-
 		
-		@RequestMapping(value = "/answerQuestions", method = RequestMethod.GET)
-		public ModelAndView answerQuestions(@RequestParam final int rendezvousId) {
-			final ModelAndView res;
-			final Collection<Question> questions = this.questionService.findAllByrendezvous(rendezvousId);
-			res = this.createEditModelAndViewQuestions(questions);
-			return res;
-		}
-
-		@RequestMapping(value = "/answerQuestions", method = RequestMethod.POST, params = "save")
-		public ModelAndView saveQuestions(@Valid final Collection<Question> questions, final BindingResult binding) {
-
+		protected ModelAndView createEditModelAndViewAnswer(final AnswerQuestions answerQuestions) {
 			ModelAndView result;
 
-			if (binding.hasErrors())
-				result = this.createEditModelAndViewQuestions(questions);
-			else
-
-				try {
-					
-						this.questionService.saveQuestions(questions);
-						result = new ModelAndView("redirect:/welcome/index.do");
-					
-				}
-
-				catch (final Throwable oops) {
-					result = this.createEditModelAndViewQuestions(questions, "question.comit.error");
-				}
-
+			result = this.createEditModelAndViewAnswer(answerQuestions, null);
 			return result;
 		}
 
-		protected ModelAndView createEditModelAndViewQuestions(final Collection<Question> questions) {
-			ModelAndView result;
-
-			result = this.createEditModelAndViewQuestions(questions, null);
-			return result;
-		}
-
-		protected ModelAndView createEditModelAndViewQuestions(final Collection<Question> questions, final String messageCode) {
+		protected ModelAndView createEditModelAndViewAnswer(final AnswerQuestions answerQuestions, final String messageCode) {
 			ModelAndView result;
 
 			result = new ModelAndView("question/user/answerQuestions");
-			result.addObject("questions", questions);
+			result.addObject("answerQuestions", answerQuestions);
 			result.addObject("message", messageCode);
 			return result;
 		}

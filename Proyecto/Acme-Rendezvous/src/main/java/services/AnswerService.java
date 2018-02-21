@@ -53,8 +53,18 @@ public class AnswerService {
 		final Collection<Answer> answers = question.getAnswers();
 		answers.add(answer);
 		question.setAnswers(answers);
-		this.questionService.saveQuestion(question);
+		this.questionService.save(question);
 		return saved;
+	}
+	
+	public void saveAll(final Collection<String> answers, final Collection<Question> questions) {
+		for(int i = 0;i < questions.size();i++){
+			Question question = (Question) questions.toArray()[i];
+			Answer created = this.create(question.getId());
+			String answer = (String) answers.toArray()[i];
+			created.setAnswer(answer);
+			this.save(created, question);
+		}
 	}
 
 //	public Question saveQuestion(final Question question) {
