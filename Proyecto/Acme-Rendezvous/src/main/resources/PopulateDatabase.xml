@@ -111,6 +111,7 @@
 		<property name="creator" ref="user2" />
 		<property name="attendants">
 			<list>
+			    <ref bean="user1" />
 				<ref bean="user2" />
 			</list>
 		</property>
@@ -126,6 +127,11 @@
 	<bean id="rsvp2" class="domain.RSVP">
 		<property name="rendezvous" ref="rendezvous2" />
 		<property name="user" ref="user2" />
+	</bean>
+	
+	<bean id="rsvp3" class="domain.RSVP">
+		<property name="rendezvous" ref="rendezvous2" />
+		<property name="user" ref="user1" />
 	</bean>
 
 
@@ -160,6 +166,7 @@
 		<property name="rsvps">
 			<list>
 				<ref bean="rsvp1" />
+				<ref bean="rsvp3" />
 			</list>
 		</property>
 

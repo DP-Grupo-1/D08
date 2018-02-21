@@ -144,15 +144,15 @@ public class RendezvousService {
 		return result;
 	}
 
-	public Double[] avgStddevRendezvousPerUser() {
-		final Double[] result = this.rendezvousRepository.avgStddevRendezvousPerUser();
-		return result;
-	}
-
-	public Double ratioUserWithRendezvous() {
-		final Double result = this.rendezvousRepository.ratioUserWithRendezvous();
-		return result;
-	}
+	//	public Double[] avgStddevRendezvousPerUser() {
+	//		final Double[] result = this.rendezvousRepository.avgStddevRendezvousPerUser();
+	//		return result;
+	//	}
+	//
+	//	public Double ratioUserWithRendezvous() {
+	//		final Double result = this.rendezvousRepository.ratioUserWithRendezvous();
+	//		return result;
+	//	}
 
 	public Double[] avgStddevUsersPerRendezvous() {
 		final Double[] result = this.rendezvousRepository.avgStddevUsersPerRendezvous();
@@ -164,14 +164,27 @@ public class RendezvousService {
 		return result;
 	}
 
-	public Collection<Rendezvous> top10RendezvousesByRSVPs() {
-		final Collection<Rendezvous> result;
-		result = this.rendezvousRepository.top10RendezvousesByRSVPs();
-		return result;
-	}
+	//	public Collection<Rendezvous> top10RendezvousesByRSVPs() {
+	//		final Collection<Rendezvous> result;
+	//		result = this.rendezvousRepository.top10RendezvousesByRSVPs();
+	//		return result;
+	//	}
+
+	//	private Collection<Rendezvous> above75AverageOfAnnouncementsPerRendezvous() {
+	//		final Collection<Rendezvous> result;
+	//		result = this.rendezvousRepository.above75AverageOfAnnouncementsPerRendezvous();
+	//		return result;
+	//	}
+
+	//	private Collection<Rendezvous> LinkedGreaterAveragePlus10() {
+	//		final Collection<Rendezvous> result; 
+	//		result = this.rendezvousRepository.linkedGreaterAveragePlus10();
+	//		return result;
+	//	}
 
 	private Collection<Rendezvous> findRendezvousParents(final int id) {
-		final Collection<Rendezvous> result = this.rendezvousRepository.findRendezvousParents(id);
+		final Collection<Rendezvous> result;
+		result = this.rendezvousRepository.findRendezvousParents(id);
 		return result;
 	}
 
