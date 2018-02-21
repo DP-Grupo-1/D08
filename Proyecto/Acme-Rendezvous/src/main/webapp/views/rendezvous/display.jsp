@@ -65,7 +65,7 @@
 	
 	<spring:message code="rendezvous.creator" var="creatorHeader" />
     <display:column title="${creatorHeader}" sortable="true">
-    <a href="profile/personalData/list.do?actorId=<jstl:out value="${row.creator.id}"/>">
+    <a href="user/display.do?userId=<jstl:out value="${row.creator.id}"/>">
     <jstl:out value="${row.creator.name} ${row.creator.surname}"/></a>
     </display:column> 
     
@@ -95,6 +95,7 @@
 </display:table>
 
 <security:authorize access="hasRole('USER')">
+<display:table>
 <display:column>
 <jstl:choose> 
 <jstl:when test="${hasUserRSVPd==false}">
@@ -109,11 +110,13 @@
 </jstl:otherwise>
 </jstl:choose>
 </display:column>
+</display:table>
 </security:authorize> 
 
 <!-- Action links -->
 
 <security:authorize access="hasRole('USER')">
+<display:table>
   <display:column>
   	<jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
 	     <a href="rendezvous/user/edit.do?rendezvousId=${row.id}">
@@ -121,6 +124,7 @@
 	     </a>	
    	</jstl:if>
    </display:column>
+</display:table>   
 </security:authorize> 
 
 <security:authorize access="hasRole('USER')">
@@ -137,35 +141,6 @@
 	<br />
 </jstl:if>
 </security:authorize>
-
-<!-- 									Announcements											-->
-
-<h1>Announcements</h1>
-<display:table pagesize="5" class="displaytag" keepStatus="true"
-	name="rendezvous.announcements" requestURI="${requestURI}" id="row">
-
-	<spring:message code="rendezvous.announcement.title" var="announcementTitleHeader" />
-	<display:column property="title" title="${announcementTitleHeader}"
-		sortable="true">
-	</display:column>
-
-	<spring:message code="rendezvous.announcement.description"
-		var="announcementDescriptionHeader" />
-	<display:column property="description"
-		title="${announcementDescriptionHeader}" sortable="true">
-	</display:column>
-
-	<spring:message code="rendezvous.announcement.price" var="announcementPriceHeader" />
-	<display:column property="price" title="${announcementPriceHeader}"
-		sortable="true">
-	</display:column>
-
-	<spring:message code="rendezvous.announcement.number" var="announcementNumberHeader" />
-	<display:column property="number" title="${announcementNumberHeader}"
-		sortable="true">
-	</display:column>
-	
-</display:table>
 
 
 <!-- 							 Rendezvouses linked										-->
@@ -198,7 +173,7 @@
 
 	<spring:message code="rendezvous.creator" var="rendezvousCreatorHeader" />
     <display:column title="${rendezvousCreatorHeader}" sortable="true">
-    <a href="profile/personalData/list.do?actorId=<jstl:out value="${row.creator.id}"/>">
+    <a href="profile/user/display.do?userId=<jstl:out value="${row.creator.id}"/>">
     <jstl:out value="${row.creator.name} ${row.creator.surname}"/></a>
     </display:column> 
    	    
