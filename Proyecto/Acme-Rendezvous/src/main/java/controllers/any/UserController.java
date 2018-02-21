@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.UserService;
@@ -29,6 +30,17 @@ public class UserController {
 		final Collection<User> users = this.userService.findAll();
 		res = new ModelAndView("user/list");
 		res.addObject("users", users);
+		return res;
+	}
+	//Display-------------------------------------------------------------------
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	public ModelAndView display(@RequestParam final int userId) {
+		Assert.notNull(userId);
+		ModelAndView res;
+		final User user = this.userService.findOne(userId);
+		res = new ModelAndView("user/display");
+		res.addObject("user", user);
+		res.addObject("requestURI", "user/display.do");
 		return res;
 	}
 
