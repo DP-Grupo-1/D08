@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.Assert;
 
 import domain.User;
 
@@ -28,6 +29,12 @@ public class UserServiceTest {
 	@Test
 	public void testCreate() {
 		final User user = this.userService.create();
+		Assert.isNull(user.getName());
+		Assert.isNull(user.getSurname());
+		Assert.isNull(user.getPostalAddress());
+		Assert.isNull(user.getPhoneNumber());
+		Assert.isNull(user.getEmail());
+		Assert.notNull(user.getUserAccount());
 
 	}
 }

@@ -23,6 +23,7 @@ public class User extends Actor {
 
 
 	@OneToMany
+	@NotNull
 	public Collection<Reply> getReplies() {
 		return this.replies;
 	}

@@ -15,6 +15,7 @@ import security.LoginService;
 import security.UserAccount;
 import domain.Comment;
 import domain.RSVP;
+import domain.Reply;
 import domain.User;
 
 @Service
@@ -31,8 +32,10 @@ public class UserService {
 		final User res = new User();
 		final Collection<Comment> comments = new ArrayList<>();
 		final Collection<RSVP> rsvps = new ArrayList<>();
+		final Collection<Reply> replies = new ArrayList<>();
 		res.setComments(comments);
 		res.setRsvps(rsvps);
+		res.setReplies(replies);
 		return res;
 	}
 	public User save(final User user) {
