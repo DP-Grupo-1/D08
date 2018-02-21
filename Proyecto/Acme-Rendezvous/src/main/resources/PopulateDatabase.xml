@@ -149,11 +149,6 @@
 		<property name="email" value="carfer@gmail.com" />
 		<property name="userAccount" ref="userAccount2" />
 	
-		<property name="questions">
-			<list>
-				<ref bean="question1" />
-			</list>
-		</property>
 		<property name="replies">
 			<list>
 				<ref bean="reply1" />
@@ -183,11 +178,7 @@
 		<property name="phoneNumber" value="636456111" />
 		<property name="email" value="perpe@gmail.com" />
 		<property name="userAccount" ref="userAccount3" />
-		<property name="questions">
-			<list>
-				<ref bean="question2" />
-			</list>
-		</property>
+
 		<property name="replies">
 			<list>
 				<ref bean="reply2" />

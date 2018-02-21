@@ -31,18 +31,31 @@
 		</li>
 		</security:authorize>
 		
-		<security:authorize access="hasRole('CUSTOMER')">
-		<li><a href="#" class="parent"><span><spring:message	code="master.page.customer" /></span></a>
-			<div><ul>
-				<li><a href="customer/action-1.do"><span><spring:message code="master.page.customer.action.1" /></span></a></li>
-				<li><a href="customer/action-2.do"><span><spring:message code="master.page.customer.action.2" /></span></a></li>
-			</ul></div>
-		</li>
+		<security:authorize access="hasRole('USER')">
+			<li><a href="#" class="parent"><span><spring:message code="master.page.user" /></span></a>
+				<div><ul>
+					<li><a href="rendezvous/user/list.do"><span><spring:message code="master.page.user.action1" /></span></a></li>
+					<li><a href="rsvp/user/list.do"><span><spring:message code="master.page.user.action2" /></span></a></li>
+					<li><a href="question/user/list.do"><span><spring:message code="master.page.user.action3" /></span></a></li>
+				</ul></div>
+			</li>
 		</security:authorize>
 		
+		
 		<security:authorize access="isAnonymous()">
-		<li><a href="security/login.do"><span><spring:message code="master.page.login" /></span></a></li>
+		
+			<li><a href="#" class="parent"><span><spring:message code="master.page.common" /></span></a>
+				<div><ul>
+					<li><a href="user/list.do"><span><spring:message code="master.page.common1" /></span></a></li>
+					<li><a href="rendezvous/list.do"><span><spring:message code="master.page.common2" /></span></a></li>
+					<li><a href="announcement/list.do"><span><spring:message code="master.page.common3" /></span></a></li>
+					<li><a href="j_spring_security_logout"><span><spring:message code="master.page.logout" /></span></a></li>
+				</ul></div>
+			</li>
+			
+			<li><a href="security/login.do"><span><spring:message code="master.page.login" /></span></a></li>
 		</security:authorize>
+		
 		
 		<security:authorize access="isAuthenticated()">
 		<li><a href="#" class="parent"><span><spring:message code="master.page.profile" />(<security:authentication property="principal.username" />)</span></a>
