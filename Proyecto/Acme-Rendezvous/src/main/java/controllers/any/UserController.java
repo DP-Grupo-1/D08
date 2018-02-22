@@ -35,27 +35,35 @@ public class UserController {
 
 
 	//List--------------------------------------------------------------------------
+	//	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	//	public ModelAndView list(@RequestParam(required = false) final Integer rendezvousId) {
+	//		ModelAndView res;
+	//		final Collection<User> users = this.userService.findAll();
+	//
+	//		res = new ModelAndView("user/list");
+	//
+	//		final Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
+	//		String id = "";
+	//		if (rendezvous != null) { NO ENTENDER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	//			id = rendezvousId.toString();
+	//			res.addObject("users", rendezvous.getAttendants());
+	//			res.addObject("rendezvousId", id);
+	//			res.addObject("uri", "user/list.do?rendezvousId=" + id);
+	//		} else {
+	//			res.addObject("requestURI", "user/list.do");
+	//			res.addObject("users", users);
+	//		}
+	//		return res;
+	//	}
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam(required = false) final Integer rendezvousId) {
+	public ModelAndView list() {
 		ModelAndView res;
 		final Collection<User> users = this.userService.findAll();
-
 		res = new ModelAndView("user/list");
-
-		final Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
-		String id = "";
-		if (rendezvous != null) {
-			id = rendezvousId.toString();
-			res.addObject("users", rendezvous.getAttendants());
-			res.addObject("rendezvousId", id);
-			res.addObject("uri", "user/list.do?rendezvousId=" + id);
-		} else {
-			res.addObject("requestURI", "user/list.do");
-			res.addObject("users", users);
-		}
+		res.addObject("users", users);
+		res.addObject("requestURI", "user/list.do");
 		return res;
 	}
-
 	//Display-------------------------------------------------------------------
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView display(@RequestParam final int userId) {

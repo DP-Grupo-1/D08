@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.Collection;
+
 import javax.transaction.Transactional;
 
 import org.junit.Test;
@@ -66,5 +68,10 @@ public class UserServiceTest {
 		System.out.println(saved.getPhoneNumber());
 		System.out.println(saved.getPostalAddress());
 
+	}
+	@Test
+	public void testFindAll() {
+		final Collection<User> users = this.userService.findAll();
+		System.out.println(users);
 	}
 }

@@ -15,7 +15,6 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Actor;
-import domain.Administrator;
 import domain.User;
 
 @Service
@@ -41,9 +40,9 @@ public class ActorService {
 		final List<Authority> authorities = (List<Authority>) userAccount.getAuthorities();
 
 		switch (authorities.get(0).getAuthority()) {
-		case Authority.ADMIN:
-			res = this.administratorService.save((Administrator) actor);
-			break;
+		//		case Authority.ADMIN:
+		//			res = this.administratorService.save((Administrator) actor);
+		//			break;
 		case Authority.USER:
 			res = this.userService.save((User) actor);
 			break;

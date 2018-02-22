@@ -25,11 +25,11 @@ public class AdministratorService {
 
 
 	//CRUD methods--------------------------------------------------------
-	public Administrator create() {
-		Administrator res;
-		res = new Administrator();
-		return res;
-	}
+	//	public Administrator create() {
+	//		Administrator res;
+	//		res = new Administrator();
+	//		return res;
+	//	}
 
 	public Administrator save(final Administrator administrator) {
 		Assert.notNull(administrator);
