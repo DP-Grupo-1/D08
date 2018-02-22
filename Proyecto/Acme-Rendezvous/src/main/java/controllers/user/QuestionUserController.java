@@ -52,14 +52,13 @@ public class QuestionUserController extends AbstractController{
 			question = this.questionService.create(rendezvousId);
 
 			result = this.createEditModelAndViewQuestion(question);
-
-			result.addObject("requestURI", "question/user/create.do?rendezvousId=" + rendezvousId);
+			result.addObject("requestURI", "question/user/edit.do?rendezvousId=" + rendezvousId);
 
 			return result;
 		}
 		
 		//Edit----------------------------------------------------------------------
-		@RequestMapping(value = "/editQuestion", method = RequestMethod.GET)
+		@RequestMapping(value = "/edit", method = RequestMethod.GET)
 		public ModelAndView editQuestion(@RequestParam final int questionId) {
 			final ModelAndView res;
 			final Question question = this.questionService.findOne(questionId);
@@ -67,7 +66,7 @@ public class QuestionUserController extends AbstractController{
 			return res;
 		}
 
-		@RequestMapping(value = "/editQuestion", method = RequestMethod.POST, params = "save")
+		@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 		public ModelAndView saveQuestion(@Valid final Question question, final BindingResult binding) {
 
 			ModelAndView result;
@@ -144,7 +143,7 @@ public class QuestionUserController extends AbstractController{
 		protected ModelAndView createEditModelAndViewQuestion(final Question question, final String messageCode) {
 			ModelAndView result;
 
-			result = new ModelAndView("question/editQuestion");
+			result = new ModelAndView("question/edit");
 			result.addObject("question", question);
 			result.addObject("message", messageCode);
 			return result;
