@@ -154,8 +154,6 @@
 			</list>
 		</property>
 
-		
-
 		<property name="rsvps">
 			<list>
 				<ref bean="rsvp1" />

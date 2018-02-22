@@ -116,7 +116,7 @@
 </security:authorize>
 <br>
 
-<security:authorize access="hasRole('USER')">
+<!--<security:authorize access="hasRole('USER')">
 <jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
     <spring:message code="rendezvous.name" var="rendezvousName" />
 	<form:label path="rendezvous">
@@ -129,7 +129,7 @@
 	<form:errors cssClass="error" path="rendezvous" />
 	<br />
 </jstl:if>
-</security:authorize>
+</security:authorize>-->
 
 
 <!-- 							 Rendezvouses linked										-->
