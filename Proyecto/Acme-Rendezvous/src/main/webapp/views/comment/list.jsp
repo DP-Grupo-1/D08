@@ -77,7 +77,6 @@
 
 </display:table>
 
-<<<<<<< HEAD
 <!-- Create -->
 <security:authorize access="hasRole('USER')">
 <jstl:if test="${hasUserRSVPd==true}">
@@ -93,6 +92,3 @@
 				code="category.edit.create" /></a>
 	</div>
 </security:authorize>  --%>
-=======
-
->>>>>>> 0e4c8501b2f7d7a04fb2c8871e4c77dd901b9c61
