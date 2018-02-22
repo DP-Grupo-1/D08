@@ -47,7 +47,7 @@
 	
 	<spring:message code="rendezvous.finalMode" />:
 	<input type="checkbox" name="finalMode"
-		value="<spring:message code="rendezvous.finalMode"/>" />
+		value="true" />
 	<br>
 	
 	<spring:message code="rendezvous.adultOnly" />:
