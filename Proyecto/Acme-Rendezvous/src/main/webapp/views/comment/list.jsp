@@ -55,29 +55,29 @@
 
 
 <!-- Display comment -->
-	<spring:message code="comment.display" var="nameHeader" />
-	<display:column title="${nameHeader}">
-			<a href="comment/display.do?commentId=${row.id}">
-				${row.text}
-			</a>
-	</display:column>
+<display:column >
+			<a href="comment/display.do?commentId=${row.id}"><spring:message code="comment.display" /></a>
+        </display:column>
 
 
 <!-- Replies -->
 	<spring:message code="comment.reply" var="nameHeader" />
 	<display:column title="${nameHeader}">
 			<a href="reply/list.do?commentId=${row.id}">
-				${row.text}
+				<spring:message code="comment.replies"/>
 			</a>
 	</display:column>
 	 
 
 	
-	
+	<a href="comment/display.do?commentId=${row.id}">
+				${row.text}
+			</a>
 
 
 </display:table>
 
+<<<<<<< HEAD
 <!-- Create -->
 <security:authorize access="hasRole('USER')">
 <jstl:if test="${hasUserRSVPd==true}">
@@ -93,3 +93,6 @@
 				code="category.edit.create" /></a>
 	</div>
 </security:authorize>  --%>
+=======
+
+>>>>>>> 0e4c8501b2f7d7a04fb2c8871e4c77dd901b9c61
