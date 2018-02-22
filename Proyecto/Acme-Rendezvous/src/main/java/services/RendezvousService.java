@@ -68,7 +68,7 @@ public class RendezvousService {
 		final User user = this.userService.findByPrincipal();
 		Assert.notNull(user);
 
-		Assert.isTrue(rendezvous.getFinalMode() == false);
+		//		Assert.isTrue(rendezvous.getFinalMode() == false);
 		Assert.isTrue(rendezvous.getFlag() != Flag.DELETED);
 
 		if (rendezvous.getId() == 0) {
@@ -81,6 +81,7 @@ public class RendezvousService {
 
 			this.findByCreatorId(user.getId()).add(result);
 		} else
+
 			result = this.rendezvousRepository.save(rendezvous);
 
 		return result;
