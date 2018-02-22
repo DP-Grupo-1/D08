@@ -111,7 +111,7 @@ public class QuestionUserController extends AbstractController{
 		}
 
 		@RequestMapping(value = "/answerQuestions", method = RequestMethod.POST, params = "save")
-		public ModelAndView editQuantity(@Valid AnswerQuestions answerQuestions, BindingResult binding) {
+		public ModelAndView answerQuestions(@Valid AnswerQuestions answerQuestions, BindingResult binding) {
 
 			ModelAndView result;
 
@@ -144,7 +144,7 @@ public class QuestionUserController extends AbstractController{
 		protected ModelAndView createEditModelAndViewQuestion(final Question question, final String messageCode) {
 			ModelAndView result;
 
-			result = new ModelAndView("question/user/editQuestion");
+			result = new ModelAndView("question/editQuestion");
 			result.addObject("question", question);
 			result.addObject("message", messageCode);
 			return result;
@@ -190,7 +190,7 @@ public class QuestionUserController extends AbstractController{
 			Question question = this.questionService.findOne(questionId);
 
 			result = new ModelAndView("question/answers");
-			result.addObject("question", question);
+			result.addObject("answers", question.getAnswers());
 			result.addObject("requestURI", "question/user/answers.do");
 
 			return result;

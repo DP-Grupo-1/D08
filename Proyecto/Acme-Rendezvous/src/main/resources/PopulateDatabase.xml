@@ -236,7 +236,7 @@
 
 	<!-- Question -->
 	<bean id="question1" class="domain.Question">
-		<property name="question" value="¿Qué te parece el fútbol?" />
+		<property name="questionToAnswer" value="¿Qué te parece el fútbol?" />
 		<property name="answers">
 			<list>
 				<ref bean="answer1" />
@@ -250,7 +250,7 @@
 
 
 	<bean id="question2" class="domain.Question">
-		<property name="question" value="¿Te gusta Belén Esteban?" />
+		<property name="questionToAnswer" value="¿Te gusta Belén Esteban?" />
 		<property name="answers">
 			<list>
 				<ref bean="answer2" />
@@ -264,13 +264,13 @@
 
 	<!-- Answer -->
 	<bean id="answer1" class="domain.Answer">
-		<property name="answer" value="Me encanta" />
+		<property name="written" value="Me encanta" />
 		<property name="answerer" ref="user2" />
 	</bean>
 
 
 	<bean id="answer2" class="domain.Answer">
-		<property name="answer" value="La adoro" />
+		<property name="written" value="La adoro" />
 		<property name="answerer" ref="user1" />
 	</bean>
 

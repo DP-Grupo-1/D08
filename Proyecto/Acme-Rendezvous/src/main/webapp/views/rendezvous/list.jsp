@@ -24,7 +24,7 @@
 
 	<display:table pagesize="5" class="displaytag" keepStatus="true"
 		name="rendezvouses" requestURI="${requestURI}" id="row">
-
+	<security:authentication property="principal" var ="loggedactor"/>
 		<!-- Display -->
 		
 			<display:column>
@@ -65,7 +65,18 @@
 		 <display:column >
 			<a href="user/list.do?rendezvousId=${row.id}"><spring:message code="rendezvous.attendants" /></a>
         </display:column>
-
+        
+       <display:column>
+		<jstl:if test="${row.creator.userAccount.username==loggedactor.username}">
+			<a href="question/user/list.do?rendezvousId=${row.id}"><spring:message code="question.list"/></a>
+		</jstl:if>
+		</display:column>
+		
+		<display:column>
+		<jstl:if test="${row.creator.userAccount.username==loggedactor.username}">
+			<a href="question/user/create.do?rendezvousId=${row.id}"><spring:message code="question.create"/></a>
+		</jstl:if>
+		</display:column>
 	</display:table>
 	
 	<!-- Action links -->

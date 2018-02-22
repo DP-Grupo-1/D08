@@ -24,15 +24,15 @@ public class Question extends DomainEntity {
 
 	// Attributes -------------------------------------------------------------
 
-	private String	question;
+	private String	questionToAnswer;
 
 
 	@NotBlank
-	public String getQuestion() {
-		return this.question;
+	public String getQuestionToAnswer() {
+		return this.questionToAnswer;
 	}
-	public void setQuestion(final String question) {
-		this.question = question;
+	public void setQuestionToAnswer(final String questionToAnswer) {
+		this.questionToAnswer = questionToAnswer;
 	}
 
 

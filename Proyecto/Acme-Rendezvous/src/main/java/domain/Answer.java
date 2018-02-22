@@ -16,15 +16,15 @@ public class Answer extends DomainEntity {
 
 	// Attributes -------------------------------------------------------------
 
-	private String	answer;
+	private String	written;
 
 
 	@NotBlank
-	public String getAnswer() {
-		return this.answer;
+	public String getWritten() {
+		return this.written;
 	}
-	public void setAnswer(final String answer) {
-		this.answer = answer;
+	public void setWritten(final String written) {
+		this.written = written;
 	}
 
 

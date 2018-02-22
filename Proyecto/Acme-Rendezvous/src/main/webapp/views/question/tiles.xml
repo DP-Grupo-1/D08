@@ -17,22 +17,22 @@
        
 <tiles-definitions>
 	
-	<definition name="question/user/list" extends="master.page">	
+	<definition name="question/list" extends="master.page">	
 		<put-attribute name="title" value="List questions" />
 		<put-attribute name="body" value="/views/question/list.jsp" />
 	</definition>
 	
-	<definition name="question/user/editQuestion" extends="master.page">	
+	<definition name="question/editQuestion" extends="master.page">	
 		<put-attribute name="title" value="Edit question" />
 		<put-attribute name="body" value="/views/question/editQuestion.jsp" />
 	</definition>
 	
-	<definition name="question/user/answerQuestions" extends="master.page">	
+	<definition name="question/answerQuestions" extends="master.page">	
 		<put-attribute name="title" value="Answer the questions" />
 		<put-attribute name="body" value="/views/question/answerQuestion.jsp" />
 	</definition>
 	
-	<definition name="question/user/answers" extends="master.page">	
+	<definition name="question/answers" extends="master.page">	
 		<put-attribute name="title" value="View answers" />
 		<put-attribute name="body" value="/views/question/answers.jsp" />
 	</definition>

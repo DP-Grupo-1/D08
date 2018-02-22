@@ -10,14 +10,12 @@
 
 
 <display:table pagesize="10" class="displaytag" keepStatus="true"
-	name="question" requestURI="${requestURI}" id="row">
+	name="answers" requestURI="${requestURI}" id="row">
 	<security:authentication property="principal" var ="loggedactor"/>
 	
-	<jstl:forEach items="row.answers" var="answer">
-		<spring:message code="answer.answer" var="answerHeader" />
-		<display:column property="answer" title="${answerHeader}" sortable="true" />
+		<spring:message code="answer.written" var="writtenHeader" />
+		<display:column property="written" title="${writtenHeader}" sortable="true" />
 	
 		<spring:message code="answer.answerer" var="answererHeader" />
-		<display:column property="answerer" title="${answererHeader}" sortable="true" />
-	</jstl:forEach>
+		<display:column property="answerer.userAccount.username" title="${answererHeader}" sortable="true" />
 </display:table>

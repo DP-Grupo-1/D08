@@ -62,7 +62,7 @@ public class AnswerService {
 			Question question = (Question) questions.toArray()[i];
 			Answer created = this.create(question.getId());
 			String answer = (String) answers.toArray()[i];
-			created.setAnswer(answer);
+			created.setWritten(answer);
 			this.save(created, question);
 		}
 	}

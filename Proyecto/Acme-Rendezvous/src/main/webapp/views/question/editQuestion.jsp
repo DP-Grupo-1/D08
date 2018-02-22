@@ -16,7 +16,7 @@
 	<form:hidden path="creator" />
 	<form:hidden path="rendezvous" />
 	
-	<acme:textbox code="question.question" path="question"/>
+	<acme:textbox code="question.questionToAnswer" path="questionToAnswer"/>
 	<br/>
 	
 	<input type="submit" name="save"

@@ -13,18 +13,18 @@
 	name="questions" requestURI="${requestURI}" id="row">
 	<security:authentication property="principal" var ="loggedactor"/>
 	
-	<spring:message code="question.question" var="questionHeader" />
-	<display:column property="question" title="${questionHeader}" sortable="true" />
+	<spring:message code="question.questionToAnswer" var="questionToAnswerHeader" />
+	<display:column property="questionToAnswer" title="${questionToAnswerHeader}" sortable="true" />
 	
 	<display:column>
-	<jstl:if test="${row.user.userAccount.username==loggedactor.username}">
-		<a href="question/user/edit.do?questionId=${row.id}"><spring:message code="question.edit"/></a>
+	<jstl:if test="${row.creator.userAccount.username==loggedactor.username}">
+		<a href="question/user/editQuestion.do?questionId=${row.id}"><spring:message code="question.edit"/></a>
 	</jstl:if>
 	
 	</display:column>	
 	
 	<display:column>
-	<jstl:if test="${row.user.userAccount.username==loggedactor.username}">
+	<jstl:if test="${row.creator.userAccount.username==loggedactor.username}">
 		<a href="question/user/answers.do?questionId=${row.id}"><spring:message code="question.answers"/></a>
 	</jstl:if>
 	
