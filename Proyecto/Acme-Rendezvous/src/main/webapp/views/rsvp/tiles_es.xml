@@ -16,8 +16,8 @@
       
 <tiles-definitions>
 
-		<definition name="rsvp/user/list" extends="master.page">
-		<put-attribute name="title" value="Listar RSVPs" />
+		<definition name="RSVP/user/list" extends="master.page">
+		<put-attribute name="title" value="Mis RSVPs" />
 		<put-attribute name="body" value="/views/rsvp/list.jsp" />
 	</definition>
 	

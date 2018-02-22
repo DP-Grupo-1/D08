@@ -19,8 +19,8 @@
 	
 	
 
-		<definition name="rsvp/user/list" extends="master.page">
-		<put-attribute name="title" value="List RSVPs" />
+		<definition name="RSVP/user/list" extends="master.page">
+		<put-attribute name="title" value="My RSVPs" />
 		<put-attribute name="body" value="/views/rsvp/list.jsp" />
 	
 	</definition>
