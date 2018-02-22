@@ -27,6 +27,8 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous, Integer>
 	@Query("select r.rendezvous from RSVP r where r.user.id = ?1")
 	Collection<Rendezvous> findByUserId(int userId);
 
+	@Query("select r from Rendezvous r where r.creator.id=?1")
+	Collection<Rendezvous> findByCreatorId(int creatorId);
 	//	//	Requisito 6.3 punto 1: La media y la desviación estándar de reuniones creadas por usuario.
 	//	@Query("select avg(u.rendezvouses.size), stddev(u.rendezvouses.size) from User u")
 	//	Double[] avgStddevRendezvousPerUser();
