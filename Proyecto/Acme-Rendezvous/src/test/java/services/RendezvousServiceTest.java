@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.Collection;
+
 import javax.transaction.Transactional;
 
 import org.junit.Test;
@@ -12,6 +14,7 @@ import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.Rendezvous;
+import domain.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -23,12 +26,16 @@ public class RendezvousServiceTest extends AbstractTest {
 	//Service under test----------------------------------------------------------
 	@Autowired
 	private RendezvousService	rendezvousService;
+	@Autowired
+	private UserService			userService;
 
 
 	//Tests-------------------------------------------------------------------------
 	@Test
 	public void testCreate() {
 		super.authenticate("user2");
+		final User user = this.userService.findByPrincipal();
+		System.out.println(user.getId());
 		final Rendezvous rendezvous = this.rendezvousService.create();
 		Assert.isNull(rendezvous.getName());
 		Assert.isNull(rendezvous.getDescription());
@@ -51,5 +58,10 @@ public class RendezvousServiceTest extends AbstractTest {
 		System.out.println(rendezvous.getAttendants());
 		System.out.println(rendezvous.getCreator());
 		super.authenticate(null);
+	}
+	@Test
+	public void testFindByCreatorId() {
+		final Collection<Rendezvous> rendezvouses = this.rendezvousService.findByCreatorId(111);
+		System.out.println(rendezvouses);
 	}
 }

@@ -46,7 +46,7 @@ public class RendezvousUserController extends AbstractController {
 		ModelAndView result;
 		Collection<Rendezvous> rendezvouses = new ArrayList<Rendezvous>();
 		final User logged = this.userService.findByPrincipal();
-
+		//	if(logged.id)
 		rendezvouses = this.rendezvousService.findByCreatorId(logged.getId());
 
 		result = new ModelAndView("rendezvous/list");
