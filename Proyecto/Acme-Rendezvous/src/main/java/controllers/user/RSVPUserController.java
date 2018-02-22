@@ -1,5 +1,9 @@
 package controllers.user;
 
+
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -11,18 +15,18 @@ import org.springframework.web.servlet.ModelAndView;
 
 import domain.RSVP;
 import domain.Rendezvous;
+
 import domain.User;
 
 import services.RSVPService;
-import services.RendezvousService;
+
 import services.UserService;
 
 @Controller
-@RequestMapping("/RSVP/user")
+@RequestMapping("/rsvp/user")
 public class RSVPUserController {
 	
-	@Autowired
-	private RendezvousService	rendezvousService;
+
 	@Autowired
 	private RSVPService	rsvpService;
 	@Autowired
@@ -37,6 +41,25 @@ public class RSVPUserController {
 		result = this.createEditModelAndView(rsvp);
 		return result;
 	}
+	
+	
+	//Listing ----------------------------------------------------
+		@RequestMapping(value = "/list", method = RequestMethod.GET)
+		public ModelAndView list() {
+			ModelAndView result;
+			final User logged = this.userService.findByPrincipal();
+			Collection<RSVP> rsvps = logged.getRsvps();
+			Collection<Rendezvous> rendezvouses = new ArrayList<Rendezvous>();
+			for(RSVP r: rsvps){
+				
+				rendezvouses.add(r.getRendezvous());
+			}
+			result = new ModelAndView("RSVP/user/list");
+			result.addObject("rendezvouses", rendezvouses);
+			result.addObject("requestURI", "rsvp/user/list.do");
+
+			return result;
+		}
 	
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
