@@ -18,7 +18,7 @@
 	
 	<display:column>
 	<jstl:if test="${row.creator.userAccount.username==loggedactor.username}">
-		<a href="question/user/editQuestion.do?questionId=${row.id}"><spring:message code="question.edit"/></a>
+		<a href="question/user/edit.do?questionId=${row.id}"><spring:message code="question.edit"/></a>
 	</jstl:if>
 	
 	</display:column>	
