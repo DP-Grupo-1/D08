@@ -78,5 +78,63 @@
  			<spring:message code="rendezvous.comments" />
  		</a>	
     </display:column> 
+
+</display:table>
+
+
+
+<!-- 							 Rendezvouses linked										-->
+<h1>Rendezvouses linked</h1>
+<display:table pagesize="5" class="displaytag" keepStatus="true"
+	name="rendezvous.rendezvouses" requestURI="${requestURI}" id="row">
 	
+	<!-- Display -->
+		
+	<display:column>
+		<a href="rendezvous/display.do?rendezvousId=${row.id}">
+			<spring:message code="rendezvous.list.display" />
+		</a>
+	</display:column>
+
+	<spring:message code="rendezvous.name" var="rendezvousNameHeader" />
+	<display:column property="name" title="${rendezvousNameHeader}" sortable="true">
+	</display:column>
+
+	<spring:message code="rendezvous.description" var="rendezvousDescriptionHeader" />
+	<display:column property="description" title="${rendezvousDescriptionHeader}" 
+	    sortable="true">
+	</display:column>
+	
+	<spring:message code="rendezvous.moment" var="rendezvousMomentHeader" />
+    <spring:message code="rendezvous.moment.format" var="rendezvousMomentFormat" />
+	<display:column property="moment" title="${rendezvousMomentHeader}" 
+	    titleKey="rendezvous.moment"
+		sortable="true" format="{0,date,${rendezvousMomentFormat }}" />
+
+	<spring:message code="rendezvous.creator" var="rendezvousCreatorHeader" />
+    <display:column title="${rendezvousCreatorHeader}" sortable="true">
+    <a href="profile/user/display.do?userId=<jstl:out value="${row.creator.id}"/>">
+    <jstl:out value="${row.creator.name} ${row.creator.surname}"/></a>
+    </display:column> 
+   	    
+   	<display:column >
+   	<a  href="user/list.do?rendezvousId=${row.id}"><spring:message code="rendezvous.attendants" /></a>
+    </display:column>
+
+	<spring:message code="rendezvous.adultOnly" var="rendezvousAdultOnlyHeader" />
+	<display:column property="adultOnly" title="${rendezvousAdultOnlyHeader}" sortable="true" />
+			
+	<spring:message code="rendezvous.flag" var="rendezvousFlagHeader" />
+	<display:column property="flag" title="${rendezvousFlagHeader}" sortable="true" />
+	
+	<security:authorize access="hasRole('USER')">
+    <display:column>
+  	<jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
+	     <a href="rendezvous/user/deleteLink.do?rendezvousId=${row.id}">
+	       <spring:message code="rendezvous.deleteLink" />
+	     </a>	
+   	</jstl:if>
+    </display:column>
+    </security:authorize> 
+  
 </display:table>
