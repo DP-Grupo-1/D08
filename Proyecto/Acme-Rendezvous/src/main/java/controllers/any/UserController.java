@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.RendezvousService;
 import services.UserService;
 import domain.RSVP;
 import domain.Rendezvous;
@@ -27,17 +28,31 @@ public class UserController {
 
 	//Services------------------------------------------------------------------
 	@Autowired
-	UserService	userService;
+	UserService			userService;
+
+	@Autowired
+	RendezvousService	rendezvousService;
 
 
 	//List--------------------------------------------------------------------------
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list() {
+	public ModelAndView list(@RequestParam(required = false) final Integer rendezvousId) {
 		ModelAndView res;
 		final Collection<User> users = this.userService.findAll();
+
 		res = new ModelAndView("user/list");
-		res.addObject("requestURI", "user/list.do");
-		res.addObject("users", users);
+
+		final Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
+		String id = "";
+		if (rendezvous != null) {
+			id = rendezvousId.toString();
+			res.addObject("users", rendezvous.getAttendants());
+			res.addObject("rendezvousId", id);
+			res.addObject("uri", "user/list.do?rendezvousId=" + id);
+		} else {
+			res.addObject("requestURI", "user/list.do");
+			res.addObject("users", users);
+		}
 		return res;
 	}
 
@@ -47,13 +62,11 @@ public class UserController {
 		Assert.notNull(userId);
 		ModelAndView res;
 		final User user = this.userService.findOne(userId);
-		Collection<RSVP> rsvps = user.getRsvps();
-		Collection<Rendezvous> rendezvouses = new ArrayList<Rendezvous>();
-		for(RSVP r: rsvps){
-			
+		final Collection<RSVP> rsvps = user.getRsvps();
+		final Collection<Rendezvous> rendezvouses = new ArrayList<Rendezvous>();
+		for (final RSVP r : rsvps)
 			rendezvouses.add(r.getRendezvous());
-		}
-		
+
 		res = new ModelAndView("user/display");
 		res.addObject("user", user);
 		res.addObject("rendezvouses", rendezvouses);
