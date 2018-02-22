@@ -85,12 +85,12 @@
 <security:authorize access="hasRole('USER')">
 <jstl:choose> 
 <jstl:when test="${hasUserRSVPd==false}">
-  	<a href="rendezvous/attend.do?rendezvousId=${row.id}">
+  	<a href="rendezvous/user/attend.do?rendezvousId=${row.id}">
 	  	<spring:message code="rendezvous.attend" />
 	</a>	
 </jstl:when>
 <jstl:otherwise>
-  	<a href="rendezvous/noAttend.do?rsvpId=${id}">
+  	<a href="rendezvous/user/noAttend.do?rsvpId=${id}">
 	  	<spring:message code="rendezvous.noAttend" />
 	</a>	
 </jstl:otherwise>

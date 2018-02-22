@@ -140,7 +140,7 @@ public class RendezvousUserController extends AbstractController {
 			redirectAttrs.addFlashAttribute("msgType", "danger");
 		}
 
-		result = new ModelAndView("redirect:/rendezvous/display.do");
+		result = new ModelAndView("redirect:/rendezvous/list.do");
 
 		return result;
 	}
@@ -163,7 +163,7 @@ public class RendezvousUserController extends AbstractController {
 			redirectAttrs.addFlashAttribute("msgType", "danger");
 		}
 
-		result = new ModelAndView("redirect:/rendezvous/display.do");
+		result = new ModelAndView("redirect:/rendezvous/list.do");
 
 		return result;
 	}
