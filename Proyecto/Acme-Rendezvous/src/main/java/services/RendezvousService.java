@@ -44,7 +44,7 @@ public class RendezvousService {
 	public Rendezvous create() {
 
 		final Rendezvous result = new Rendezvous();
-
+		final User user = this.userService.findByPrincipal();
 		final Collection<User> attendants = new ArrayList<User>();
 		final Collection<Rendezvous> rendezvouses = new ArrayList<Rendezvous>();
 		final Collection<Comment> comments = new ArrayList<Comment>();
@@ -54,6 +54,7 @@ public class RendezvousService {
 		result.setComments(comments);
 		result.setFinalMode(false);
 		result.setAdultOnly(false);
+		result.setCreator(user);
 		result.setFlag(Flag.ACTIVE);
 
 		return result;
@@ -71,9 +72,14 @@ public class RendezvousService {
 		Assert.isTrue(rendezvous.getFlag() != Flag.DELETED);
 
 		if (rendezvous.getId() == 0) {
+
 			result = this.rendezvousRepository.save(rendezvous);
-			result.setCreator(user);
+
+			//			result.setCreator(user);
 			this.rsvpService.create(result.getId());
+			result.getAttendants().add(user);
+
+			this.findByCreatorId(user.getId()).add(result);
 		} else
 			result = this.rendezvousRepository.save(rendezvous);
 
@@ -142,6 +148,14 @@ public class RendezvousService {
 				r.setFlag(Flag.PASSED);
 
 		return result;
+	}
+	public Collection<Rendezvous> findByCreatorId(final int userId) {
+		final Collection<Rendezvous> res = this.rendezvousRepository.findByCreatorId(userId);
+		for (final Rendezvous r : res)
+			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE)
+				r.setFlag(Flag.PASSED);
+
+		return res;
 	}
 
 	//	public Double[] avgStddevRendezvousPerUser() {

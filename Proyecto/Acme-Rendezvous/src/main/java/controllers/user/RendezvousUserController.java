@@ -47,7 +47,7 @@ public class RendezvousUserController extends AbstractController {
 		Collection<Rendezvous> rendezvouses = new ArrayList<Rendezvous>();
 		final User logged = this.userService.findByPrincipal();
 
-		rendezvouses = this.rendezvousService.findByUserId(logged.getId());
+		rendezvouses = this.rendezvousService.findByCreatorId(logged.getId());
 
 		result = new ModelAndView("rendezvous/list");
 		result.addObject("rendezvouses", rendezvouses);
@@ -70,6 +70,7 @@ public class RendezvousUserController extends AbstractController {
 			result.addObject("rendezvous", rendezvous);
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/");
+			System.out.println(oops);
 		}
 
 		return result;
@@ -94,13 +95,15 @@ public class RendezvousUserController extends AbstractController {
 	public ModelAndView save(@Valid final Rendezvous rendezvous, final BindingResult binding) {
 		ModelAndView result;
 
-		if (binding.hasErrors())
+		if (binding.hasErrors()) {
+			System.out.println(binding.getAllErrors());
 			result = this.createEditModelAndView(rendezvous);
-		else
+		} else
 			try {
 				final Rendezvous saved = this.rendezvousService.save(rendezvous);
 				result = new ModelAndView("redirect:../display.do?rendezvousId=" + saved.getId());
 			} catch (final Throwable error) {
+				System.out.println(error);
 				result = this.createEditModelAndView(rendezvous, "rendezvous.comit.error");
 			}
 		return result;
