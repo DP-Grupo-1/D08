@@ -26,6 +26,11 @@
 		<put-attribute name="body" value="/views/comment/edit.jsp" />
 	</definition>
 	
+	<definition name="comment/user/create" extends="master.page">	
+		<put-attribute name="title" value="Write a new comment" />
+		<put-attribute name="body" value="/views/comment/edit.jsp" />
+	</definition>
+	
 	<definition name="comment/display" extends="master.page">	
 		<put-attribute name="title" value="Display Comment" />
 		<put-attribute name="body" value="/views/comment/display.jsp" />
