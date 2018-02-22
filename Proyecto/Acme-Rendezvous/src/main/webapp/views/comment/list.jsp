@@ -42,8 +42,8 @@
 
 	<!-- Attributes -->
 
-	<spring:message code="comment.date" var="dateHeader" />
-	<display:column property="date" title="${dateHeader}" sortable="true" />
+	<spring:message code="comment.moment" var="momentHeader" />
+	<display:column property="moment" title="${momentHeader}" sortable="true" />
 
 	<spring:message code="comment.text" var="textHeader" />
 	<display:column property="text" title="${textHeader}" sortable="true" />
@@ -58,7 +58,7 @@
 	<spring:message code="comment.display" var="nameHeader" />
 	<display:column title="${nameHeader}">
 			<a href="comment/display.do?commentId=${row.id}">
-				${row.name}
+				${row.text}
 			</a>
 	</display:column>
 
@@ -67,7 +67,7 @@
 	<spring:message code="comment.reply" var="nameHeader" />
 	<display:column title="${nameHeader}">
 			<a href="reply/list.do?commentId=${row.id}">
-				${row.name}
+				${row.text}
 			</a>
 	</display:column>
 	 
