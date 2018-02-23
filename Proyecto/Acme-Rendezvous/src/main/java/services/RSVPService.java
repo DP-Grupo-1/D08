@@ -12,9 +12,6 @@ import domain.Rendezvous;
 import domain.User;
 
 import repositories.RSVPRepository;
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 
 @Service
 @Transactional
@@ -42,8 +39,9 @@ public class RSVPService{
 		final RSVP res = new RSVP();
 		Rendezvous rendezvous = rendezvousService.findOne(rendezvousId);
 		User user = this.userService.findByPrincipal();
+		Assert.notNull(user);
 		res.setUser(user);
-
+		
 		res.setRendezvous(rendezvous);
 
 		
@@ -54,13 +52,17 @@ public class RSVPService{
 		Assert.notNull(rsvp);
 		RSVP res;
 		final RSVP aux = rsvp;
-		
+		Rendezvous rendezvous = rendezvousService.findOne(aux.getRendezvous().getId());
 		//Iniciaciones
 		User user = userService.findByPrincipal();
 		Assert.notNull(user);
-		aux.setUser(user);
-		Rendezvous rendezvous = rendezvousService.findOne(aux.getRendezvous().getId());
-		aux.setRendezvous(rendezvous);
+		if(userService.hasUserRSVP(rendezvous.getId()) == false){
+			aux.setRendezvous(rendezvous);
+			Collection<User> attendants = rendezvous.getAttendants();
+			attendants.add(user);
+			aux.setUser(user);
+		}
+		
 		
 		res= this.RSVPRepository.save(aux);
 		
@@ -73,9 +75,14 @@ public class RSVPService{
 		Assert.isTrue(this.RSVPRepository.exists(rsvp.getId()));
 		
 		// Authority
-		final UserAccount userAccount = LoginService.getPrincipal();
-		Assert.isTrue(userAccount.getAuthorities().contains(Authority.USER));
-
+		
+		User user = userService.findByPrincipal();
+		Assert.notNull(user);
+		
+		user.getRsvps().remove(rsvp);
+		
+		rsvp.getRendezvous().getAttendants().remove(user);
+		
 		this.RSVPRepository.delete(rsvp);
 	}
 	

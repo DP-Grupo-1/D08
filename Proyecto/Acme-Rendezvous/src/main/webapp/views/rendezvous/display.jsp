@@ -89,7 +89,7 @@
 	</a>	
 </jstl:when>
 <jstl:otherwise>
-  	<a href="rendezvous/user/noAttend.do?rsvpId=${id}">
+  	<a href="rendezvous/user/noAttend.do?rendezvousId=${row.id}">
 	  	<spring:message code="rendezvous.noAttend" />
 	</a>	
 </jstl:otherwise>

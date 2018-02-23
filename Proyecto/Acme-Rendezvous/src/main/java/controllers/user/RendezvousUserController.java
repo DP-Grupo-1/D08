@@ -131,9 +131,11 @@ public class RendezvousUserController extends AbstractController {
 
 		try {
 			final User user = this.userService.findByPrincipal();
+			
 			Assert.notNull(user);
-			this.rsvpService.create(rendezvousId);
-
+			RSVP rsvp = this.rsvpService.create(rendezvousId);
+			this.rsvpService.save(rsvp);
+			
 			redirectAttrs.addFlashAttribute("message", "rendezvous.commit.ok");
 			redirectAttrs.addFlashAttribute("msgType", "success");
 		} catch (final Throwable oops) {
@@ -149,14 +151,23 @@ public class RendezvousUserController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/noAttend", method = RequestMethod.GET)
-	public ModelAndView noAttend(@RequestParam final int rsvpId, final RedirectAttributes redirectAttrs) {
+	public ModelAndView noAttend(@RequestParam final int rendezvousId, final RedirectAttributes redirectAttrs) {
 		ModelAndView result;
-
+		final User user = this.userService.findByPrincipal();
+		RSVP rsvpValido = null;
+		Assert.notNull(user);
+		Collection<RSVP> rsvps = this.rendezvousService.findRSVPs(rendezvousId);
+		for(RSVP rsvp: rsvps){
+			if(user.getRsvps().contains(rsvp)){
+				rsvpValido = rsvp;
+				break;
+			}
+		}
+		
 		try {
-			final RSVP rsvp = this.rsvpService.findOne(rsvpId);
-			final User user = this.userService.findByPrincipal();
-			Assert.notNull(user);
-			this.rsvpService.delete(rsvp);
+			
+			
+			this.rsvpService.delete(rsvpValido);
 
 			redirectAttrs.addFlashAttribute("message", "rendezvous.commit.ok");
 			redirectAttrs.addFlashAttribute("msgType", "success");
@@ -167,7 +178,7 @@ public class RendezvousUserController extends AbstractController {
 		}
 
 		result = new ModelAndView("redirect:/rendezvous/list.do");
-
+		
 		return result;
 	}
 

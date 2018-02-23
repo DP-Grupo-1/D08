@@ -80,6 +80,8 @@ public class RendezvousService {
 			result.getAttendants().add(user);
 
 			this.findByCreatorId(user.getId()).add(result);
+			
+			
 		} else
 
 			result = this.rendezvousRepository.save(rendezvous);
@@ -229,7 +231,7 @@ public class RendezvousService {
 		return result;
 	}
 
-	private Collection<RSVP> findRSVPs(final int id) {
+	public Collection<RSVP> findRSVPs(final int id) {
 		final Collection<RSVP> result = this.rendezvousRepository.findRSVPs(id);
 		return result;
 	}

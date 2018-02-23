@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import services.RSVPService;
 import services.RendezvousService;
 import services.UserService;
+import domain.RSVP;
 import domain.Rendezvous;
 
 @Controller
@@ -55,7 +56,9 @@ public class RendezvousController extends AbstractController {
 		ModelAndView result;
 		Rendezvous rendezvous;
 		result = new ModelAndView("rendezvous/display");
+		
 		try {
+			
 			final Boolean hasUserRSVPd = this.userService.hasUserRSVP(rendezvousId);
 			result.addObject("hasUserRSVPd", hasUserRSVPd);
 		} catch (final Throwable oops) {
