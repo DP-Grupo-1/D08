@@ -15,7 +15,7 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Comment;
-import domain.RSVP;
+import domain.Rendezvous;
 import domain.Reply;
 import domain.User;
 
@@ -32,7 +32,7 @@ public class UserService {
 	public User create() {
 		final User res = new User();
 		final Collection<Comment> comments = new ArrayList<>();
-		final Collection<RSVP> rsvps = new ArrayList<>();
+		final Collection<Rendezvous> attendances = new ArrayList<>();
 		final Collection<Reply> replies = new ArrayList<>();
 		final UserAccount userAccount = new UserAccount();
 		final Authority authority = new Authority();
@@ -44,7 +44,7 @@ public class UserService {
 		authorities.add(authority);
 		userAccount.setAuthorities(authorities);
 		res.setComments(comments);
-		res.setRsvps(rsvps);
+		res.setAttendances(attendances);
 		res.setReplies(replies);
 		res.setUserAccount(userAccount);
 		return res;
@@ -88,17 +88,5 @@ public class UserService {
 		return res;
 
 	}
-	public Boolean hasUserRSVP(final Integer rendezvousId) {
-		Boolean res = false;
-		final User logged = this.findByPrincipal();
 
-		Assert.notNull(logged);
-		final Integer userId = logged.getId();
-		final Collection<RSVP> rsvps = this.userRepository.hasUserRSVP(userId);
-
-		for (final RSVP r : rsvps)
-			if (r.getRendezvous().getId() == rendezvousId)
-				res = true;
-		return res;
-	}
 }

@@ -41,7 +41,7 @@
 			<li><a href="#" class="parent"><span><spring:message code="master.page.user" /></span></a>
 				<div><ul>
 					<li><a href="rendezvous/user/list.do"><span><spring:message code="master.page.user.action1" /></span></a></li>
-					<li><a href="rsvp/user/list.do"><span><spring:message code="master.page.user.action2" /></span></a></li>
+					<li><a href="rendezvous/user/listRsvps.do"><span><spring:message code="master.page.user.action2" /></span></a></li>
 					<li><a href="announcement/user/list.do"><span><spring:message code="master.page.user.action4" /></span></a></li>
 				</ul></div>
 			</li>

@@ -36,7 +36,6 @@
 		<value>/views/rendezvous/tiles.xml</value>
 		<value>/views/dashboard/tiles.xml</value>
 		<value>/views/reply/tiles.xml</value>
-		<value>/views/rsvp/tiles.xml</value>
 	</util:list>
 
 </beans>

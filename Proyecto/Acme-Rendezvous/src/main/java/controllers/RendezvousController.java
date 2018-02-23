@@ -10,11 +10,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.RSVPService;
+import security.LoginService;
+import security.UserAccount;
 import services.RendezvousService;
 import services.UserService;
-import domain.RSVP;
 import domain.Rendezvous;
+import domain.User;
 
 @Controller
 @RequestMapping("/rendezvous")
@@ -26,9 +27,6 @@ public class RendezvousController extends AbstractController {
 
 	@Autowired
 	UserService			userService;
-
-	@Autowired
-	RSVPService			rsvpService;
 
 
 	//Constructors ------------------------------------------------------
@@ -56,11 +54,27 @@ public class RendezvousController extends AbstractController {
 		ModelAndView result;
 		Rendezvous rendezvous;
 		result = new ModelAndView("rendezvous/display");
-		
+
 		try {
-			
-			final Boolean hasUserRSVPd = this.userService.hasUserRSVP(rendezvousId);
+			UserAccount userAcc = LoginService.getPrincipal();
+			User u = this.userService.findByUserAccount(userAcc);
+
+			Boolean hasUserRSVPd = false;
+
+			if(u != null){
+				//Rendezvouses a los que el usuario va a asistir (RSVPs)
+				Collection<Rendezvous> rendezvouses = this.rendezvousService.findByUserId(u.getId());
+
+				for(Rendezvous r: rendezvouses){
+					if(r.getId() == rendezvousId){
+						hasUserRSVPd = true;
+						break;
+					}
+				}
+
+			}
 			result.addObject("hasUserRSVPd", hasUserRSVPd);
+
 		} catch (final Throwable oops) {
 		}
 

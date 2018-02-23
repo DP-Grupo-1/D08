@@ -14,7 +14,6 @@ import repositories.RendezvousRepository;
 import domain.Administrator;
 import domain.Comment;
 import domain.Flag;
-import domain.RSVP;
 import domain.Rendezvous;
 import domain.User;
 
@@ -34,9 +33,6 @@ public class RendezvousService {
 
 	@Autowired
 	private AdministratorService	administratorService;
-
-	@Autowired
-	private RSVPService				rsvpService;
 
 
 	// Simple CRUD methods ------------------------------------------
@@ -76,7 +72,6 @@ public class RendezvousService {
 			result = this.rendezvousRepository.save(rendezvous);
 
 			//			result.setCreator(user);
-			this.rsvpService.create(result.getId());
 			result.getAttendants().add(user);
 
 			this.findByCreatorId(user.getId()).add(result);
@@ -113,11 +108,6 @@ public class RendezvousService {
 		final Collection<Rendezvous> rendezvouses = this.findRendezvousParents(rendezvous.getId());
 		for (final Rendezvous r : rendezvouses)
 			r.getRendezvouses().remove(rendezvous);
-
-		final Collection<RSVP> rsvps = this.findRSVPs(rendezvous.getId());
-
-		for (final RSVP rsvp : rsvps)
-			this.rsvpService.delete(rsvp);
 
 		this.rendezvousRepository.delete(rendezvous);
 	}
@@ -228,11 +218,6 @@ public class RendezvousService {
 	private Collection<Rendezvous> findRendezvousParents(final int id) {
 		final Collection<Rendezvous> result;
 		result = this.rendezvousRepository.findRendezvousParents(id);
-		return result;
-	}
-
-	public Collection<RSVP> findRSVPs(final int id) {
-		final Collection<RSVP> result = this.rendezvousRepository.findRSVPs(id);
 		return result;
 	}
 

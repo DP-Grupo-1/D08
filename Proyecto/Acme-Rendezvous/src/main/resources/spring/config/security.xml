@@ -67,7 +67,7 @@
 		<security:intercept-url pattern="/reply/list.do" access="permitAll" />
 		<security:intercept-url pattern="/reply/display.do" access="permitAll" />
 		
-		<security:intercept-url pattern="/rsvp/user/list.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/rendezvous/user/listRsvps.do" access="hasRole('USER')" />
 		
 		<security:intercept-url pattern="/announcement/user/**" access="hasRole('USER')" />
 		<security:intercept-url pattern="/announcement/list.do" access="permitAll" />

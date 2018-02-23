@@ -1,7 +1,6 @@
 
 package controllers.any;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.validation.Valid;
@@ -18,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.RendezvousService;
 import services.UserService;
-import domain.RSVP;
 import domain.Rendezvous;
 import domain.User;
 
@@ -69,14 +67,11 @@ public class UserController {
 		Assert.notNull(userId);
 		ModelAndView res;
 		final User user = this.userService.findOne(userId);
-		final Collection<RSVP> rsvps = user.getRsvps();
-		final Collection<Rendezvous> rendezvouses = new ArrayList<Rendezvous>();
-		for (final RSVP r : rsvps)
-			rendezvouses.add(r.getRendezvous());
+		final Collection<Rendezvous> attendances = user.getAttendances();
 
 		res = new ModelAndView("user/display");
 		res.addObject("user", user);
-		res.addObject("rendezvouses", rendezvouses);
+		res.addObject("rendezvouses", attendances);
 		res.addObject("requestURI", "user/display.do");
 		return res;
 	}

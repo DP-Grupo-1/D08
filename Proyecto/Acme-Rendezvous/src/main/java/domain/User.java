@@ -6,6 +6,7 @@ import java.util.Collection;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -16,10 +17,10 @@ public class User extends Actor {
 
 	//Relationships-----------------------------------------------------------
 
-	private Collection<Reply>	replies;
-	private Collection<Comment>	comments;
+	private Collection<Reply>		replies;
+	private Collection<Comment>		comments;
 
-	private Collection<RSVP>	rsvps;
+	private Collection<Rendezvous>	attendances;
 
 
 	@OneToMany
@@ -44,14 +45,14 @@ public class User extends Actor {
 	}
 
 	@Valid
-	@OneToMany(mappedBy = "user")
+	@ManyToMany(mappedBy = "attendants")
 	@NotNull
-	public Collection<RSVP> getRsvps() {
-		return this.rsvps;
+	public Collection<Rendezvous> getAttendances() {
+		return this.attendances;
 	}
 
-	public void setRsvps(final Collection<RSVP> rsvps) {
-		this.rsvps = rsvps;
+	public void setAttendances(final Collection<Rendezvous> attendances) {
+		this.attendances = attendances;
 	}
 
 }

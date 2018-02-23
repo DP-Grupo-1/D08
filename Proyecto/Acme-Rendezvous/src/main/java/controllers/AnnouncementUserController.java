@@ -27,7 +27,7 @@ import security.UserAccount;
 import services.AnnouncementService;
 import services.UserService;
 import domain.Announcement;
-import domain.RSVP;
+import domain.Rendezvous;
 import domain.User;
 
 @Controller
@@ -70,8 +70,8 @@ public class AnnouncementUserController extends AbstractController {
 		//Display a stream of announcements that have been posted to the rendezvouses that he or she's RSVPd
 		Collection<Integer> rendezvousesIds = new ArrayList<Integer>();
 
-		for (RSVP r : u.getRsvps()) {
-			rendezvousesIds.add(r.getRendezvous().getId());
+		for (Rendezvous r : u.getAttendances()) {
+			rendezvousesIds.add(r.getId());
 		}
 
 		Collection<Announcement> announcements = new ArrayList<Announcement>();

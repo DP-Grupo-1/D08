@@ -16,11 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import services.RSVPService;
 import services.RendezvousService;
 import services.UserService;
 import controllers.AbstractController;
-import domain.RSVP;
 import domain.Rendezvous;
 import domain.User;
 
@@ -36,9 +34,6 @@ public class RendezvousUserController extends AbstractController {
 	@Autowired
 	private UserService			userService;
 
-	@Autowired
-	private RSVPService			rsvpService;
-
 
 	//Listing ----------------------------------------------------
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -52,6 +47,22 @@ public class RendezvousUserController extends AbstractController {
 		result = new ModelAndView("rendezvous/list");
 		result.addObject("rendezvouses", rendezvouses);
 		result.addObject("requestURI", "rendezvous/user/list.do");
+
+		return result;
+	}
+
+	//Listing ----------------------------------------------------
+	@RequestMapping(value = "/listRsvps", method = RequestMethod.GET)
+	public ModelAndView list2() {
+		ModelAndView result;
+		Collection<Rendezvous> rendezvouses = new ArrayList<Rendezvous>();
+		final User logged = this.userService.findByPrincipal();
+
+		rendezvouses = logged.getAttendances();
+
+		result = new ModelAndView("rendezvous/user/list2");
+		result.addObject("rendezvouses", rendezvouses);
+		result.addObject("requestURI", "rendezvous/user/listRsvps.do");
 
 		return result;
 	}
@@ -133,10 +144,18 @@ public class RendezvousUserController extends AbstractController {
 
 		try {
 			final User user = this.userService.findByPrincipal();
-
+			Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
 			Assert.notNull(user);
-			RSVP rsvp = this.rsvpService.create(rendezvousId);
-			this.rsvpService.save(rsvp);
+			Assert.notNull(rendezvous);
+
+			Collection<Rendezvous> attendances = user.getAttendances();
+			attendances.add(this.rendezvousService.findOne(rendezvousId));
+			user.setAttendances(attendances);
+			this.userService.save(user);
+
+			//rendezvous.getAttendants().add(user);
+			//this.rendezvousService.save(rendezvous);
+
 
 			redirectAttrs.addFlashAttribute("message", "rendezvous.commit.ok");
 			redirectAttrs.addFlashAttribute("msgType", "success");
@@ -155,20 +174,20 @@ public class RendezvousUserController extends AbstractController {
 	@RequestMapping(value = "/noAttend", method = RequestMethod.GET)
 	public ModelAndView noAttend(@RequestParam final int rendezvousId, final RedirectAttributes redirectAttrs) {
 		ModelAndView result;
-		final User user = this.userService.findByPrincipal();
-		RSVP rsvpValido = null;
-		Assert.notNull(user);
-		Collection<RSVP> rsvps = this.rendezvousService.findRSVPs(rendezvousId);
-		for (RSVP rsvp : rsvps) {
-			if (user.getRsvps().contains(rsvp)) {
-				rsvpValido = rsvp;
-				break;
-			}
-		}
 
 		try {
 
-			this.rsvpService.delete(rsvpValido);
+			User user = this.userService.findByPrincipal();
+			Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
+
+			Assert.notNull(user);
+			Assert.notNull(rendezvous);
+
+			user.getAttendances().remove(rendezvous);
+			this.userService.save(user);
+
+			//rendezvous.getAttendants().remove(user);
+			//this.rendezvousService.save(rendezvous);
 
 			redirectAttrs.addFlashAttribute("message", "rendezvous.commit.ok");
 			redirectAttrs.addFlashAttribute("msgType", "success");

@@ -32,7 +32,6 @@
 		<bean class="converters.QuestionToStringConverter" />
 		<bean class="converters.RendezvousToStringConverter" />
 		<bean class="converters.ReplyToStringConverter" />
-		<bean class="converters.RSVPToStringConverter" />
 		<bean class="converters.UserAccountToStringConverter"/>
 		<bean class="converters.UserToStringConverter" />
 		
@@ -45,7 +44,6 @@
 		<bean class="converters.StringToQuestionConverter" />
 		<bean class="converters.StringToRendezvousConverter" /> 
 		<bean class="converters.StringToReplyConverter" /> 
-		<bean class="converters.StringToRSVPConverter" />
 		<bean class="converters.StringToUserAccountConverter"/>
 		<bean class="converters.StringToUserConverter" />
 	</util:list>

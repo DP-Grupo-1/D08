@@ -39,11 +39,11 @@ public class UserServiceTest {
 		Assert.notNull(user.getUserAccount());
 		Assert.notNull(user.getReplies());
 		Assert.notNull(user.getComments());
-		Assert.notNull(user.getRsvps());
+		Assert.notNull(user.getAttendances());
 		System.out.println(user.getUserAccount());
 		System.out.println(user.getUserAccount().getAuthorities());
 		System.out.println(user.getReplies());
-		System.out.println(user.getRsvps());
+		System.out.println(user.getAttendances());
 		System.out.println(user.getComments());
 
 	}
