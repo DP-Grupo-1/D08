@@ -80,8 +80,7 @@ public class RendezvousService {
 			result.getAttendants().add(user);
 
 			this.findByCreatorId(user.getId()).add(result);
-			
-			
+
 		} else
 
 			result = this.rendezvousRepository.save(rendezvous);
@@ -105,26 +104,21 @@ public class RendezvousService {
 	public void deleteByAdmin(final Rendezvous rendezvous) {
 
 		Assert.notNull(rendezvous);
-		
+
 		Assert.notNull(this.findOne(rendezvous.getId()));
-		
+
 		final Administrator admin = this.administratorService.findByPrincipal();
 		Assert.notNull(admin);
-		
+
 		final Collection<Rendezvous> rendezvouses = this.findRendezvousParents(rendezvous.getId());
-		for (final Rendezvous r : rendezvouses){
+		for (final Rendezvous r : rendezvouses)
 			r.getRendezvouses().remove(rendezvous);
-			
-	}
-		
-		
+
 		final Collection<RSVP> rsvps = this.findRSVPs(rendezvous.getId());
-		System.out.println("llego 1");
-		for (RSVP rsvp : rsvps)
-			
+
+		for (final RSVP rsvp : rsvps)
 			this.rsvpService.delete(rsvp);
-			
-		System.out.println("llego 1.1");
+
 		this.rendezvousRepository.delete(rendezvous);
 	}
 
@@ -168,7 +162,6 @@ public class RendezvousService {
 		return res;
 	}
 
-
 	//--------------------------------------------- DASHBOARD ---------------------------------------------------------
 
 	//	public Double[] avgStddevRendezvousPerUser() {
@@ -211,9 +204,9 @@ public class RendezvousService {
 
 		final Collection<Rendezvous> finalTop10RendezvousesByRSVPs = new ArrayList<Rendezvous>();
 
-		for(final Rendezvous r: top10RendezvousesByRSVPs){
+		for (final Rendezvous r : top10RendezvousesByRSVPs) {
 			finalTop10RendezvousesByRSVPs.add(r);
-			if(finalTop10RendezvousesByRSVPs.size()>=10)
+			if (finalTop10RendezvousesByRSVPs.size() >= 10)
 				break;
 		}
 
