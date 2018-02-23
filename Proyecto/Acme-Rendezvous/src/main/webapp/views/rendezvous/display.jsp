@@ -82,28 +82,28 @@
 </display:table>
 
 <security:authorize access="hasRole('USER')">
-<jstl:choose> 
-<jstl:when test="${hasUserRSVPd==false}">
-  	<a href="rendezvous/user/attend.do?rendezvousId=${row.id}">
-	  	<spring:message code="rendezvous.attend" />
-	</a>	
-</jstl:when>
-<jstl:otherwise>
-  	<a href="rendezvous/user/noAttend.do?rendezvousId=${row.id}">
-	  	<spring:message code="rendezvous.noAttend" />
-	</a>	
-</jstl:otherwise>
-</jstl:choose>
+	<jstl:choose> 
+	<jstl:when test="${hasUserRSVPd==false}">
+	  	<a href="rendezvous/user/attend.do?rendezvousId=${row.id}">
+		  	<spring:message code="rendezvous.attend" />
+		</a>	
+	</jstl:when>
+	<jstl:otherwise>
+	  	<a href="rendezvous/user/noAttend.do?rendezvousId=${row.id}">
+		  	<spring:message code="rendezvous.noAttend" />
+		</a>	
+	</jstl:otherwise>
+	</jstl:choose>
+	<br>
 </security:authorize> 
-<br>
 
 
 <security:authorize access="hasRole('ADMIN')">
          <a href="rendezvous/administrator/edit.do?rendezvousId=${row.id}">
            <spring:message code="rendezvous.edit" />
          </a>
+         <br>
 </security:authorize>
-<br>
 
 
 <security:authorize access="hasRole('USER')">
@@ -115,10 +115,10 @@
          </jstl:if>
        </jstl:if>
 </security:authorize>
-<br>
+
 
 <!-- 							 Rendezvouses linked										-->
-<h1>Rendezvouses linked</h1>
+<h1><spring:message code="rendezvous.linked" /></h1>
 <display:table pagesize="5" class="displaytag" keepStatus="true"
 	name="rendezvous.rendezvouses" requestURI="${requestURI}" id="row">
 	
@@ -162,13 +162,13 @@
 	<display:column property="flag" title="${rendezvousFlagHeader}" sortable="true" />
 	
 	<security:authorize access="hasRole('USER')">
+	<jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
     <display:column>
-  	<jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
 	     <a href="rendezvous/user/deleteLink.do?rendezvousId=${row.id}">
 	       <spring:message code="rendezvous.deleteLink" />
 	     </a>	
-   	</jstl:if>
     </display:column>
+    </jstl:if>
     </security:authorize> 
   
 </display:table>
