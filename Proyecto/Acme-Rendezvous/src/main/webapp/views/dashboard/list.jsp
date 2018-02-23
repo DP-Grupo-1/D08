@@ -27,14 +27,14 @@
 <security:authorize access="hasRole('ADMIN')">
 
 <table class="dashboard">
-	<tr> <td><spring:message code="dashboard.1.1" />:</td> <td></td>	</tr>
+	<tr> <td><spring:message code="dashboard.1.1" /></td> <td></td>	</tr>
 	<tr> <td><spring:message code="dashboard.1.2" /> <td></td>	</tr>
-	<tr> <td><spring:message code="dashboard.2" />: <td></td>	</tr>
-	<tr> <td><spring:message code="dashboard.3.1" />: </td> <td> <jstl:out value="${avgUsersPerRendezvous}"/> </td> </tr>
-	<tr> <td><spring:message code="dashboard.3.2" />: </td> <td> <jstl:out value="${stddevUsersPerRendezvous}"/> </td> </tr>
-	<tr> <td><spring:message code="dashboard.4.1" />: </td> <td> <jstl:out value="${avgRSVPsPerUser}"/> </td>	</tr>
-	<tr> <td><spring:message code="dashboard.4.2" />: </td> <td> <jstl:out value="${stddevRSVPsPerUser}"/> </td>	</tr>
-	<tr> <td><spring:message code="dashboard.5" />:	</td>
+	<tr> <td><spring:message code="dashboard.2" /> <td></td>	</tr>
+	<tr> <td><spring:message code="dashboard.3.1" /> </td> <td> <jstl:out value="${avgUsersPerRendezvous}"/> </td> </tr>
+	<tr> <td><spring:message code="dashboard.3.2" /> </td> <td> <jstl:out value="${stddevUsersPerRendezvous}"/> </td> </tr>
+	<tr> <td><spring:message code="dashboard.4.1" /> </td> <td> <jstl:out value="${avgRSVPsPerUser}"/> </td>	</tr>
+	<tr> <td><spring:message code="dashboard.4.2" /> </td> <td> <jstl:out value="${stddevRSVPsPerUser}"/> </td>	</tr>
+	<tr> <td><spring:message code="dashboard.5" />	</td>
 											<td> <jstl:forEach var="x" items="${top10RendezvousesByRSVPs}" varStatus="status">
 												<a href="rendezvous/display.do?rendezvousId=${x.id}"><jstl:out value="${x.name}" /></a><jstl:if test="${not status.last}">,</jstl:if> 
 											</jstl:forEach> </td>

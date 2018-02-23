@@ -108,9 +108,11 @@
 
 <security:authorize access="hasRole('USER')">
       <jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
+      <jstl:if test="${row.finalMode == false}">
          <a href="rendezvous/user/edit.do?rendezvousId=${row.id}">
            <spring:message code="rendezvous.edit" />
          </a>
+         </jstl:if>
        </jstl:if>
 </security:authorize>
 <br>

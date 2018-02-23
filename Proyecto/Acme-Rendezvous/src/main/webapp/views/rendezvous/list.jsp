@@ -24,6 +24,7 @@
 
 	<display:table pagesize="5" class="displaytag" keepStatus="true"
 		name="rendezvouses" requestURI="${requestURI}" id="row">
+		
 	<security:authentication property="principal" var ="loggedactor"/>
 		<!-- Display -->
 		
@@ -31,6 +32,13 @@
 				<a href="rendezvous/display.do?rendezvousId=${row.id}">
 					<spring:message code="rendezvous.list.display" />
 				</a>
+				
+			<jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
+			<jstl:if test="${row.finalMode == false}">
+				<a href="rendezvous/user/edit.do?rendezvousId=${row.id}"><spring:message code="rendezvous.edit"/></a>
+				</jstl:if>
+			</jstl:if>
+		
 			</display:column>
 		
 <!-- Attributes -->
@@ -55,6 +63,8 @@
         <jstl:out value="${row.creator.name} ${row.creator.surname}"/></a>
         </display:column> 
    	    
+   	    <spring:message code="rendezvous.finalMode" var="finalModeHeader" />
+		<display:column property="finalMode" title="${finalModeHeader}" sortable="true" />
         	
 		<spring:message code="rendezvous.adultOnly" var="adultOnlyHeader" />
 		<display:column property="adultOnly" title="${adultOnlyHeader}" sortable="true" />
@@ -79,6 +89,8 @@
 			<a href="question/user/create.do?rendezvousId=${row.id}"><spring:message code="question.create"/></a>
 		</display:column>
 		</jstl:if>
+		
+
 		
 	</display:table>
 	
