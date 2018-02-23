@@ -51,13 +51,17 @@
 	<br>
 	
 	<spring:message code="rendezvous.adultOnly" />:
-	<input type="checkbox" name="adultOnly"
-		value="<spring:message code="rendezvous.adultOnly"/>" />
+	<input type="checkbox" name="adultOnly" 
+	<jstl:if test="${rendezvous.adultOnly==true}">
+	checked
+	</jstl:if> 
+		value="true" />
 	<br>
 	
 	<jstl:if test="${rendezvous.finalMode==false || rendezvous.flag!=Flag.DELETED}">
 		<input type="submit" name="save"
-			value="<spring:message code="rendezvous.save"/>" />&nbsp;
+			value="<spring:message code="rendezvous.save"/>" 
+			/>&nbsp;
 	<input type="submit" name="delete"
 			value="<spring:message code="rendezvous.delete"/>" />&nbsp;
     </jstl:if> 
@@ -96,12 +100,12 @@
 	
 	<spring:message code="rendezvous.finalMode" />:
 	<input type="checkbox" name="finalMode"
-		value="<spring:message code="rendezvous.finalMode"/>" />
+		value="true" />
 	<br>
 	
 	<spring:message code="rendezvous.adultOnly" />:
 	<input type="checkbox" name="adultOnly"
-		value="<spring:message code="rendezvous.adultOnly"/>" />
+		value="true" />
 	<br>
 	
 	<input type="submit" name="save"

@@ -86,6 +86,8 @@ public class RendezvousUserController extends AbstractController {
 
 		rendezvous = this.rendezvousService.findOne(rendezvousId);
 		Assert.notNull(rendezvous);
+		Assert.isTrue(!rendezvous.getFinalMode());
+
 		result = this.createEditModelAndView(rendezvous);
 		result.addObject("rendezvous", rendezvous);
 		return result;
@@ -131,11 +133,11 @@ public class RendezvousUserController extends AbstractController {
 
 		try {
 			final User user = this.userService.findByPrincipal();
-			
+
 			Assert.notNull(user);
 			RSVP rsvp = this.rsvpService.create(rendezvousId);
 			this.rsvpService.save(rsvp);
-			
+
 			redirectAttrs.addFlashAttribute("message", "rendezvous.commit.ok");
 			redirectAttrs.addFlashAttribute("msgType", "success");
 		} catch (final Throwable oops) {
@@ -157,16 +159,15 @@ public class RendezvousUserController extends AbstractController {
 		RSVP rsvpValido = null;
 		Assert.notNull(user);
 		Collection<RSVP> rsvps = this.rendezvousService.findRSVPs(rendezvousId);
-		for(RSVP rsvp: rsvps){
-			if(user.getRsvps().contains(rsvp)){
+		for (RSVP rsvp : rsvps) {
+			if (user.getRsvps().contains(rsvp)) {
 				rsvpValido = rsvp;
 				break;
 			}
 		}
-		
+
 		try {
-			
-			
+
 			this.rsvpService.delete(rsvpValido);
 
 			redirectAttrs.addFlashAttribute("message", "rendezvous.commit.ok");
@@ -178,7 +179,7 @@ public class RendezvousUserController extends AbstractController {
 		}
 
 		result = new ModelAndView("redirect:/rendezvous/list.do");
-		
+
 		return result;
 	}
 
