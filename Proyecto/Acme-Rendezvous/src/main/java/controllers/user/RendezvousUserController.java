@@ -187,8 +187,8 @@ public class RendezvousUserController extends AbstractController {
 			user.getAttendances().remove(rendezvous);
 			this.userService.save(user);
 
-			//rendezvous.getAttendants().remove(user);
-			//this.rendezvousService.save(rendezvous);
+			rendezvous.getAttendants().remove(user);
+			this.rendezvousService.save(rendezvous);
 
 			redirectAttrs.addFlashAttribute("message", "rendezvous.commit.ok");
 			redirectAttrs.addFlashAttribute("msgType", "success");

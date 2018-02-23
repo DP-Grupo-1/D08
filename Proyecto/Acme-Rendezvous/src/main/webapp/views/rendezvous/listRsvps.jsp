@@ -25,6 +25,11 @@
 <display:table name="rendezvouses" id="row" class="displayTag"
 	requestURI="${requestURI}" keepStatus="true" pagesize="5">
 
+			<display:column>
+				<a href="rendezvous/display.do?rendezvousId=${row.id}">
+					<spring:message code="rendezvous.list.display" />
+				</a>
+			</display:column>
 
 	<spring:message code="rendezvous.name" var="nameHeader" />
 	<display:column property="name" title="${nameHeader}" sortable="true" />
