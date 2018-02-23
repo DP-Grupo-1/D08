@@ -58,6 +58,9 @@
 	<display:column property="finalMode" title="${finalModeHeader}" sortable="true">
 	</display:column>
 	
+	<spring:message code="rendezvous.adultOnly" var="adultOnlyHeader" />
+		<display:column property="adultOnly" title="${adultOnlyHeader}" sortable="true" />
+	
 	<spring:message code="rendezvous.flag" var="flagHeader" />
 	<display:column property="flag" title="${flagHeader}" sortable="true">
 	</display:column>

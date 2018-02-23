@@ -47,6 +47,9 @@
 	
 	<spring:message code="rendezvous.finalMode" />:
 	<input type="checkbox" name="finalMode"
+		<jstl:if test="${rendezvous.finalMode==true}">
+			checked
+		</jstl:if> 
 		value="true" />
 	<br>
 	
@@ -100,11 +103,17 @@
 	
 	<spring:message code="rendezvous.finalMode" />:
 	<input type="checkbox" name="finalMode"
+		<jstl:if test="${rendezvous.finalMode==true}">
+			checked
+		</jstl:if> 
 		value="true" />
 	<br>
 	
 	<spring:message code="rendezvous.adultOnly" />:
 	<input type="checkbox" name="adultOnly"
+		<jstl:if test="${rendezvous.adultOnly==true}">
+			checked
+		</jstl:if> 
 		value="true" />
 	<br>
 	
