@@ -26,7 +26,7 @@
 
 <security:authorize access="hasRole('ADMIN')">
 
-<table>
+<table class="dashboard">
 	<tr> <td><spring:message code="dashboard.1.1" />:</td> <td></td>	</tr>
 	<tr> <td><spring:message code="dashboard.1.2" /> <td></td>	</tr>
 	<tr> <td><spring:message code="dashboard.2" />: <td></td>	</tr>
