@@ -153,12 +153,13 @@ public class RendezvousUserController extends AbstractController {
 			user.setAttendances(attendances);
 			this.userService.save(user);
 
-			//rendezvous.getAttendants().add(user);
-			//this.rendezvousService.save(rendezvous);
+			rendezvous.getAttendants().add(user);
+			this.rendezvousService.save(rendezvous);
 
 
 			redirectAttrs.addFlashAttribute("message", "rendezvous.commit.ok");
 			redirectAttrs.addFlashAttribute("msgType", "success");
+
 		} catch (final Throwable oops) {
 			System.out.println(oops.getLocalizedMessage());
 			System.out.println(oops.getMessage());
