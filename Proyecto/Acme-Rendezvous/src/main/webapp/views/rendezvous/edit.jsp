@@ -71,7 +71,7 @@
 </security:authorize>
 
 <security:authorize access="hasRole('ADMIN')">
-<form:form action="rendezvous/user/edit.do" modelAttribute="rendezvous">
+<form:form action="rendezvous/administrator/edit.do" modelAttribute="rendezvous">
 
     <form:hidden path="id" />
 	<form:hidden path="version" />

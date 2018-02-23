@@ -98,6 +98,23 @@
 <br>
 
 
+<security:authorize access="hasRole('ADMIN')">
+         <a href="rendezvous/administrator/edit.do?rendezvousId=${row.id}">
+           <spring:message code="rendezvous.edit" />
+         </a>
+</security:authorize>
+<br>
+
+
+<security:authorize access="hasRole('USER')">
+      <jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
+         <a href="rendezvous/user/edit.do?rendezvousId=${row.id}">
+           <spring:message code="rendezvous.edit" />
+         </a>
+       </jstl:if>
+</security:authorize>
+<br>
+
 <!-- 							 Rendezvouses linked										-->
 <h1>Rendezvouses linked</h1>
 <display:table pagesize="5" class="displaytag" keepStatus="true"

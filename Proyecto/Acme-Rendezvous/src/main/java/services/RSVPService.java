@@ -70,20 +70,21 @@ public class RSVPService{
 	}
 
 	public void delete(RSVP rsvp) {
-
+		System.out.println("llego aqui");
 		Assert.notNull(rsvp);
+
 		Assert.isTrue(this.RSVPRepository.exists(rsvp.getId()));
 		
 		// Authority
 		
 		User user = userService.findByPrincipal();
-		Assert.notNull(user);
-		
+		System.out.println("llego aqui");
 		user.getRsvps().remove(rsvp);
-		
+		System.out.println("llego aqui");
 		rsvp.getRendezvous().getAttendants().remove(user);
-		
+		System.out.println("llego aqui2");
 		this.RSVPRepository.delete(rsvp);
+		System.out.println("llego aqui3");
 	}
 	
 	public Collection<RSVP> findAll() {

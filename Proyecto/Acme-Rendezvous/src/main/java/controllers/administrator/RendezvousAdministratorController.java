@@ -62,12 +62,12 @@ public class RendezvousAdministratorController extends AbstractController {
 
 		ModelAndView result;
 
-		try {
+//		try {
 			this.rendezvousService.deleteByAdmin(rendezvous);
 			result = new ModelAndView("redirect:../../welcome/index.do");
-		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(rendezvous, "rendezvous.comit.error");
-		}
+//		} catch (final Throwable oops) {
+//			result = this.createEditModelAndView(rendezvous, "rendezvous.comit.error");
+//		}
 		return result;
 	}
 

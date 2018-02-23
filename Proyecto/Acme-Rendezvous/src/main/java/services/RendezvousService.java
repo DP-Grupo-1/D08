@@ -90,7 +90,7 @@ public class RendezvousService {
 	}
 
 	public void deleteByUser(final Rendezvous rendezvous) {
-
+		System.out.println("llego aqui4");
 		Assert.notNull(rendezvous);
 		Assert.notNull(this.findOne(rendezvous.getId()));
 
@@ -105,19 +105,26 @@ public class RendezvousService {
 	public void deleteByAdmin(final Rendezvous rendezvous) {
 
 		Assert.notNull(rendezvous);
+		
 		Assert.notNull(this.findOne(rendezvous.getId()));
-
+		
 		final Administrator admin = this.administratorService.findByPrincipal();
 		Assert.notNull(admin);
-
+		
 		final Collection<Rendezvous> rendezvouses = this.findRendezvousParents(rendezvous.getId());
-		for (final Rendezvous r : rendezvouses)
+		for (final Rendezvous r : rendezvouses){
 			r.getRendezvouses().remove(rendezvous);
-
+			
+	}
+		
+		
 		final Collection<RSVP> rsvps = this.findRSVPs(rendezvous.getId());
+		System.out.println("llego 1");
 		for (final RSVP rsvp : rsvps)
+			
 			this.rsvpService.delete(rsvp);
-
+			
+		System.out.println("llego 1.1");
 		this.rendezvousRepository.delete(rendezvous);
 	}
 
