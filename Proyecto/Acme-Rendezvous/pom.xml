@@ -31,7 +31,7 @@
 	<!-- Indexing information -->
 
 	<name>Acme-Rendezvous</name>
-	<url>http://www.Acme-Rendezvous.com</url>
+	<url>http://www.acme-rendezvous.com</url>
 	<description>This is an Acme-Rendezvous project.</description>
 	
 	<!-- Build commands -->
