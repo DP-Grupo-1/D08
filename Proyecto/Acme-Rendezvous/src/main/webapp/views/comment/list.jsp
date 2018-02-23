@@ -77,7 +77,7 @@
 
 </display:table>
 
-<!-- Create -->
+<!-- Create
 <security:authorize access="hasRole('USER')">
 <jstl:if test="${hasUserRSVPd==true}">
 	 <div>
@@ -85,6 +85,7 @@
 	 </div>
 </jstl:if>
 </security:authorize>
+-->
 
 <%-- <security:authorize access="hasRole('ADMIN')">
 	<div>
