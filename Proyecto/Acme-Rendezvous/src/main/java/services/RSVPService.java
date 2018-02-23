@@ -74,7 +74,7 @@ public class RSVPService{
 		Assert.notNull(rsvp);
 
 		Assert.isTrue(this.RSVPRepository.exists(rsvp.getId()));
-		
+		System.out.println("llego aqui");
 		// Authority
 		
 		User user = userService.findByPrincipal();

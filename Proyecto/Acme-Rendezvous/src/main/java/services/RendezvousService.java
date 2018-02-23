@@ -120,7 +120,7 @@ public class RendezvousService {
 		
 		final Collection<RSVP> rsvps = this.findRSVPs(rendezvous.getId());
 		System.out.println("llego 1");
-		for (final RSVP rsvp : rsvps)
+		for (RSVP rsvp : rsvps)
 			
 			this.rsvpService.delete(rsvp);
 			
