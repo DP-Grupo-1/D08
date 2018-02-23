@@ -159,6 +159,9 @@ public class RendezvousService {
 		return res;
 	}
 
+
+	//--------------------------------------------- DASHBOARD ---------------------------------------------------------
+
 	//	public Double[] avgStddevRendezvousPerUser() {
 	//		final Double[] result = this.rendezvousRepository.avgStddevRendezvousPerUser();
 	//		return result;
@@ -169,21 +172,44 @@ public class RendezvousService {
 	//		return result;
 	//	}
 
-	public Double[] avgStddevUsersPerRendezvous() {
-		final Double[] result = this.rendezvousRepository.avgStddevUsersPerRendezvous();
+	//3.1
+	public Double avgUsersPerRendezvous() {
+		final Double result = this.rendezvousRepository.avgUsersPerRendezvous();
 		return result;
 	}
 
-	public Double[] avgStddevRSVPsPerUser() {
-		final Double[] result = this.rendezvousRepository.avgStddevRSVPsPerUser();
+	//3.2
+	public Double stddevUsersPerRendezvous() {
+		final Double result = this.rendezvousRepository.stddevUsersPerRendezvous();
 		return result;
 	}
 
-	//	public Collection<Rendezvous> top10RendezvousesByRSVPs() {
-	//		final Collection<Rendezvous> result;
-	//		result = this.rendezvousRepository.top10RendezvousesByRSVPs();
-	//		return result;
-	//	}
+	//4.1
+	public Double avgRSVPsPerUser() {
+		final Double result = this.rendezvousRepository.avgRSVPsPerUser();
+		return result;
+	}
+
+	//4.2
+	public Double stddevRSVPsPerUser() {
+		final Double result = this.rendezvousRepository.stddevRSVPsPerUser();
+		return result;
+	}
+
+	//5
+	public Collection<Rendezvous> top10RendezvousesByRSVPs() {
+		final Collection<Rendezvous> top10RendezvousesByRSVPs = this.rendezvousRepository.top10RendezvousesByRSVPs();
+
+		final Collection<Rendezvous> finalTop10RendezvousesByRSVPs = new ArrayList<Rendezvous>();
+
+		for(final Rendezvous r: top10RendezvousesByRSVPs){
+			finalTop10RendezvousesByRSVPs.add(r);
+			if(finalTop10RendezvousesByRSVPs.size()>=10)
+				break;
+		}
+
+		return finalTop10RendezvousesByRSVPs;
+	}
 
 	//	private Collection<Rendezvous> above75AverageOfAnnouncementsPerRendezvous() {
 	//		final Collection<Rendezvous> result;
@@ -192,7 +218,7 @@ public class RendezvousService {
 	//	}
 
 	//	private Collection<Rendezvous> LinkedGreaterAveragePlus10() {
-	//		final Collection<Rendezvous> result; 
+	//		final Collection<Rendezvous> result;
 	//		result = this.rendezvousRepository.linkedGreaterAveragePlus10();
 	//		return result;
 	//	}

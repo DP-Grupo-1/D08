@@ -55,7 +55,7 @@
 		
 		
 		<security:authorize access="isAuthenticated()">
-		<li><a href="#" class="parent"><span><spring:message code="master.page.profile" />(<security:authentication property="principal.username" />)</span></a>
+		<li><a href="#" class="parent"><span><spring:message code="master.page.profile" /> (<security:authentication property="principal.username" />)</span></a>
 			<div><ul>
 				<li><a href="j_spring_security_logout"><span><spring:message code="master.page.logout" /></span></a></li>
 			</ul></div>

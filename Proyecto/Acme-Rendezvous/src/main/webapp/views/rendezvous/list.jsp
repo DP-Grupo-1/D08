@@ -66,17 +66,20 @@
 			<a href="user/list.do?rendezvousId=${row.id}"><spring:message code="rendezvous.attendants" /></a>
         </display:column>
         
+        
+        <jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
        <display:column>
-		<jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
 			<a href="question/user/list.do?rendezvousId=${row.id}"><spring:message code="question.list"/></a>
-		</jstl:if>
-		</display:column>
 		
-		<display:column>
-		<jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
-			<a href="question/user/create.do?rendezvousId=${row.id}"><spring:message code="question.create"/></a>
-		</jstl:if>
 		</display:column>
+		</jstl:if>
+		
+		<jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
+		<display:column>
+			<a href="question/user/create.do?rendezvousId=${row.id}"><spring:message code="question.create"/></a>
+		</display:column>
+		</jstl:if>
+		
 	</display:table>
 	
 	<!-- Action links -->
