@@ -27,7 +27,7 @@
 <security:authorize access="hasRole('ADMIN')">
 
 <table class="dashboard">
-	<tr> <td><spring:message code="dashboard.1.1" /></td> <td></td>	</tr>
+	<tr> <td><spring:message code="dashboard.1.1" /></td> <td><jstl:out value="${avgRendezvousPerUser}"/></td>	</tr>
 	<tr> <td><spring:message code="dashboard.1.2" /> <td></td>	</tr>
 	<tr> <td><spring:message code="dashboard.2" /> <td></td>	</tr>
 	<tr> <td><spring:message code="dashboard.3.1" /> </td> <td> <jstl:out value="${avgUsersPerRendezvous}"/> </td> </tr>
@@ -38,6 +38,8 @@
 											<td> <jstl:forEach var="x" items="${top10RendezvousesByRSVPs}" varStatus="status">
 												<a href="rendezvous/display.do?rendezvousId=${x.id}"><jstl:out value="${x.name}" /></a><jstl:if test="${not status.last}">,</jstl:if> 
 											</jstl:forEach> </td>
-	</tr>											
+	</tr>
+	<tr> <td><spring:message code="dashboard.17.2.1" /> </td> <td> <jstl:out value="${avgOfAnnouncementsPerRendezvous}"/> </td>	</tr>
+	<tr> <td><spring:message code="dashboard.17.2.2" /> </td> <td> </td>	</tr>										
 </table>
 </security:authorize>

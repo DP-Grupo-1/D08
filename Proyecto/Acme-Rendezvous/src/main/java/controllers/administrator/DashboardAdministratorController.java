@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.AdministratorService;
+import services.AnnouncementService;
 import services.RendezvousService;
 import domain.Rendezvous;
 
@@ -25,6 +26,9 @@ public class DashboardAdministratorController {
 	@Autowired
 	RendezvousService	rendezvousService;
 
+	@Autowired
+	AnnouncementService announcementService;
+
 
 	//Listing -----------------------------------------------------------
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -33,7 +37,7 @@ public class DashboardAdministratorController {
 
 		//Level C-----------------------------------------------------------------------------------------------------
 		//1
-
+		Double avgRendezvousPerUser = this.rendezvousService.avgRendezvousPerUser();
 		//2
 
 		//3
@@ -49,8 +53,14 @@ public class DashboardAdministratorController {
 
 
 		//Level B
+		final Double avgOfAnnouncementsPerRendezvous = this.announcementService.avgOfAnnouncementsPerRendezvous();
+
+
 
 		res = new ModelAndView("dashboard/list");
+
+		//1
+		res.addObject("avgRendezvousPerUser", avgRendezvousPerUser);
 
 		//3.1
 		res.addObject("avgUsersPerRendezvous", avgUsersPerRendezvous);
@@ -66,6 +76,10 @@ public class DashboardAdministratorController {
 
 		//5
 		res.addObject("top10RendezvousesByRSVPs", top10RendezvousesByRSVPs);
+
+		//B
+		res.addObject("avgOfAnnouncementsPerRendezvous", avgOfAnnouncementsPerRendezvous);
+
 
 
 		res.addObject("requestURI", "announcement/list.do");

@@ -154,10 +154,11 @@ public class RendezvousService {
 
 	//--------------------------------------------- DASHBOARD ---------------------------------------------------------
 
-	//	public Double[] avgStddevRendezvousPerUser() {
-	//		final Double[] result = this.rendezvousRepository.avgStddevRendezvousPerUser();
-	//		return result;
-	//	}
+	//1
+	public Double avgRendezvousPerUser() {
+		final Double result = this.rendezvousRepository.avgRendezvousPerUser();
+		return result;
+	}
 	//
 	//	public Double ratioUserWithRendezvous() {
 	//		final Double result = this.rendezvousRepository.ratioUserWithRendezvous();
