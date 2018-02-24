@@ -82,6 +82,19 @@ public class RendezvousService {
 
 		return result;
 	}
+	
+	public Rendezvous onlySave(final Rendezvous rendezvous) {
+		Rendezvous saved;
+		saved = this.rendezvousRepository.save(rendezvous);
+		return saved;
+	}
+	
+	public void onlyDelete(final Rendezvous rendezvous) {
+		
+		this.rendezvousRepository.delete(rendezvous);
+	}
+	
+	
 
 	public void deleteByUser(final Rendezvous rendezvous) {
 		
@@ -94,7 +107,7 @@ public class RendezvousService {
 		Assert.isTrue(rendezvous.getFinalMode() == false);
 		Assert.isTrue(rendezvous.getFlag() != Flag.DELETED);
 		rendezvous.setFlag(Flag.DELETED);
-		rendezvousRepository.save(rendezvous);
+		this.onlySave(rendezvous);
 	}
 
 	public void deleteByAdmin(final Rendezvous rendezvous) {
@@ -110,7 +123,7 @@ public class RendezvousService {
 		for (final Rendezvous r : rendezvouses)
 			r.getRendezvouses().remove(rendezvous);
 
-		this.rendezvousRepository.delete(rendezvous);
+		this.onlyDelete(rendezvous);
 	}
 
 	public Collection<Rendezvous> findAll() {
@@ -119,18 +132,23 @@ public class RendezvousService {
 		for (final Rendezvous r : result){
 			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE){
 				r.setFlag(Flag.PASSED);
-				this.rendezvousRepository.save(r);
+				this.onlySave(r);
 				result.add(r);
 			}}
 		return result;
 	}
 
 	public Rendezvous findOne(final int rendezvousId) {
-		final Rendezvous res = this.rendezvousRepository.findOne(rendezvousId);
+		final Rendezvous res = this.findOneOnly(rendezvousId);
 		if (res.getMoment().before(new Date()) && res.getFlag() == Flag.ACTIVE){
 			res.setFlag(Flag.PASSED);
-			this.rendezvousRepository.save(res);
+			this.onlySave(res);
 		}
+		return res;
+	}
+	
+	public Rendezvous findOneOnly(final int rendezvousId) {
+		final Rendezvous res = this.rendezvousRepository.findOne(rendezvousId);
 		return res;
 	}
 
@@ -143,7 +161,7 @@ public class RendezvousService {
 		for (final Rendezvous r : result){
 			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE){
 				r.setFlag(Flag.PASSED);
-				this.rendezvousRepository.save(r);
+				this.onlySave(r);
 				result.add(r);
 			}}
 		return result;
@@ -153,7 +171,7 @@ public class RendezvousService {
 		for (final Rendezvous r : res){
 			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE){
 				r.setFlag(Flag.PASSED);
-				this.rendezvousRepository.save(r);
+				this.onlySave(r);
 				res.add(r);
 			}}
 		return res;
