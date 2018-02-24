@@ -123,16 +123,18 @@ public class RendezvousService {
 
 		Assert.notNull(rendezvous);
 		Collection<Question> questions = questionService.findAllByrendezvous(rendezvous.getId());
-		Collection<Announcement> announcements = this.announcementService.findAnnouncementsByRendezvousId(rendezvous.getId());
+		Collection<Announcement> announcements = rendezvous.getAnnouncements();
+		Collection<User> attendants = rendezvous.getAttendants();
 		Assert.notNull(this.findOne(rendezvous.getId()));
 
 		final Administrator admin = this.administratorService.findByPrincipal();
 		Assert.notNull(admin);
 
 		final Collection<Rendezvous> rendezvouses = this.findRendezvousParents(rendezvous.getId());
+		if(!rendezvouses.isEmpty()){
 		for (final Rendezvous r : rendezvouses)
 			r.getRendezvouses().remove(rendezvous);
-
+		}
 		
 		if(!questions.isEmpty()){
 		for(Question q: questions){
@@ -148,10 +150,17 @@ public class RendezvousService {
 				}
 			}
 		
+		if(!attendants.isEmpty()){
+			for(User u: attendants){
+				
+					u.getAttendances().remove(rendezvous);
+					userService.save(u);
+				}
+			}
 		
-		this.rendezvousRepository.delete(rendezvous);
+		
 
-		this.onlyDelete(rendezvous);
+		this.rendezvousRepository.delete(rendezvous);
 
 	}
 

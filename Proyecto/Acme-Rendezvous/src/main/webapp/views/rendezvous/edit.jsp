@@ -31,6 +31,7 @@
 	<form:hidden path="attendants" />
 	<form:hidden path="rendezvouses" />
 	<form:hidden path="comments" />
+	<form:hidden path="announcements" />
 	
 	
     <acme:textbox code="rendezvous.name" path="name"/>
