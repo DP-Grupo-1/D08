@@ -84,7 +84,7 @@ public class RendezvousService {
 	}
 
 	public void deleteByUser(final Rendezvous rendezvous) {
-		System.out.println("llego aqui4");
+		
 		Assert.notNull(rendezvous);
 		Assert.notNull(this.findOne(rendezvous.getId()));
 
@@ -94,6 +94,7 @@ public class RendezvousService {
 		Assert.isTrue(rendezvous.getFinalMode() == false);
 		Assert.isTrue(rendezvous.getFlag() != Flag.DELETED);
 		rendezvous.setFlag(Flag.DELETED);
+		rendezvousRepository.save(rendezvous);
 	}
 
 	public void deleteByAdmin(final Rendezvous rendezvous) {
@@ -115,20 +116,22 @@ public class RendezvousService {
 	public Collection<Rendezvous> findAll() {
 		final Collection<Rendezvous> result = this.rendezvousRepository.findAll();
 
-		for (final Rendezvous r : result)
-			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE)
+		for (final Rendezvous r : result){
+			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE){
 				r.setFlag(Flag.PASSED);
-
+				this.rendezvousRepository.save(r);
+				result.add(r);
+			}}
 		return result;
 	}
 
 	public Rendezvous findOne(final int rendezvousId) {
-		final Rendezvous result = this.rendezvousRepository.findOne(rendezvousId);
-
-		if (result.getMoment().before(new Date()) && result.getFlag() == Flag.ACTIVE)
-			result.setFlag(Flag.PASSED);
-
-		return result;
+		final Rendezvous res = this.rendezvousRepository.findOne(rendezvousId);
+		if (res.getMoment().before(new Date()) && res.getFlag() == Flag.ACTIVE){
+			res.setFlag(Flag.PASSED);
+			this.rendezvousRepository.save(res);
+		}
+		return res;
 	}
 
 	// Other business methods ----------------------------------
@@ -137,18 +140,22 @@ public class RendezvousService {
 		Collection<Rendezvous> result;
 		result = this.rendezvousRepository.findByUserId(userId);
 
-		for (final Rendezvous r : result)
-			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE)
+		for (final Rendezvous r : result){
+			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE){
 				r.setFlag(Flag.PASSED);
-
+				this.rendezvousRepository.save(r);
+				result.add(r);
+			}}
 		return result;
 	}
 	public Collection<Rendezvous> findByCreatorId(final int userId) {
 		final Collection<Rendezvous> res = this.rendezvousRepository.findByCreatorId(userId);
-		for (final Rendezvous r : res)
-			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE)
+		for (final Rendezvous r : res){
+			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE){
 				r.setFlag(Flag.PASSED);
-
+				this.rendezvousRepository.save(r);
+				res.add(r);
+			}}
 		return res;
 	}
 
