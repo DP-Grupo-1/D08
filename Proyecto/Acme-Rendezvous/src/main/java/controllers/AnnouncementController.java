@@ -17,8 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.AnnouncementService;
+import services.RendezvousService;
 import domain.Announcement;
+import domain.Rendezvous;
 
 @Controller
 @RequestMapping("/announcement")
@@ -26,7 +27,7 @@ public class AnnouncementController extends AbstractController {
 
 	//Services ----------------------------------------------------------
 	@Autowired
-	private AnnouncementService	announcementService;
+	private RendezvousService	rendezvousService;
 
 
 
@@ -35,9 +36,11 @@ public class AnnouncementController extends AbstractController {
 	public ModelAndView list(@RequestParam final Integer rendezvousId) {
 		ModelAndView res;
 
-		Collection<Announcement> announcements = this.announcementService.findAnnouncementsByRendezvousId(rendezvousId);
+		final Rendezvous r = this.rendezvousService.findOne(rendezvousId);
+		final Collection<Announcement> announcements = r.getAnnouncements();
 
 		res = new ModelAndView("announcement/list");
+		res.addObject("rendezvous", r);
 		res.addObject("announcements", announcements);
 		res.addObject("requestURI", "announcement/list.do");
 

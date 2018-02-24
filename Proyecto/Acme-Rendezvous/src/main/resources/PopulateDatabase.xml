@@ -62,6 +62,12 @@
 		<property name="locationLongitude" value="47.3" />
 		<property name="flag" value="ACTIVE" />
 		
+		<property name="announcements">
+			<list>
+				<ref bean="announcement1" />
+			</list>
+		</property>
+		
 		<property name="rendezvouses">
 			<list>
 				<ref bean="rendezvous2" />
@@ -91,7 +97,14 @@
 		<property name="locationLatitude" value="20.5" />
 		<property name="locationLongitude" value="70.0" />
 		<property name="flag" value="PASSED" />
-			
+		
+		<property name="announcements">
+			<list>
+				<ref bean="announcement2" />
+				<ref bean="announcement3" />
+			</list>
+		</property>
+		
 		<property name="rendezvouses">
 			<list>
 			</list>
@@ -265,21 +278,18 @@
 		<property name="moment" value="2018/05/10 18:00" />
 		<property name="title" value="announcement1" />
 		<property name="description" value="description1" />
-		<property name="rendezvous" ref="rendezvous1" />
 	</bean>
 
 	<bean id="announcement2" class="domain.Announcement">
 		<property name="moment" value="2018/05/10 20:00" />
 		<property name="title" value="announcement2" />
 		<property name="description" value="description2" />
-		<property name="rendezvous" ref="rendezvous2" />
 	</bean>
 
 	<bean id="announcement3" class="domain.Announcement">
 		<property name="moment" value="2018/05/15 19:00" />
 		<property name="title" value="announcement3" />
 		<property name="description" value="description3" />
-		<property name="rendezvous" ref="rendezvous2" />
 	</bean>
 
 
