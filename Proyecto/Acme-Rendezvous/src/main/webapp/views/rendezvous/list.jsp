@@ -31,14 +31,18 @@
 			<display:column>
 				<a href="rendezvous/display.do?rendezvousId=${row.id}">
 					<spring:message code="rendezvous.list.display" />
-				</a>
+				</a> <br/>
+				  <jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
+		  			<a href="announcement/user/create.do?rendezvousId=${row.id}"><spring:message code="announcement.create" /></a>
+   		 		</jstl:if>
 				
 			<jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
 			<jstl:if test="${row.finalMode == false}">
 				<a href="rendezvous/user/edit.do?rendezvousId=${row.id}"><spring:message code="rendezvous.edit"/></a>
 				</jstl:if>
 			</jstl:if>
-		
+			
+
 			</display:column>
 		
 <!-- Attributes -->
@@ -101,3 +105,4 @@
 		  <a href="rendezvous/user/create.do"><spring:message code="rendezvous.create" /></a>
 	   </div>
     </security:authorize>
+    
