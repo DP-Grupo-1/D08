@@ -41,6 +41,7 @@ public class RendezvousController extends AbstractController {
 
 		rendezvouses = this.rendezvousService.findAll();
 
+
 		result = new ModelAndView("rendezvous/list");
 		result.addObject("rendezvouses", rendezvouses);
 		result.addObject("requestURI", "rendezvous/list.do");

@@ -26,7 +26,6 @@
 				<div><ul>
 					<li><a href="user/list.do"><span><spring:message code="master.page.common1" /></span></a></li>
 					<li><a href="rendezvous/list.do"><span><spring:message code="master.page.common2" /></span></a></li>
-					<li><a href="announcement/list.do"><span><spring:message code="master.page.common3" /></span></a></li>
 				</ul></div>
 			</li>
 		<security:authorize access="hasRole('ADMIN')">

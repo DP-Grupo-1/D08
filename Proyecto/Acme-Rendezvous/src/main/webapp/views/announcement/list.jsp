@@ -29,7 +29,7 @@
 
 
 	<!-- Attributes -->
-
+	
 	<spring:message code="announcement.moment" var="momentHeader" />
 	<display:column property="moment" title="${momentHeader}" sortable="true" />
 

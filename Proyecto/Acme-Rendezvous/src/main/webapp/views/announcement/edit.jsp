@@ -33,7 +33,7 @@
 	<form:label path="title">
 		<spring:message code="announcement.title" />:
 	</form:label>
-	<form:input path="title" />
+	<form:input path="title"/>
 	<form:errors cssClass="error" path="title" />
 	<br />
 	

@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import repositories.AnnouncementRepository;
 import security.LoginService;
 import security.UserAccount;
 import services.AnnouncementService;
@@ -34,9 +33,6 @@ import domain.User;
 @RequestMapping("/announcement/user")
 public class AnnouncementUserController extends AbstractController {
 
-	//Repository ----------------------------------------------------------
-	@Autowired
-	private AnnouncementRepository	announcementRepository;
 
 	//Services ----------------------------------------------------------
 	@Autowired
@@ -77,7 +73,7 @@ public class AnnouncementUserController extends AbstractController {
 		Collection<Announcement> announcements = new ArrayList<Announcement>();
 
 		for (Integer i : rendezvousesIds) {
-			announcements.addAll(this.announcementRepository.findAnnouncementsOfMyRSVP(i));
+			announcements.addAll(this.announcementService.findAnnouncementsByRendezvousId(i));
 		}
 
 		res = new ModelAndView("announcement/list");

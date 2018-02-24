@@ -32,7 +32,7 @@
 	<form:hidden path="rendezvouses" />
 	<form:hidden path="comments" />
 	
-
+	
     <acme:textbox code="rendezvous.name" path="name"/>
     
     <acme:textbox code="rendezvous.description" path="description"/>
@@ -89,20 +89,20 @@
 	<form:hidden path="comments" />
 	
 
-    <acme:textbox code="rendezvous.name" path="name"/>
+    <acme:textbox code="rendezvous.name" disabled="true" path="name"/>
     
-    <acme:textbox code="rendezvous.description" path="description"/>
+    <acme:textbox code="rendezvous.description" disabled="true" path="description"/>
     
-    <acme:textbox code="rendezvous.moment" path="moment"/>
+    <acme:textbox code="rendezvous.moment" disabled="true" path="moment"/>
     
-    <acme:textbox code="rendezvous.picture" path="picture"/>
+    <acme:textbox code="rendezvous.picture" disabled="true" path="picture"/>
     
-    <acme:textbox code="rendezvous.locationLatitude" path="locationLatitude"/>
+    <acme:textbox code="rendezvous.locationLatitude" disabled="true" path="locationLatitude"/>
     
-    <acme:textbox code="rendezvous.locationLongitude" path="locationLongitude"/>
+    <acme:textbox code="rendezvous.locationLongitude" disabled="true" path="locationLongitude"/>
 	
 	<spring:message code="rendezvous.finalMode" />:
-	<input type="checkbox" name="finalMode"
+	<input type="checkbox" disabled="disabled" name="finalMode"
 		<jstl:if test="${rendezvous.finalMode==true}">
 			checked
 		</jstl:if> 
@@ -110,7 +110,7 @@
 	<br>
 	
 	<spring:message code="rendezvous.adultOnly" />:
-	<input type="checkbox" name="adultOnly"
+	<input type="checkbox" disabled="disabled" name="adultOnly"
 		<jstl:if test="${rendezvous.adultOnly==true}">
 			checked
 		</jstl:if> 
