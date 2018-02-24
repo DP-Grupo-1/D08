@@ -78,4 +78,10 @@ public class AnnouncementService {
 		return res;
 	}
 
+	public Collection<Announcement> findAnnouncementsByRendezvousId(final int rendezvousId) {
+
+		Collection<Announcement> res = this.announcementRepository.findAnnouncementsByRendezvousId(rendezvousId);
+
+		return res;
+	}
 }

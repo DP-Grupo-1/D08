@@ -13,5 +13,5 @@ import domain.Announcement;
 public interface AnnouncementRepository extends JpaRepository<Announcement, Integer> {
 
 	@Query("select a from Announcement a where a.rendezvous.id=?1")
-	Collection<Announcement> findAnnouncementsOfMyRSVP(int rendezvousId);
+	Collection<Announcement> findAnnouncementsByRendezvousId(int rendezvousId);
 }

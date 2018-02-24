@@ -80,6 +80,10 @@
 			<a href="user/list.do?rendezvousId=${row.id}"><spring:message code="rendezvous.attendants" /></a>
         </display:column>
         
+        <display:column >
+			<a href="announcement/list.do?rendezvousId=${row.id}"><spring:message code="rendezvous.announcements" /></a>
+        </display:column>
+        
         
         <jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
        <display:column>
