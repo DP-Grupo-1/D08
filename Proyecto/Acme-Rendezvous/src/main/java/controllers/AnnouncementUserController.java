@@ -47,7 +47,7 @@ public class AnnouncementUserController extends AbstractController {
 	public ModelAndView create(@RequestParam final Integer rendezvousId) {
 		ModelAndView result;
 
-		Announcement announcement = this.announcementService.create();
+		final Announcement announcement = this.announcementService.create();
 
 		result = this.createEditModelAndView(announcement);
 		result.addObject("rendezvousId", rendezvousId);
@@ -60,21 +60,15 @@ public class AnnouncementUserController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView res;
 
-		UserAccount userAcc = LoginService.getPrincipal();
-		User u = this.userService.findByUserAccount(userAcc);
+		final UserAccount userAcc = LoginService.getPrincipal();
+		final User u = this.userService.findByUserAccount(userAcc);
 
 		//Display a stream of announcements that have been posted to the rendezvouses that he or she's RSVPd
-		Collection<Integer> rendezvousesIds = new ArrayList<Integer>();
+		final Collection<Announcement> announcements = new ArrayList<Announcement>();
 
-		for (Rendezvous r : u.getAttendances()) {
-			rendezvousesIds.add(r.getId());
-		}
+		for (final Rendezvous r : u.getAttendances())
+			announcements.addAll(r.getAnnouncements());
 
-		Collection<Announcement> announcements = new ArrayList<Announcement>();
-
-		for (Integer i : rendezvousesIds) {
-			announcements.addAll(this.announcementService.findAnnouncementsByRendezvousId(i));
-		}
 
 		res = new ModelAndView("announcement/list");
 		res.addObject("announcements", announcements);

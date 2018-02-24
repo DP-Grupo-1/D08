@@ -1,7 +1,6 @@
 
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -42,12 +41,12 @@ public class AnnouncementService {
 	}
 
 	public Announcement save(final Announcement announcement) {
-		UserAccount userAcc = LoginService.getPrincipal();
+		final UserAccount userAcc = LoginService.getPrincipal();
 		Assert.notNull(userAcc);
 		Assert.notNull(this.userService.findByUserAccount(userAcc));
 		Assert.notNull(announcement);
 
-		Announcement res = this.announcementRepository.save(announcement);
+		final Announcement res = this.announcementRepository.save(announcement);
 
 		return res;
 	}
@@ -56,7 +55,7 @@ public class AnnouncementService {
 
 		Assert.notNull(announcement);
 
-		UserAccount userAcc = LoginService.getPrincipal();
+		final UserAccount userAcc = LoginService.getPrincipal();
 		Assert.notNull(userAcc);
 		Assert.notNull(this.administratorService.findByUserAccount(userAcc));
 
@@ -79,16 +78,14 @@ public class AnnouncementService {
 		return res;
 	}
 
-	public Collection<Announcement> findAnnouncementsByRendezvousId(final int rendezvousId) {
-
-		Collection<Announcement> res = new ArrayList<Announcement>();
-		res.addAll(this.announcementRepository.findAnnouncementsByRendezvousId(rendezvousId));
-
-		return res;
-	}
-
+	//3.1
 	public Double avgOfAnnouncementsPerRendezvous(){
 		return this.announcementRepository.avgOfAnnouncementsPerRendezvous();
+	}
+
+	//3.2
+	public Double stddAnnouncementsPerRendezvous(){
+		return this.announcementRepository.stddAnnouncementsPerRendezvous();
 	}
 
 }
