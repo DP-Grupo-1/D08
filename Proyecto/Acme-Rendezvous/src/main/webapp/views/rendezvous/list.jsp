@@ -42,7 +42,14 @@
 				</jstl:if>
 			</jstl:if>
 			
-
+			<security:authorize access="hasRole('ADMIN')">
+			<display:column>
+	   	<div>
+			<a href="rendezvous/administrator/delete.do?rendezvousId=${row.id}"><spring:message code="rendezvous.delete"/></a>
+		</div>
+		</display:column>
+    </security:authorize>
+    
 			</display:column>
 		
 <!-- Attributes -->
