@@ -63,28 +63,25 @@ public class CommentService {
 	}
 
 	public void delete(final Comment comment) {
+		System.out.println("llega aqui 2");
 		Assert.notNull(comment);
-		Assert.isTrue(this.commentRepository.exists(comment.getId()));
+		System.out.println("llega aqui 3");
+		//		Assert.isTrue(this.commentRepository.exists(comment.getId()));
 		final Administrator administrator = this.administratorService.findByPrincipal();
 		Assert.notNull(administrator);
-		//		final Collection<Reply> replies = comment.getReplies();
-		//		for (final Reply r : replies)
-		//			for (final User u : this.userService.findAll()) {
-		//				u.getComments().remove(comment.get);
-		//				if (u.getReplies().contains(r)) {
-		//					u.getReplies().remove(r);
-		//					break;
-		//				}
-		//				this.replyService.delete(r);
-		//			}
-
+		this.quitarCommentReply(comment);
+		System.out.println("llega aqui 4");
 		this.commentRepository.delete(comment);
 	}
 
-	public void quitarCommentReply(final Comment comment) {
+	private void quitarCommentReply(final Comment comment) {
 		final Collection<Reply> replies = comment.getReplies();
-		for (final Reply r : replies)
+		if (!replies.isEmpty())
+			System.out.println("llega aqui1");
+		for (final Reply r : replies) {
+			System.out.println("llega aqui2");
 			this.userService.findByReplyId(r.getId()).getReplies().remove(r);
+		}
 		this.rendezvousService.findByCommentId(comment.getId()).getComments().remove(comment);
 		this.userService.findByCommentId(comment.getId()).getComments().remove(comment);
 	}

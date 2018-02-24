@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -14,6 +15,7 @@ import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.Comment;
+import domain.Reply;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -24,9 +26,11 @@ public class CommentServiceTest extends AbstractTest {
 
 	//Service under test--------------------------------------------------------------
 	@Autowired
-	private CommentService		commentService;
+	private CommentService	commentService;
 	@Autowired
-	private RendezvousService	rendezvousService;
+	private ReplyService	replyService;
+	@Autowired
+	private UserService		userService;
 
 
 	//Tests------------------------------------------------------------------------
@@ -36,9 +40,13 @@ public class CommentServiceTest extends AbstractTest {
 		final List<Comment> comments = (List<Comment>) this.commentService.findAll();
 		final Comment comment = comments.get(0);
 		System.out.println(comments);
-		this.commentService.quitarCommentReply(comment);
+		final Collection<Reply> replies = this.replyService.findAll();
+		System.out.println(replies);
 
 		this.commentService.delete(comment);
+		final Collection<Reply> replies2 = this.replyService.findAll();
+
+		System.out.println(replies2);
 		final List<Comment> comments2 = (List<Comment>) this.commentService.findAll();
 
 		System.out.println(comments2);

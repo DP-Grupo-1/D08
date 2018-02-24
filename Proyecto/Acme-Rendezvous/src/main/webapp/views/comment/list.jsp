@@ -75,7 +75,7 @@
 			</a>
 <security:authorize access="hasRole('ADMIN')">
 	<display:column>
-		<a href="comment/administrator/delete.do" 
+		<a href="comment/administrator/delete.do?commentId=${row.id }" 
 		onclick="return confirm('<spring:message code="comment.confirm.delete" />')">
 				<spring:message code="comment.delete"/>
 				</a>

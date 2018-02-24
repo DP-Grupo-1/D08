@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -59,7 +60,7 @@ public class Comment extends DomainEntity {
 
 	@NotNull
 	@Valid
-	@OneToMany()
+	@OneToMany(cascade = CascadeType.ALL)
 	public Collection<Reply> getReplies() {
 		return this.replies;
 	}
