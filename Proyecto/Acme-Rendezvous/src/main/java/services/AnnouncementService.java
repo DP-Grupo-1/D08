@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -80,8 +81,14 @@ public class AnnouncementService {
 
 	public Collection<Announcement> findAnnouncementsByRendezvousId(final int rendezvousId) {
 
-		Collection<Announcement> res = this.announcementRepository.findAnnouncementsByRendezvousId(rendezvousId);
+		Collection<Announcement> res = new ArrayList<Announcement>();
+		res.addAll(this.announcementRepository.findAnnouncementsByRendezvousId(rendezvousId));
 
 		return res;
 	}
+
+	public Double avgOfAnnouncementsPerRendezvous(){
+		return this.announcementRepository.avgOfAnnouncementsPerRendezvous();
+	}
+
 }
