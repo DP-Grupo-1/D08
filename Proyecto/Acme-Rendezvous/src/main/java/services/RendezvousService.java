@@ -12,8 +12,10 @@ import org.springframework.util.Assert;
 
 import repositories.RendezvousRepository;
 import domain.Administrator;
+import domain.Announcement;
 import domain.Comment;
 import domain.Flag;
+import domain.Question;
 import domain.Rendezvous;
 import domain.User;
 
@@ -33,6 +35,13 @@ public class RendezvousService {
 
 	@Autowired
 	private AdministratorService	administratorService;
+	
+	@Autowired 
+	private QuestionService questionService;
+	
+	@Autowired 
+	private AnnouncementService announcementService;
+
 
 
 	// Simple CRUD methods ------------------------------------------
@@ -100,7 +109,8 @@ public class RendezvousService {
 	public void deleteByAdmin(final Rendezvous rendezvous) {
 
 		Assert.notNull(rendezvous);
-
+		Collection<Question> questions = questionService.findAllByrendezvous(rendezvous.getId());
+		Collection<Announcement> announcements = this.announcementService.findAnnouncementsByRendezvousId(rendezvous.getId());
 		Assert.notNull(this.findOne(rendezvous.getId()));
 
 		final Administrator admin = this.administratorService.findByPrincipal();
@@ -110,6 +120,22 @@ public class RendezvousService {
 		for (final Rendezvous r : rendezvouses)
 			r.getRendezvouses().remove(rendezvous);
 
+		
+		if(!questions.isEmpty()){
+		for(Question q: questions){
+			
+				this.questionService.deleteByAdmin(q);
+			}
+		}
+		
+		if(!announcements.isEmpty()){
+			for(Announcement a: announcements){
+				
+					this.announcementService.delete(a);
+				}
+			}
+		
+		
 		this.rendezvousRepository.delete(rendezvous);
 	}
 

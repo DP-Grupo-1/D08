@@ -63,10 +63,8 @@ public class CommentService {
 	}
 
 	public void delete(final Comment comment) {
-		System.out.println("llega aqui 2");
+		
 		Assert.notNull(comment);
-		System.out.println("llega aqui 3");
-		//		Assert.isTrue(this.commentRepository.exists(comment.getId()));
 		final Administrator administrator = this.administratorService.findByPrincipal();
 		Assert.notNull(administrator);
 		this.quitarCommentReply(comment);
