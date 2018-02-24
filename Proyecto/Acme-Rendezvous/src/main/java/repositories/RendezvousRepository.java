@@ -1,10 +1,12 @@
-/* ExamRepository.java
+/*
+ * ExamRepository.java
  * 
  * Copyright (C) 2017 Universidad de Sevilla
  * 
  * The use of this project is hereby constrained to the conditions of the
  * TDG Licence, a copy of which you may download from
- * http:www.tdg-seville.info/License.html */
+ * http:www.tdg-seville.info/License.html
+ */
 
 package repositories;
 
@@ -23,7 +25,6 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous, Integer>
 	//	o ya ha asistido.
 	@Query("select u.attendances from User u where u.id = ?1")
 	Collection<Rendezvous> findByUserId(int userId);
-
 
 	@Query("select r from Rendezvous r where r.creator.id=?1")
 	Collection<Rendezvous> findByCreatorId(int creatorId);
@@ -71,5 +72,8 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous, Integer>
 
 	//	@Query("select rsvp from RSVP rsvp join rsvp.rendezvous r where r.id = ?1")
 	//	Collection<RSVP> findRSVPs(int rendezvousId);
+
+	@Query("select r from Rendezvous r join r.comments c where c.id=?1")
+	Rendezvous findByCommentId(int commentId);
 
 }

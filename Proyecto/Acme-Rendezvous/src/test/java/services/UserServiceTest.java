@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -12,6 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
+import domain.Reply;
 import domain.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -23,7 +25,9 @@ public class UserServiceTest {
 
 	//Service under test--------------------------------------------------
 	@Autowired
-	private UserService	userService;
+	private UserService		userService;
+	@Autowired
+	private ReplyService	replyService;
 
 
 	//Tests----------------------------------------------------------
@@ -73,5 +77,13 @@ public class UserServiceTest {
 	public void testFindAll() {
 		final Collection<User> users = this.userService.findAll();
 		System.out.println(users);
+	}
+	@Test
+	public void testFindByReply() {
+		final List<Reply> replies = (List<Reply>) this.replyService.findAll();
+		final Reply reply = replies.get(0);
+		System.out.println(reply.getText() + "-->");
+		final User user = this.userService.findByReplyId(reply.getId());
+		System.out.println(user.getName());
 	}
 }

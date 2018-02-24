@@ -81,18 +81,12 @@ public class CommentService {
 		this.commentRepository.delete(comment);
 	}
 
-	public void quitarCommentReply(final Comment comment, final int userId, final int rendezvousId) {
-		Assert.notNull(userId);
-		Assert.notNull(rendezvousId);
-		final User user = this.userService.findOne(userId);
-		final Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
-		Assert.notNull(rendezvous);
-		Assert.notNull(user);
+	public void quitarCommentReply(final Comment comment) {
 		final Collection<Reply> replies = comment.getReplies();
 		for (final Reply r : replies)
-			user.getReplies().remove(r);
-		rendezvous.getComments().remove(comment);
-		user.getComments().remove(comment);
+			this.userService.findByReplyId(r.getId()).getReplies().remove(r);
+		this.rendezvousService.findByCommentId(comment.getId()).getComments().remove(comment);
+		this.userService.findByCommentId(comment.getId()).getComments().remove(comment);
 	}
 	public Comment findOne(final int commentID) {
 		final Comment res = this.commentRepository.findOne(commentID);

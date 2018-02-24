@@ -24,7 +24,9 @@ public class CommentServiceTest extends AbstractTest {
 
 	//Service under test--------------------------------------------------------------
 	@Autowired
-	private CommentService	commentService;
+	private CommentService		commentService;
+	@Autowired
+	private RendezvousService	rendezvousService;
 
 
 	//Tests------------------------------------------------------------------------
@@ -34,11 +36,12 @@ public class CommentServiceTest extends AbstractTest {
 		final List<Comment> comments = (List<Comment>) this.commentService.findAll();
 		final Comment comment = comments.get(0);
 		System.out.println(comments);
-		this.commentService.quitarCommentReply(comment, 95, 103);
+		this.commentService.quitarCommentReply(comment);
 
 		this.commentService.delete(comment);
+		final List<Comment> comments2 = (List<Comment>) this.commentService.findAll();
 
-		System.out.println(comments);
+		System.out.println(comments2);
 		Assert.isTrue(!this.commentService.findAll().contains(comment));
 		super.authenticate(null);
 	}

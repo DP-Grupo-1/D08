@@ -26,6 +26,9 @@ public class UserService {
 	//Managed repository----------------------------------------------
 	@Autowired
 	private UserRepository	userRepository;
+	//Suporting services---------------------------------------------
+	@Autowired
+	private ReplyService	replyService;
 
 
 	//CRUD methods-------------------------------------------------------
@@ -87,6 +90,18 @@ public class UserService {
 		Assert.notNull(res);
 		return res;
 
+	}
+
+	public User findByReplyId(final Integer replyId) {
+		Assert.notNull(replyId);
+		User res;
+		res = this.userRepository.findByReplyId(replyId);
+		return res;
+	}
+	public User findByCommentId(final Integer commentId) {
+		Assert.notNull(commentId);
+		final User res = this.userRepository.findByCommentId(commentId);
+		return res;
 	}
 
 }

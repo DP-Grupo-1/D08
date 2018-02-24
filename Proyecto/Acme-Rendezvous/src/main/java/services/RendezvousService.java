@@ -231,4 +231,10 @@ public class RendezvousService {
 		return comments;
 	}
 
+	public Rendezvous findByCommentId(final Integer commentId) {
+		Assert.notNull(commentId);
+		final Rendezvous res = this.rendezvousRepository.findByCommentId(commentId);
+		return res;
+	}
+
 }
