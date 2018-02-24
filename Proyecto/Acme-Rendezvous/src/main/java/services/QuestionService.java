@@ -6,7 +6,9 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
+import domain.Administrator;
 import domain.Answer;
 import domain.Question;
 import domain.Rendezvous;
@@ -26,6 +28,9 @@ public class QuestionService {
 		private RendezvousService		rendezvousService;
 		@Autowired
 		private UserService		userService;
+		
+		@Autowired
+		private AdministratorService		administratorService;
 
 
 		// Constructors -----------------------------------------------------------
@@ -59,6 +64,14 @@ public class QuestionService {
 			
 			Question saved = this.questionRepository.save(question);
 			return saved;
+		}
+		
+		public void deleteByAdmin(final Question question) {
+			
+			Assert.notNull(question);
+			final Administrator administrator = this.administratorService.findByPrincipal();
+			Assert.notNull(administrator);
+			this.questionRepository.delete(question);
 		}
 		
 		public Collection<Question> findAllByPrincipalAndRendezvous(int principalId, int rendezvousId){

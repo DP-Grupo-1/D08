@@ -21,6 +21,9 @@ import domain.Rendezvous;
 @Repository
 public interface RendezvousRepository extends JpaRepository<Rendezvous, Integer> {
 
+	
+	
+	
 	//	Requisito 4.2: Lista de reuniones o quedadas a las que el usuario va a asistir
 	//	o ya ha asistido.
 	@Query("select u.attendances from User u where u.id = ?1")

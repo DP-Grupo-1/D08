@@ -12,8 +12,10 @@ import org.springframework.util.Assert;
 
 import repositories.RendezvousRepository;
 import domain.Administrator;
+import domain.Announcement;
 import domain.Comment;
 import domain.Flag;
+import domain.Question;
 import domain.Rendezvous;
 import domain.User;
 
@@ -33,6 +35,13 @@ public class RendezvousService {
 
 	@Autowired
 	private AdministratorService	administratorService;
+	
+	@Autowired 
+	private QuestionService questionService;
+	
+	@Autowired 
+	private AnnouncementService announcementService;
+
 
 
 	// Simple CRUD methods ------------------------------------------
@@ -82,6 +91,19 @@ public class RendezvousService {
 
 		return result;
 	}
+	
+	public Rendezvous onlySave(final Rendezvous rendezvous) {
+		Rendezvous saved;
+		saved = this.rendezvousRepository.save(rendezvous);
+		return saved;
+	}
+	
+	public void onlyDelete(final Rendezvous rendezvous) {
+		
+		this.rendezvousRepository.delete(rendezvous);
+	}
+	
+	
 
 	public void deleteByUser(final Rendezvous rendezvous) {
 		
@@ -94,13 +116,14 @@ public class RendezvousService {
 		Assert.isTrue(rendezvous.getFinalMode() == false);
 		Assert.isTrue(rendezvous.getFlag() != Flag.DELETED);
 		rendezvous.setFlag(Flag.DELETED);
-		rendezvousRepository.save(rendezvous);
+		this.onlySave(rendezvous);
 	}
 
 	public void deleteByAdmin(final Rendezvous rendezvous) {
 
 		Assert.notNull(rendezvous);
-
+		Collection<Question> questions = questionService.findAllByrendezvous(rendezvous.getId());
+		Collection<Announcement> announcements = this.announcementService.findAnnouncementsByRendezvousId(rendezvous.getId());
 		Assert.notNull(this.findOne(rendezvous.getId()));
 
 		final Administrator admin = this.administratorService.findByPrincipal();
@@ -110,7 +133,26 @@ public class RendezvousService {
 		for (final Rendezvous r : rendezvouses)
 			r.getRendezvouses().remove(rendezvous);
 
+		
+		if(!questions.isEmpty()){
+		for(Question q: questions){
+			
+				this.questionService.deleteByAdmin(q);
+			}
+		}
+		
+		if(!announcements.isEmpty()){
+			for(Announcement a: announcements){
+				
+					this.announcementService.delete(a);
+				}
+			}
+		
+		
 		this.rendezvousRepository.delete(rendezvous);
+
+		this.onlyDelete(rendezvous);
+
 	}
 
 	public Collection<Rendezvous> findAll() {
@@ -119,18 +161,23 @@ public class RendezvousService {
 		for (final Rendezvous r : result){
 			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE){
 				r.setFlag(Flag.PASSED);
-				this.rendezvousRepository.save(r);
+				this.onlySave(r);
 				result.add(r);
 			}}
 		return result;
 	}
 
 	public Rendezvous findOne(final int rendezvousId) {
-		final Rendezvous res = this.rendezvousRepository.findOne(rendezvousId);
+		final Rendezvous res = this.findOneOnly(rendezvousId);
 		if (res.getMoment().before(new Date()) && res.getFlag() == Flag.ACTIVE){
 			res.setFlag(Flag.PASSED);
-			this.rendezvousRepository.save(res);
+			this.onlySave(res);
 		}
+		return res;
+	}
+	
+	public Rendezvous findOneOnly(final int rendezvousId) {
+		final Rendezvous res = this.rendezvousRepository.findOne(rendezvousId);
 		return res;
 	}
 
@@ -143,7 +190,7 @@ public class RendezvousService {
 		for (final Rendezvous r : result){
 			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE){
 				r.setFlag(Flag.PASSED);
-				this.rendezvousRepository.save(r);
+				this.onlySave(r);
 				result.add(r);
 			}}
 		return result;
@@ -153,7 +200,7 @@ public class RendezvousService {
 		for (final Rendezvous r : res){
 			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE){
 				r.setFlag(Flag.PASSED);
-				this.rendezvousRepository.save(r);
+				this.onlySave(r);
 				res.add(r);
 			}}
 		return res;
