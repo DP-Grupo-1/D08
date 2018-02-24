@@ -31,11 +31,15 @@ public class CommentService {
 
 	@Autowired
 	private AdministratorService	administratorService;
+	@Autowired
+	private ReplyService			replyService;
+	@Autowired
+	private RendezvousService		rendezvousService;
 
 
 	//Simple CRUD methods ------------------------
 
-	public Comment create(Rendezvous rendezvous) {
+	public Comment create(final Rendezvous rendezvous) {
 		final Date moment = new Date();
 		final Comment result = new Comment();
 		result.setMoment(moment);
@@ -43,10 +47,10 @@ public class CommentService {
 
 	}
 
-	public Comment save(Comment comment) {
+	public Comment save(final Comment comment) {
 		Assert.notNull(comment);
 		Comment res;
-		User user = this.userService.findByPrincipal();
+		final User user = this.userService.findByPrincipal();
 		Assert.notNull(user);
 
 		final Date moment = new Date(System.currentTimeMillis() - 1000);
@@ -63,11 +67,33 @@ public class CommentService {
 		Assert.isTrue(this.commentRepository.exists(comment.getId()));
 		final Administrator administrator = this.administratorService.findByPrincipal();
 		Assert.notNull(administrator);
-		comment.getReplies().removeAll(comment.getReplies());
+		//		final Collection<Reply> replies = comment.getReplies();
+		//		for (final Reply r : replies)
+		//			for (final User u : this.userService.findAll()) {
+		//				u.getComments().remove(comment.get);
+		//				if (u.getReplies().contains(r)) {
+		//					u.getReplies().remove(r);
+		//					break;
+		//				}
+		//				this.replyService.delete(r);
+		//			}
 
 		this.commentRepository.delete(comment);
 	}
 
+	public void quitarCommentReply(final Comment comment, final int userId, final int rendezvousId) {
+		Assert.notNull(userId);
+		Assert.notNull(rendezvousId);
+		final User user = this.userService.findOne(userId);
+		final Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
+		Assert.notNull(rendezvous);
+		Assert.notNull(user);
+		final Collection<Reply> replies = comment.getReplies();
+		for (final Reply r : replies)
+			user.getReplies().remove(r);
+		rendezvous.getComments().remove(comment);
+		user.getComments().remove(comment);
+	}
 	public Comment findOne(final int commentID) {
 		final Comment res = this.commentRepository.findOne(commentID);
 
@@ -80,9 +106,9 @@ public class CommentService {
 		return res;
 	}
 
-	public Collection<Reply> findByCommentId(Integer commentId){
-		Collection<Reply> replies = new ArrayList<Reply>();
-		Comment comment= commentRepository.findOne(commentId);
+	public Collection<Reply> findByCommentId(final Integer commentId) {
+		final Collection<Reply> replies = new ArrayList<Reply>();
+		final Comment comment = this.commentRepository.findOne(commentId);
 		Assert.notNull(comment);
 		replies.addAll(comment.getReplies());
 		return replies;

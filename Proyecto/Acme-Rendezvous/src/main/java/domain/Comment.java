@@ -36,7 +36,7 @@ public class Comment extends DomainEntity {
 	public Date getMoment() {
 		return this.moment;
 	}
-	public void setMoment(Date moment) {
+	public void setMoment(final Date moment) {
 		this.moment = moment;
 	}
 
@@ -44,7 +44,7 @@ public class Comment extends DomainEntity {
 	public String getText() {
 		return this.text;
 	}
-	public void setText(String text) {
+	public void setText(final String text) {
 		this.text = text;
 	}
 
@@ -53,17 +53,17 @@ public class Comment extends DomainEntity {
 	public String getPicture() {
 		return this.picture;
 	}
-	public void setPicture(String picture) {
+	public void setPicture(final String picture) {
 		this.picture = picture;
 	}
 
 	@NotNull
 	@Valid
-	@OneToMany
+	@OneToMany()
 	public Collection<Reply> getReplies() {
 		return this.replies;
 	}
-	public void setReplies(Collection<Reply> replies) {
+	public void setReplies(final Collection<Reply> replies) {
 		this.replies = replies;
 	}
 

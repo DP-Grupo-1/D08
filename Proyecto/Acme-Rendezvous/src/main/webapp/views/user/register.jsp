@@ -22,6 +22,8 @@
 <form:hidden path="userAccount.authorities"/>
 <form:hidden path="comments"/>
 <form:hidden path="replies"/>
+<form:hidden path="attendances"/>
+
 
 
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
