@@ -59,6 +59,19 @@ public class RendezvousAdministratorController extends AbstractController {
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public ModelAndView delete(@RequestParam final int rendezvousId) {
+<<<<<<< HEAD
+
+		ModelAndView result;
+		final Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
+
+		//		try {
+
+		this.rendezvousService.deleteByAdmin(rendezvous);
+		result = new ModelAndView("redirect:../../welcome/index.do");
+		//		} catch (final Throwable oops) {
+		//			result = new ModelAndView("redirect:../../welcome/index.do");
+		//		}
+=======
 		System.out.println("llego aqui");
 		Rendezvous rendezvous = rendezvousService.findOne(rendezvousId);
 		ModelAndView result;
@@ -71,6 +84,7 @@ public class RendezvousAdministratorController extends AbstractController {
 		//}
 			
 			System.out.println("llego aqui");
+>>>>>>> d38d26de6579d15be4cccd523b7aec9df18330b0
 		return result;
 	}
 

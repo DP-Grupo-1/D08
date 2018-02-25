@@ -35,13 +35,12 @@ public class RendezvousService {
 
 	@Autowired
 	private AdministratorService	administratorService;
-	
-	@Autowired 
-	private QuestionService questionService;
-	
-	@Autowired 
-	private AnnouncementService announcementService;
 
+	@Autowired
+	private QuestionService			questionService;
+
+	@Autowired
+	private AnnouncementService		announcementService;
 
 
 	// Simple CRUD methods ------------------------------------------
@@ -53,7 +52,9 @@ public class RendezvousService {
 		final Collection<User> attendants = new ArrayList<User>();
 		final Collection<Rendezvous> rendezvouses = new ArrayList<Rendezvous>();
 		final Collection<Comment> comments = new ArrayList<Comment>();
-
+		Collection<Announcement> announcements = new ArrayList<Announcement>();
+		
+		result.setAnnouncements(announcements);
 		result.setAttendants(attendants);
 		result.setRendezvouses(rendezvouses);
 		result.setComments(comments);
@@ -91,22 +92,20 @@ public class RendezvousService {
 
 		return result;
 	}
-	
+
 	public Rendezvous onlySave(final Rendezvous rendezvous) {
 		Rendezvous saved;
 		saved = this.rendezvousRepository.save(rendezvous);
 		return saved;
 	}
-	
+
 	public void onlyDelete(final Rendezvous rendezvous) {
-		
+
 		this.rendezvousRepository.delete(rendezvous);
 	}
-	
-	
 
 	public void deleteByUser(final Rendezvous rendezvous) {
-		
+
 		Assert.notNull(rendezvous);
 		Assert.notNull(this.findOne(rendezvous.getId()));
 
@@ -122,15 +121,36 @@ public class RendezvousService {
 	public void deleteByAdmin(final Rendezvous rendezvous) {
 
 		Assert.notNull(rendezvous);
-		Collection<Question> questions = questionService.findAllByrendezvous(rendezvous.getId());
-		Collection<Announcement> announcements = new ArrayList<Announcement>();
-		announcements = rendezvous.getAnnouncements();
+
+		final Collection<Question> questions = this.questionService.findAllByrendezvous(rendezvous.getId());
+		final Collection<Announcement> announcements = rendezvous.getAnnouncements();
+		final Collection<User> attendants = rendezvous.getAttendants();
+
 		Assert.notNull(this.findOne(rendezvous.getId()));
 
 		final Administrator admin = this.administratorService.findByPrincipal();
 		Assert.notNull(admin);
 
 		final Collection<Rendezvous> rendezvouses = this.findRendezvousParents(rendezvous.getId());
+
+		if (!rendezvouses.isEmpty())
+			for (final Rendezvous r : rendezvouses)
+				r.getRendezvouses().remove(rendezvous);
+
+		if (!questions.isEmpty())
+			for (final Question q : questions)
+				this.questionService.deleteByAdmin(q);
+
+		if (!announcements.isEmpty())
+			for (final Announcement a : announcements)
+				this.announcementService.delete(a);
+
+		if (!attendants.isEmpty())
+			for (final User u : attendants)
+				u.getAttendances().remove(rendezvous);
+		//	userService.save(u);
+
+
 		for (final Rendezvous r : rendezvouses)
 			r.getRendezvouses().remove(rendezvous);
 
@@ -156,24 +176,24 @@ public class RendezvousService {
 	public Collection<Rendezvous> findAll() {
 		final Collection<Rendezvous> result = this.rendezvousRepository.findAll();
 
-		for (final Rendezvous r : result){
-			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE){
+		for (final Rendezvous r : result)
+			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE) {
 				r.setFlag(Flag.PASSED);
 				this.onlySave(r);
 				result.add(r);
-			}}
+			}
 		return result;
 	}
 
 	public Rendezvous findOne(final int rendezvousId) {
 		final Rendezvous res = this.findOneOnly(rendezvousId);
-		if (res.getMoment().before(new Date()) && res.getFlag() == Flag.ACTIVE){
+		if (res.getMoment().before(new Date()) && res.getFlag() == Flag.ACTIVE) {
 			res.setFlag(Flag.PASSED);
 			this.onlySave(res);
 		}
 		return res;
 	}
-	
+
 	public Rendezvous findOneOnly(final int rendezvousId) {
 		final Rendezvous res = this.rendezvousRepository.findOne(rendezvousId);
 		return res;
@@ -185,22 +205,22 @@ public class RendezvousService {
 		Collection<Rendezvous> result;
 		result = this.rendezvousRepository.findByUserId(userId);
 
-		for (final Rendezvous r : result){
-			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE){
+		for (final Rendezvous r : result)
+			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE) {
 				r.setFlag(Flag.PASSED);
 				this.onlySave(r);
 				result.add(r);
-			}}
+			}
 		return result;
 	}
 	public Collection<Rendezvous> findByCreatorId(final int userId) {
 		final Collection<Rendezvous> res = this.rendezvousRepository.findByCreatorId(userId);
-		for (final Rendezvous r : res){
-			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE){
+		for (final Rendezvous r : res)
+			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE) {
 				r.setFlag(Flag.PASSED);
 				this.onlySave(r);
 				res.add(r);
-			}}
+			}
 		return res;
 	}
 

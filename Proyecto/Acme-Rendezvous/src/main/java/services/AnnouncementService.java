@@ -15,7 +15,6 @@ import security.LoginService;
 import security.UserAccount;
 import domain.Administrator;
 import domain.Announcement;
-import domain.User;
 
 @Service
 @Transactional
@@ -60,7 +59,7 @@ public class AnnouncementService {
 		final Administrator administrator = this.administratorService.findByPrincipal();
 		Assert.notNull(administrator);
 
-		Assert.isTrue(this.announcementRepository.exists(announcement.getId()));
+		//	Assert.isTrue(this.announcementRepository.exists(announcement.getId()));
 
 		this.announcementRepository.delete(announcement);
 	}
@@ -80,12 +79,12 @@ public class AnnouncementService {
 	}
 
 	//3.1
-	public Double avgOfAnnouncementsPerRendezvous(){
+	public Double avgOfAnnouncementsPerRendezvous() {
 		return this.announcementRepository.avgOfAnnouncementsPerRendezvous();
 	}
 
 	//3.2
-	public Double stddAnnouncementsPerRendezvous(){
+	public Double stddAnnouncementsPerRendezvous() {
 		return this.announcementRepository.stddAnnouncementsPerRendezvous();
 	}
 
