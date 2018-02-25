@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.UserRepository;
 import security.Authority;
@@ -31,6 +32,8 @@ public class UserService {
 	//Suporting services---------------------------------------------
 	@Autowired
 	private ReplyService	replyService;
+	@Autowired
+	private Validator		validator;
 
 
 	//CRUD methods-------------------------------------------------------
@@ -119,6 +122,22 @@ public class UserService {
 		result.setEmail(registerUser.getEmail());
 
 		return result;
+	}
+
+	public User reconstruct(final User user, final BindingResult binding) {
+		User res;
+		if (user.getId() == 0)
+			res = user;
+		else {
+			res = this.userRepository.findOne(user.getId());
+			res.setName(user.getName());
+			res.setSurname(user.getSurname());
+			res.setPostalAddress(user.getPostalAddress());
+			res.setPhoneNumber(user.getPhoneNumber());
+			res.setEmail(user.getEmail());
+			this.validator.validate(res, binding);
+		}
+		return res;
 	}
 
 }

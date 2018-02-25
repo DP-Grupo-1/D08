@@ -37,14 +37,21 @@ public class UserUserController {
 	public ModelAndView save(@Valid final User user, final BindingResult binding) {
 		Assert.notNull(user);
 		ModelAndView res;
+
 		if (binding.hasErrors()) {
 			System.out.println(binding.getAllErrors());
+			System.out.println("llega aqui 1");
 			res = this.createEditModelAndView(user);
 		} else
 			try {
-
+				//				user2 = this.userService.reconstruct(user, binding);
+				//				if (binding.hasErrors()) {
+				//					System.out.println("llega aqui 2");
+				//					System.out.println(binding.getAllErrors());
+				//					res = this.createEditModelAndView(user);
+				//				}
 				this.userService.save(user);
-				res = new ModelAndView("redirect:../welcome/index.do");
+				res = new ModelAndView("redirect:../../welcome/index.do");
 			} catch (final Throwable error) {
 				res = this.createEditModelAndView(user, "user.error");
 			}

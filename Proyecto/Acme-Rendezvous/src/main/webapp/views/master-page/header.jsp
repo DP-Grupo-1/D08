@@ -42,6 +42,7 @@
 					<li><a href="rendezvous/user/list.do"><span><spring:message code="master.page.user.action1" /></span></a></li>
 					<li><a href="rendezvous/user/listRsvps.do"><span><spring:message code="master.page.user.action2" /></span></a></li>
 					<li><a href="announcement/user/list.do"><span><spring:message code="master.page.user.action4" /></span></a></li>
+					<li><a href="user/user/edit.do"><span><spring:message code="master.page.user.edit"/></span></a></li>
 				</ul></div>
 			</li>
 		</security:authorize>
