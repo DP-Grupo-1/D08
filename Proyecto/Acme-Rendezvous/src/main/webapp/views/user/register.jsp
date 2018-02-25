@@ -15,20 +15,13 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
-<form:form action="user/register.do" modelAttribute="user">
-
-<form:hidden path="id"/>
-<form:hidden path="version"/>
-<form:hidden path="userAccount.authorities"/>
-<form:hidden path="comments"/>
-<form:hidden path="replies"/>
-<form:hidden path="attendances"/>
+<form:form action="user/register.do" modelAttribute="register">
 
 
 
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
-<acme:textbox code="user.username" path="userAccount.username"/>
-<acme:password code="user.password" path="userAccount.password"/>
+<acme:textbox code="user.username" path="username"/>
+<acme:password code="user.password" path="password"/>
 <acme:textbox code="user.name" path="name"/>
 <acme:textbox code="user.surname" path="surname"/>
 <acme:textbox code="user.postalAddress" path="postalAddress"/>

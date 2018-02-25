@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
 
 import repositories.UserRepository;
 import security.Authority;
@@ -18,6 +19,7 @@ import domain.Comment;
 import domain.Rendezvous;
 import domain.Reply;
 import domain.User;
+import forms.Register;
 
 @Service
 @Transactional
@@ -102,6 +104,21 @@ public class UserService {
 		Assert.notNull(commentId);
 		final User res = this.userRepository.findByCommentId(commentId);
 		return res;
+	}
+
+	public User reconstruct(final Register registerUser, final BindingResult binding) {
+		User result;
+		result = this.create();
+		result.getUserAccount().setUsername(registerUser.getUsername());
+		result.getUserAccount().setPassword(registerUser.getPassword());
+
+		result.setName(registerUser.getName());
+		result.setSurname(registerUser.getSurname());
+		result.setPostalAddress(registerUser.getPostalAddress());
+		result.setPhoneNumber(registerUser.getPhoneNumber());
+		result.setEmail(registerUser.getEmail());
+
+		return result;
 	}
 
 }
