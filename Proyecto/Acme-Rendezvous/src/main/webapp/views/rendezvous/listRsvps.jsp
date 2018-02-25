@@ -58,11 +58,20 @@
 
 	<spring:message code="rendezvous.flag" var="flagHeader" />
 	<display:column property="flag" title="${flagHeader}" sortable="true" />
-
 	
+	
+	<display:column>
+				<a href="comment/list.do?rendezvousId=${row.id}">
+					<spring:message code="rendezvous.list.comment" />
+				</a>
+			</display:column>
 
-
-
+<display:column>
+	<div>
+		<a href="comment/user/create.do?rendezvousId=${row.id}"><spring:message
+				code="comment.create" /></a>
+	</div>
+</display:column>
 </display:table>
 	
 </security:authorize>

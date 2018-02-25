@@ -40,8 +40,13 @@ public class CommentService {
 	//Simple CRUD methods ------------------------
 
 	public Comment create(final Rendezvous rendezvous) {
+		Collection<Reply> replies = new ArrayList<Reply>();
 		final Date moment = new Date();
 		final Comment result = new Comment();
+		
+		
+		
+		result.setReplies(replies);
 		result.setMoment(moment);
 		return result;
 
@@ -52,13 +57,23 @@ public class CommentService {
 		Comment res;
 		final User user = this.userService.findByPrincipal();
 		Assert.notNull(user);
+		Collection<Comment> comments = user.getComments();
+		System.out.println("llego aqui save2");
 
-		final Date moment = new Date(System.currentTimeMillis() - 1000);
-
-		Assert.isTrue(comment.getMoment().after(moment));
-
+//		Assert.isTrue(comment.getMoment().b(moment));
+		
+		if(comment.getId() == 0){
+			System.out.println("llego aqui save3");
+			res = this.commentRepository.save(comment);
+			System.out.println("llego aqui save4");
+			comments.add(res);
+			user.setComments(comments);
+			//userService.save(user);
+			System.out.println("llego aqui save5");
+		}
+		else{
 		res = this.commentRepository.save(comment);
-
+		}
 		return res;
 	}
 

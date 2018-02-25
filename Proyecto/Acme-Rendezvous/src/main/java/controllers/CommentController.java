@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+
 import services.CommentService;
 import services.RendezvousService;
 import domain.Comment;
@@ -21,6 +22,9 @@ public class CommentController extends AbstractController {
 	
 	@Autowired
 	private RendezvousService rendezvousService;
+	
+	@Autowired
+	private CommentService commentService;
 
 
 	//Listing
@@ -30,13 +34,27 @@ public class CommentController extends AbstractController {
 		Collection<Comment> comments;
 		comments = this.rendezvousService.findByRendezvous(rendezvousId);
 
-		//POR HACER LA QUERY EN COMMENT REPOSITORY
-
 		res = new ModelAndView("comment/list");
 		res.addObject("comments", comments);
 		res.addObject("requestURI", "comment/list.do");
 		return res;
 	}
+	
+	//Listing
+		@RequestMapping(value = "/display", method = RequestMethod.GET)
+		public ModelAndView Display(@RequestParam(required = false) final Integer commentId) {
+			ModelAndView res;
+			Comment comment;
+			comment = this.commentService.findOne(commentId);
+
+			//POR HACER LA QUERY EN COMMENT REPOSITORY
+
+			res = new ModelAndView("comment/display");
+			res.addObject("comment", comment);
+			res.addObject("requestURI", "comment/display.do");
+			return res;
+		}
+
 
 	protected ModelAndView createEditModelAndView(final Comment comment) {
 		ModelAndView result;
