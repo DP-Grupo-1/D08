@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.CommentRepository;
 import domain.Administrator;
@@ -36,6 +37,9 @@ public class CommentService {
 	private ReplyService			replyService;
 	@Autowired
 	private RendezvousService		rendezvousService;
+
+	@Autowired
+	private Validator				validator;
 
 
 	//Simple CRUD methods ------------------------
@@ -115,15 +119,18 @@ public class CommentService {
 		return replies;
 	}
 
-	public Comment reconstruct(final Comment comment,final BindingResult binding){
+	public Comment reconstruct(final Comment comment, final BindingResult binding) {
 		Comment res;
-		if(comment.getId()==0)
-			res=comment;
-		else{
-			res.set
+		if (comment.getId() == 0)
+			res = comment;
+		else {
+			res = this.commentRepository.findOne(comment.getId());
+			res.setText(comment.getText());
+			res.setPicture(comment.getPicture());
+			this.validator.validate(res, binding);
 		}
-		
+
 		return res;
-		
+
 	}
 }
