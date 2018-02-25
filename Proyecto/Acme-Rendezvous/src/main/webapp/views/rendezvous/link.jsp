@@ -51,7 +51,9 @@
 	    </a>	
 	</jstl:when>
 	<jstl:otherwise>
-	  <spring:message code="linked" />
+	   <a href="rendezvous/user/removeLink.do?rendezvousId=${rendezvousId}&rendezvousLinkedId=${row.id}">
+	       <spring:message code="rendezvous.removeLink" />
+	     </a>	
 	 </jstl:otherwise>
 	</jstl:choose>
    	</display:column>
