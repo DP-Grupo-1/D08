@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -63,5 +64,18 @@ public class RendezvousServiceTest extends AbstractTest {
 	public void testFindByCreatorId() {
 		final Collection<Rendezvous> rendezvouses = this.rendezvousService.findByCreatorId(111);
 		System.out.println(rendezvouses);
+	}
+
+	@Test
+	public void testDelete() {
+		super.authenticate("admin");
+		final List<Rendezvous> rendezvouses = (List<Rendezvous>) this.rendezvousService.findAll();
+		final Rendezvous rendezvous = rendezvouses.get(0);
+		System.out.println(rendezvouses);
+		this.rendezvousService.deleteByAdmin(rendezvous);
+		final Collection<Rendezvous> rendezvouses2 = this.rendezvousService.findAll();
+		System.out.println(rendezvouses2);
+		Assert.isTrue(!this.rendezvousService.findAll().contains(rendezvous));
+		super.authenticate(null);
 	}
 }

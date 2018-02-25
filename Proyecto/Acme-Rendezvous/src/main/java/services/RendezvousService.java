@@ -35,13 +35,12 @@ public class RendezvousService {
 
 	@Autowired
 	private AdministratorService	administratorService;
-	
-	@Autowired 
-	private QuestionService questionService;
-	
-	@Autowired 
-	private AnnouncementService announcementService;
 
+	@Autowired
+	private QuestionService			questionService;
+
+	@Autowired
+	private AnnouncementService		announcementService;
 
 
 	// Simple CRUD methods ------------------------------------------
@@ -93,22 +92,20 @@ public class RendezvousService {
 
 		return result;
 	}
-	
+
 	public Rendezvous onlySave(final Rendezvous rendezvous) {
 		Rendezvous saved;
 		saved = this.rendezvousRepository.save(rendezvous);
 		return saved;
 	}
-	
+
 	public void onlyDelete(final Rendezvous rendezvous) {
-		
+
 		this.rendezvousRepository.delete(rendezvous);
 	}
-	
-	
 
 	public void deleteByUser(final Rendezvous rendezvous) {
-		
+
 		Assert.notNull(rendezvous);
 		Assert.notNull(this.findOne(rendezvous.getId()));
 
@@ -122,85 +119,92 @@ public class RendezvousService {
 	}
 
 	public void deleteByAdmin(final Rendezvous rendezvous) {
-		System.out.println("llego aqui2");
+
 		Assert.notNull(rendezvous);
-		System.out.println("llego aqui3");
+<<<<<<< HEAD
+		final Collection<Question> questions = this.questionService.findAllByrendezvous(rendezvous.getId());
+		final Collection<Announcement> announcements = rendezvous.getAnnouncements();
+		final Collection<User> attendants = rendezvous.getAttendants();
+=======
 		Collection<Question> questions = questionService.findAllByrendezvous(rendezvous.getId());
-		System.out.println("llego aqui4");
 		Collection<Announcement> announcements = rendezvous.getAnnouncements();
-		System.out.println("llego aqui5");
-		Collection<User> attendants = rendezvous.getAttendants();
-		System.out.println("llego aqui6");
+>>>>>>> d38d26de6579d15be4cccd523b7aec9df18330b0
 		Assert.notNull(this.findOne(rendezvous.getId()));
-		System.out.println("llego aqui7");
 
 		final Administrator admin = this.administratorService.findByPrincipal();
 		Assert.notNull(admin);
 
-		System.out.println("llego aqui8");
 		final Collection<Rendezvous> rendezvouses = this.findRendezvousParents(rendezvous.getId());
-		System.out.println("llego aqui9");
-		if(!rendezvouses.isEmpty()){
-			System.out.println("llego aqui10");
+<<<<<<< HEAD
+		if (!rendezvouses.isEmpty())
+			for (final Rendezvous r : rendezvouses)
+				r.getRendezvouses().remove(rendezvous);
+
+		if (!questions.isEmpty())
+			for (final Question q : questions)
+				this.questionService.deleteByAdmin(q);
+
+		if (!announcements.isEmpty())
+			for (final Announcement a : announcements)
+				this.announcementService.delete(a);
+
+		if (!attendants.isEmpty())
+			for (final User u : attendants)
+				u.getAttendances().remove(rendezvous);
+		//	userService.save(u);
+
+=======
 		for (final Rendezvous r : rendezvouses)
-			
 			r.getRendezvouses().remove(rendezvous);
-		}
-		System.out.println("llego aqui11");
+
+		
 		if(!questions.isEmpty()){
-			System.out.println("llego aqui111");
 		for(Question q: questions){
 			
 				this.questionService.deleteByAdmin(q);
 			}
 		}
-		System.out.println("llego aqui12");
+		
 		if(!announcements.isEmpty()){
 			for(Announcement a: announcements){
 				
 					this.announcementService.delete(a);
 				}
 			}
-		System.out.println("llego aqui13");
-		if(!attendants.isEmpty()){
-			for(User u: attendants){
-				
-					u.getAttendances().remove(rendezvous);
-					
-				}
-			}
 		
 		
-		System.out.println("llego aqui14");
+>>>>>>> d38d26de6579d15be4cccd523b7aec9df18330b0
 		this.rendezvousRepository.delete(rendezvous);
-		System.out.println("llego aqui15");
+
+		this.onlyDelete(rendezvous);
+
 	}
 
 	public Collection<Rendezvous> findAll() {
 		final Collection<Rendezvous> result = this.rendezvousRepository.findAll();
 
-		for (final Rendezvous r : result){
-			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE){
+		for (final Rendezvous r : result)
+			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE) {
 				r.setFlag(Flag.PASSED);
 				this.onlySave(r);
 				result.add(r);
-			}}
+			}
 		return result;
 	}
 
 	public Rendezvous findOne(final int rendezvousId) {
-		final Rendezvous res = this.rendezvousRepository.findOne(rendezvousId);
-		if (res.getMoment().before(new Date()) && res.getFlag() == Flag.ACTIVE){
+		final Rendezvous res = this.findOneOnly(rendezvousId);
+		if (res.getMoment().before(new Date()) && res.getFlag() == Flag.ACTIVE) {
 			res.setFlag(Flag.PASSED);
 			this.onlySave(res);
 		}
 		return res;
 	}
-	
-//	public Rendezvous findOneOnly(final int rendezvousId) {
-//		final Rendezvous res = this.rendezvousRepository.findOne(rendezvousId);
-//		return res;
-//	}
+
+	public Rendezvous findOneOnly(final int rendezvousId) {
+		final Rendezvous res = this.rendezvousRepository.findOne(rendezvousId);
+		return res;
+	}
 
 	// Other business methods ----------------------------------
 
@@ -208,22 +212,22 @@ public class RendezvousService {
 		Collection<Rendezvous> result;
 		result = this.rendezvousRepository.findByUserId(userId);
 
-		for (final Rendezvous r : result){
-			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE){
+		for (final Rendezvous r : result)
+			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE) {
 				r.setFlag(Flag.PASSED);
 				this.onlySave(r);
 				result.add(r);
-			}}
+			}
 		return result;
 	}
 	public Collection<Rendezvous> findByCreatorId(final int userId) {
 		final Collection<Rendezvous> res = this.rendezvousRepository.findByCreatorId(userId);
-		for (final Rendezvous r : res){
-			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE){
+		for (final Rendezvous r : res)
+			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE) {
 				r.setFlag(Flag.PASSED);
 				this.onlySave(r);
 				res.add(r);
-			}}
+			}
 		return res;
 	}
 
