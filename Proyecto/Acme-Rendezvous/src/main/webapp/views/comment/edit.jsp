@@ -24,15 +24,16 @@
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-	
+	<form:hidden path="moment" />
+	<form:hidden path="replies" />
 
 	
-	<form:label path="date">
+	<%-- <form:label path="moment">
 		<spring:message code="comment.date" />:
 	</form:label>
-	<form:input path="date" />
-	<form:errors cssClass="error" path="date" />
-	<br />
+	<form:input path="moment" />
+	<form:errors cssClass="error" path="moment" />
+	<br /> --%>
 	
 	<form:label path="text">
 		<spring:message code="comment.text" />:

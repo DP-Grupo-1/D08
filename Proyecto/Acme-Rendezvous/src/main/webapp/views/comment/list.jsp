@@ -84,19 +84,7 @@
 
 </display:table>
 
-<!-- Create
-<security:authorize access="hasRole('USER')">
-<jstl:if test="${hasUserRSVPd==true}">
-	 <div>
-		<a href="comment/user/create.do"><spring:message code="comment.create" /></a>
-	 </div>
-</jstl:if>
-</security:authorize>
--->
-
-<%-- <security:authorize access="hasRole('ADMIN')">
-	<div>
-		<a href="category/administrator/create.do"><spring:message
-				code="category.edit.create" /></a>
+<div>
+		<a href="comment/user/create.do?rendezvousId=${rendezvousId}"><spring:message
+				code="comment.create" /></a>
 	</div>
-</security:authorize>  --%>
