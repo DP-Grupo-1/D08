@@ -43,7 +43,7 @@
 				
 		
 			<b>	<spring:message	code="comment.date" />: </b>
-				<jstl:out  value="${comment.date}" /> <br>	
+				<jstl:out  value="${comment.moment}" /> <br>	
 
 
 			<b>	<spring:message	code="comment.text" />: </b>
