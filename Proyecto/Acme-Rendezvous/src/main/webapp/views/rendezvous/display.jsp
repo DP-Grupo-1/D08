@@ -181,10 +181,10 @@
 	<display:column property="flag" title="${rendezvousFlagHeader}" sortable="true" />
 	
 	<security:authorize access="hasRole('USER')">
-	<jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
+	<jstl:if test="${rendezvous.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
     <display:column>
-	     <a href="rendezvous/user/deleteLink.do?rendezvousId=${row.id}">
-	       <spring:message code="rendezvous.deleteLink" />
+	     <a href="rendezvous/user/removeLink.do?rendezvousId=${rendezvous.id}&rendezvousLinkedId=${row.id}">
+	       <spring:message code="rendezvous.removeLink" />
 	     </a>	
     </display:column>
     </jstl:if>

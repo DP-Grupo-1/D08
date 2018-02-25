@@ -44,11 +44,16 @@
 		  </jstl:if>
 		</jstl:forEach>
 	<display:column>
-   	<jstl:if test="${!linked}">
+	<jstl:choose> 
+   	<jstl:when test="${!linked}">
 	    <a href="rendezvous/user/link.do?rendezvousId=${rendezvousId}&rendezvousLinkId=${row.id}">
 	        <spring:message code="rendezvous.link" />
 	    </a>	
-	</jstl:if>
+	</jstl:when>
+	<jstl:otherwise>
+	  <spring:message code="linked" />
+	 </jstl:otherwise>
+	</jstl:choose>
    	</display:column>
    	
   	</security:authorize>   

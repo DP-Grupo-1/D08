@@ -253,6 +253,30 @@ public class RendezvousUserController extends AbstractController {
 		return result;
 	}
 
+	@RequestMapping(value = "/removeLink", method = RequestMethod.GET)
+	public ModelAndView removeLink(@RequestParam final int rendezvousId, @RequestParam final int rendezvousLinkedId, final RedirectAttributes redirectAttrs) {
+		ModelAndView result;
+		try {
+			final Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
+			Assert.notNull(rendezvous);
+			final Rendezvous rendezvousLink = this.rendezvousService.findOne(rendezvousLinkedId);
+			Assert.notNull(rendezvousLink);
+			rendezvous.getRendezvouses().remove(rendezvousLink);
+			this.rendezvousService.save(rendezvous);
+
+			redirectAttrs.addFlashAttribute("message", "rendezvous.commit.ok");
+			redirectAttrs.addFlashAttribute("msgType", "success");
+		} catch (final Throwable oops) {
+			System.out.println(oops.getMessage());
+			System.out.println(oops.getLocalizedMessage());
+			redirectAttrs.addFlashAttribute("message", "rendezvous.commit.error");
+			redirectAttrs.addFlashAttribute("msgType", "danger");
+		}
+
+		result = new ModelAndView("redirect:list.do");
+		return result;
+	}
+
 	// Ancillary methods -----------------------------------------
 	protected ModelAndView createEditModelAndView(final Rendezvous rendezvous) {
 		ModelAndView result;
