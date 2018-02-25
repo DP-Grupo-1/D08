@@ -13,7 +13,9 @@ import org.springframework.util.Assert;
 import repositories.AnnouncementRepository;
 import security.LoginService;
 import security.UserAccount;
+import domain.Administrator;
 import domain.Announcement;
+import domain.User;
 
 @Service
 @Transactional
@@ -55,9 +57,8 @@ public class AnnouncementService {
 
 		Assert.notNull(announcement);
 
-		final UserAccount userAcc = LoginService.getPrincipal();
-		Assert.notNull(userAcc);
-		Assert.notNull(this.administratorService.findByUserAccount(userAcc));
+		final Administrator administrator = this.administratorService.findByPrincipal();
+		Assert.notNull(administrator);
 
 		Assert.isTrue(this.announcementRepository.exists(announcement.getId()));
 
