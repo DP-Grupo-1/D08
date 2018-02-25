@@ -98,6 +98,7 @@ public class RendezvousController extends AbstractController {
 
 		try {
 			Rendezvous rendezvous = this.rendezvousService.findByAnnouncementId(announcementId);
+			result.addObject("rendezvous", rendezvous);
 
 			UserAccount userAcc = LoginService.getPrincipal();
 			User u = this.userService.findByUserAccount(userAcc);
@@ -117,7 +118,6 @@ public class RendezvousController extends AbstractController {
 
 			}
 
-			result.addObject("rendezvous", rendezvous);
 			result.addObject("hasUserRSVPd", hasUserRSVPd);
 
 		} catch (final Throwable oops) {
