@@ -123,7 +123,7 @@ public class RendezvousService {
 
 		Assert.notNull(rendezvous);
 		Collection<Question> questions = questionService.findAllByrendezvous(rendezvous.getId());
-		Collection<Announcement> announcements = this.announcementService.findAnnouncementsByRendezvousId(rendezvous.getId());
+		Collection<Announcement> announcements = rendezvous.getAnnouncements();
 		Assert.notNull(this.findOne(rendezvous.getId()));
 
 		final Administrator admin = this.administratorService.findByPrincipal();
