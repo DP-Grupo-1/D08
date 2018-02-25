@@ -116,11 +116,11 @@ public class CommentService {
 	}
 
 	public Comment reconstruct(final Comment comment,final BindingResult binding){
-		Comment res;
+		Comment res = null;
 		if(comment.getId()==0)
 			res=comment;
 		else{
-			res.set
+			//res.set
 		}
 		
 		return res;
