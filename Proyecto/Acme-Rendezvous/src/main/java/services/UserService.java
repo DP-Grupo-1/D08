@@ -136,6 +136,7 @@ public class UserService {
 			res.setPhoneNumber(user.getPhoneNumber());
 			res.setEmail(user.getEmail());
 			this.validator.validate(res, binding);
+
 		}
 		return res;
 	}
