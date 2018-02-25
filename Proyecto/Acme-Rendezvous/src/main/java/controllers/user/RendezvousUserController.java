@@ -148,13 +148,7 @@ public class RendezvousUserController extends AbstractController {
 			Assert.notNull(user);
 			Assert.notNull(rendezvous);
 
-			final Collection<Rendezvous> attendances = user.getAttendances();
-			attendances.add(this.rendezvousService.findOne(rendezvousId));
-			user.setAttendances(attendances);
-			this.userService.save(user);
-
-			rendezvous.getAttendants().add(user);
-			this.rendezvousService.save(rendezvous);
+			this.rendezvousService.rsvp(rendezvous);
 
 			redirectAttrs.addFlashAttribute("message", "rendezvous.commit.ok");
 			redirectAttrs.addFlashAttribute("msgType", "success");

@@ -12,8 +12,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
 import security.UserAccount;
+import services.QuestionService;
 import services.RendezvousService;
 import services.UserService;
+import domain.Question;
 import domain.Rendezvous;
 import domain.User;
 
@@ -27,6 +29,8 @@ public class RendezvousController extends AbstractController {
 
 	@Autowired
 	UserService			userService;
+	@Autowired
+	QuestionService			questionService;
 
 
 	//Constructors ------------------------------------------------------
@@ -38,6 +42,7 @@ public class RendezvousController extends AbstractController {
 
 		ModelAndView result;
 		Collection<Rendezvous> rendezvouses;
+		
 
 		rendezvouses = this.rendezvousService.findAll();
 
@@ -81,9 +86,11 @@ public class RendezvousController extends AbstractController {
 
 		rendezvous = this.rendezvousService.findOne(rendezvousId);
 		final Collection<Rendezvous> rendezvouses = this.rendezvousService.findAll();
-
+		Collection<Question> questions = this.questionService.findAllByrendezvous(rendezvousId);
+		Boolean noQuestions = questions.isEmpty();
 		result.addObject("rendezvous", rendezvous);
 		result.addObject("rendezvouses", rendezvouses);
+		result.addObject("noQuestions", noQuestions);
 		result.addObject("requestURI", "rendezvous/display.do");
 
 		return result;

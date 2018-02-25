@@ -90,10 +90,11 @@ public class QuestionUserController extends AbstractController{
 		}
 		
 		//Edit----------------------------------------------------------------------
-		@RequestMapping(value = "/answerQuestions", method = RequestMethod.POST, params = "answerQuestions")
+		@RequestMapping(value = "/answerQuestions", method = RequestMethod.GET)
 		public ModelAndView answerQuestions(@RequestParam final int rendezvousId, BindingResult binding) {
 
 			ModelAndView result;
+			Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
 			Collection<Question> questions = questionService.findAllByrendezvous(rendezvousId);
 			Collection<String> answers = new ArrayList<String>();
 			for(int i=0;i<questions.size();i++){
@@ -105,7 +106,6 @@ public class QuestionUserController extends AbstractController{
 
 			result = this.createEditModelAndViewAnswer(answerQuestions);
 			result.addObject("requestURI", "question/user/answerQuestions.do?rendezvousId=" + rendezvousId);
-
 			return result;
 		}
 

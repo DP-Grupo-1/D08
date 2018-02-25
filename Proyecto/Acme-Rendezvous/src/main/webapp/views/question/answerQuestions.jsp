@@ -9,7 +9,6 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <form:form action="${requestURI}" modelAttribute="answerQuestions">
-	
 	<jstl:forEach items="answerQuestions.questions" var="currentQuestion" varStatus="current">
 		<jstl:out value="${currentQuestion.question}"></jstl:out>
 		<acme:textbox code="currentQuestion.answers[${current.index}]" path="answers"/>
