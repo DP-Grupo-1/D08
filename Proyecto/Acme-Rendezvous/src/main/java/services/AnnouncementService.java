@@ -15,7 +15,6 @@ import security.LoginService;
 import security.UserAccount;
 import domain.Administrator;
 import domain.Announcement;
-import domain.User;
 
 @Service
 @Transactional

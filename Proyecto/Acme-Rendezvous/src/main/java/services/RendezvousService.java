@@ -53,7 +53,9 @@ public class RendezvousService {
 		final Collection<User> attendants = new ArrayList<User>();
 		final Collection<Rendezvous> rendezvouses = new ArrayList<Rendezvous>();
 		final Collection<Comment> comments = new ArrayList<Comment>();
-
+		Collection<Announcement> announcements = new ArrayList<Announcement>();
+		
+		result.setAnnouncements(announcements);
 		result.setAttendants(attendants);
 		result.setRendezvouses(rendezvouses);
 		result.setComments(comments);
