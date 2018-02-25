@@ -190,7 +190,7 @@ public class RendezvousService {
 			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE) {
 				r.setFlag(Flag.PASSED);
 				this.onlySave(r);
-				result.add(r);
+				
 			}
 		return result;
 	}
@@ -219,7 +219,7 @@ public class RendezvousService {
 			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE) {
 				r.setFlag(Flag.PASSED);
 				this.onlySave(r);
-				result.add(r);
+				
 			}
 		return result;
 	}
@@ -229,7 +229,7 @@ public class RendezvousService {
 			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE) {
 				r.setFlag(Flag.PASSED);
 				this.onlySave(r);
-				res.add(r);
+				
 			}
 		return res;
 	}

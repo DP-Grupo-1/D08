@@ -48,6 +48,7 @@ public class QuestionService {
 			Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
 			Collection<Answer> answers = new ArrayList<Answer>();
 			User principal = this.userService.findByPrincipal();
+			Assert.isTrue(principal.equals(rendezvous.getCreator()));
 			result.setAnswers(answers);
 			result.setCreator(principal);
 			result.setRendezvous(rendezvous);
@@ -57,6 +58,7 @@ public class QuestionService {
 		
 		public Question findOne(int questionId){
 			Question question = this.questionRepository.findOne(questionId);
+			Assert.isTrue(question.getId()!=0);
 			return question;
 		}
 		

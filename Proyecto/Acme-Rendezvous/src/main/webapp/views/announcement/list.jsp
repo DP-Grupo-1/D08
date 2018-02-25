@@ -28,8 +28,17 @@
 	requestURI="${requestURI}" class="displaytag" keepStatus="true" defaultorder="descending">
 
 
-	<!-- Attributes -->
 	
+	<security:authorize access="hasRole('ADMIN')">
+		<display:column>
+				<a href="announcement/administrator/delete.do?announcementId=${row.id}">
+					<spring:message code="announcement.delete" /> 
+				</a>		
+		</display:column>
+	</security:authorize>
+	
+	
+	<!-- Attributes -->
 	<spring:message code="announcement.moment" var="momentHeader" />
 	<display:column property="moment" format="{0,date,yyyy/MM/dd HH:mm}" title="${momentHeader}" sortable="true" />
 
