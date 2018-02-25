@@ -89,6 +89,49 @@ public class RendezvousController extends AbstractController {
 		return result;
 	}
 
+	//Display from Announcement ------------------------------------------------------------
+	@RequestMapping(value = "/display2", method = RequestMethod.GET)
+	public ModelAndView Display2(@RequestParam final Integer announcementId) {                                                        //Listeo de viajes
+		ModelAndView result;
+
+		result = new ModelAndView("rendezvous/display2");
+
+		try {
+			Rendezvous rendezvous = this.rendezvousService.findByAnnouncementId(announcementId);
+
+			UserAccount userAcc = LoginService.getPrincipal();
+			User u = this.userService.findByUserAccount(userAcc);
+
+			Boolean hasUserRSVPd = false;
+
+			if(u != null){
+				//Rendezvouses a los que el usuario va a asistir (RSVPs)
+				Collection<Rendezvous> rendezvouses = this.rendezvousService.findByUserId(u.getId());
+
+				for(Rendezvous r: rendezvouses){
+					if(r.getId() == rendezvous.getId()){
+						hasUserRSVPd = true;
+						break;
+					}
+				}
+
+			}
+
+			result.addObject("rendezvous", rendezvous);
+			result.addObject("hasUserRSVPd", hasUserRSVPd);
+
+		} catch (final Throwable oops) {
+		}
+
+		final Collection<Rendezvous> rendezvouses = this.rendezvousService.findAll();
+
+
+		result.addObject("rendezvouses", rendezvouses);
+		result.addObject("requestURI", "rendezvous/display2.do");
+
+		return result;
+	}
+
 	//Creation ----------------------------------------------------------
 
 	//Edition -----------------------------------------------------------

@@ -318,5 +318,11 @@ public class RendezvousService {
 		final Rendezvous res = this.rendezvousRepository.findByCommentId(commentId);
 		return res;
 	}
+	
+	public Rendezvous findByAnnouncementId(Integer announcementId){
+		Assert.notNull(announcementId);
+		final Rendezvous res = this.rendezvousRepository.findByAnnouncementId(announcementId);
+		return res;
+	}
 
 }

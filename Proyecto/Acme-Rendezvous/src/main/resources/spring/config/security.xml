@@ -59,6 +59,7 @@
 		<security:intercept-url pattern="/rendezvous/user/**" access="hasRole('USER')" />
 		<security:intercept-url pattern="/rendezvous/list.do" access="permitAll" />
 		<security:intercept-url pattern="/rendezvous/display.do" access="permitAll" />
+		<security:intercept-url pattern="/rendezvous/display2.do" access="permitAll" />
 		
 		<security:intercept-url pattern="/comment/user/**" access="hasRole('USER')" />
 		<security:intercept-url pattern="/comment/administrator/delete.do" access="hasRole('ADMIN')"/>
