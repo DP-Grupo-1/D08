@@ -21,9 +21,6 @@ import domain.Rendezvous;
 @Repository
 public interface RendezvousRepository extends JpaRepository<Rendezvous, Integer> {
 
-	
-	
-	
 	//	Requisito 4.2: Lista de reuniones o quedadas a las que el usuario va a asistir
 	//	o ya ha asistido.
 	@Query("select u.attendances from User u where u.id = ?1")
@@ -32,16 +29,18 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous, Integer>
 	@Query("select r from Rendezvous r where r.creator.id=?1")
 	Collection<Rendezvous> findByCreatorId(int creatorId);
 
-	//	Requisito 6.3 punto 1: La media y la desviación estándar de reuniones creadas por usuario.
-	@Query("select count(r)*1.0/(select count(u)*1.0 from User u) from Rendezvous r")
+	//	//	Requisito 6.3 punto 1: La media y la desviación estándar de reuniones creadas por usuario.
+	@Query("select count(r)*1.0/(select count(u) from User u) from Rendezvous r")
 	Double avgRendezvousPerUser();
 
 	//@Query("select stddev(u.rendezvouses.size) from User u")
-	//Double stddevRendezvousPerUser();
-
+	//Double stddevRendezvousPerUser()
 	//	//	Requisito 6.3 punto 2: Ratio de usuarios que han creado al menos una reunión.
-	//	@Query("select sum(case when u.rendezvouses.size > 0 then 1 else 0 end) / count(*) *1.0 from User u")
-	//	Double ratioUserWithRendezvous();
+	@Query("select count(DISTINCT r.creator)*1.0/(select count(u) from User u) from Rendezvous r")
+	Double ratioCreators();
+	//Ratio de usuario que NO han creado un rendezvous
+	//	@Query("select count(u)*1.0/(select count(us) from User us) " + "from User u where NOT EXISTS( select r.creator from Rendezvous r " + "where u.id=r.creator.id")
+	//	Double ratioUsersSinRendezvous();
 
 	//	Requisito 6.3 punto 3: La media y la desviación estándar de usuarios por reunión.
 	@Query("select avg(r.attendants.size) from Rendezvous r")

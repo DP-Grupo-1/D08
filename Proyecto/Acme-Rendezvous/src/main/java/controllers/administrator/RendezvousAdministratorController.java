@@ -59,15 +59,17 @@ public class RendezvousAdministratorController extends AbstractController {
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public ModelAndView delete(@RequestParam final int rendezvousId) {
-		Rendezvous rendezvous = rendezvousService.findOne(rendezvousId);
-		ModelAndView result;
 
-		try {
-			this.rendezvousService.deleteByAdmin(rendezvous);
-			result = new ModelAndView("redirect:../../welcome/index.do");
-		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(rendezvous, "rendezvous.comit.error");
-		}
+		ModelAndView result;
+		final Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
+
+		//		try {
+
+		this.rendezvousService.deleteByAdmin(rendezvous);
+		result = new ModelAndView("redirect:../../welcome/index.do");
+		//		} catch (final Throwable oops) {
+		//			result = new ModelAndView("redirect:../../welcome/index.do");
+		//		}
 		return result;
 	}
 
