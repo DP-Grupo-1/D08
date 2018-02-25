@@ -73,6 +73,7 @@
 		<security:intercept-url pattern="/rendezvous/user/listRsvps.do" access="hasRole('USER')" />
 		
 		<security:intercept-url pattern="/announcement/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/announcement/administrator/**" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/announcement/list.do" access="permitAll" />
 		<security:intercept-url pattern="/announcement/display.do" access="permitAll" />
 		

@@ -59,7 +59,6 @@ public class AnnouncementService {
 		final Administrator administrator = this.administratorService.findByPrincipal();
 		Assert.notNull(administrator);
 
-
 		this.announcementRepository.delete(announcement);
 	}
 
@@ -87,4 +86,17 @@ public class AnnouncementService {
 		return this.announcementRepository.stddAnnouncementsPerRendezvous();
 	}
 
+	//Prune domain object--------------------------------------------------------
+	//	public Announcement reconstruct(Announcement announcement,BindingResult binding){
+	//		Announcement res;
+	//		if(announcement.getId()==0){
+	//			res=announcement;
+	//		}else{
+	//			res=announcementRepository.findOne(announcement.getId());
+	//			res.setTitle(announcement.getTitle());
+	//			res.setDescription(announcement)
+	//		}
+	//		
+	//		return res;
+	//	}
 }

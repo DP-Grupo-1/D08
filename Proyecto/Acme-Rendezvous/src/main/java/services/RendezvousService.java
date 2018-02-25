@@ -104,10 +104,10 @@ public class RendezvousService {
 		saved = this.rendezvousRepository.save(rendezvous);
 		return saved;
 	}
-	
+
 	public Rendezvous rsvp(final Rendezvous rendezvous) {
-		Collection<User> attendants= rendezvous.getAttendants();
-		User principal = this.userService.findByPrincipal();
+		final Collection<User> attendants= rendezvous.getAttendants();
+		final User principal = this.userService.findByPrincipal();
 		attendants.add(principal);
 		rendezvous.setAttendants(attendants);
 		Rendezvous saved;
@@ -164,22 +164,10 @@ public class RendezvousService {
 		if (!attendants.isEmpty())
 			for (final User u : attendants)
 				u.getAttendances().remove(rendezvous);
-		//	userService.save(u);
 
-		for (final Rendezvous r : rendezvouses)
-			r.getRendezvouses().remove(rendezvous);
-
-		if (!questions.isEmpty())
-			for (final Question q : questions)
-				this.questionService.deleteByAdmin(q);
-
-		if (!announcements.isEmpty())
-			for (final Announcement a : announcements)
-				this.announcementService.delete(a);
 
 		this.rendezvousRepository.delete(rendezvous);
 
-		this.onlyDelete(rendezvous);
 
 	}
 
@@ -190,7 +178,7 @@ public class RendezvousService {
 			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE) {
 				r.setFlag(Flag.PASSED);
 				this.onlySave(r);
-				result.add(r);
+
 			}
 		return result;
 	}
@@ -219,7 +207,7 @@ public class RendezvousService {
 			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE) {
 				r.setFlag(Flag.PASSED);
 				this.onlySave(r);
-				result.add(r);
+
 			}
 		return result;
 	}
@@ -229,7 +217,7 @@ public class RendezvousService {
 			if (r.getMoment().before(new Date()) && r.getFlag() == Flag.ACTIVE) {
 				r.setFlag(Flag.PASSED);
 				this.onlySave(r);
-				res.add(r);
+
 			}
 		return res;
 	}
