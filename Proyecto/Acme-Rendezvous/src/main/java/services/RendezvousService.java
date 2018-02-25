@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.RendezvousRepository;
 import domain.Administrator;
@@ -18,6 +20,7 @@ import domain.Flag;
 import domain.Question;
 import domain.Rendezvous;
 import domain.User;
+import forms.CreateRendezvous;
 
 @Service
 @Transactional
@@ -42,6 +45,9 @@ public class RendezvousService {
 	@Autowired
 	private AnnouncementService		announcementService;
 
+	@Autowired
+	private Validator				validator;
+
 
 	// Simple CRUD methods ------------------------------------------
 
@@ -52,8 +58,8 @@ public class RendezvousService {
 		final Collection<User> attendants = new ArrayList<User>();
 		final Collection<Rendezvous> rendezvouses = new ArrayList<Rendezvous>();
 		final Collection<Comment> comments = new ArrayList<Comment>();
-		Collection<Announcement> announcements = new ArrayList<Announcement>();
-		
+		final Collection<Announcement> announcements = new ArrayList<Announcement>();
+
 		result.setAnnouncements(announcements);
 		result.setAttendants(attendants);
 		result.setRendezvouses(rendezvouses);
@@ -126,9 +132,6 @@ public class RendezvousService {
 		final Collection<Announcement> announcements = rendezvous.getAnnouncements();
 		final Collection<User> attendants = rendezvous.getAttendants();
 
-
-	
-
 		Assert.notNull(this.findOne(rendezvous.getId()));
 
 		final Administrator admin = this.administratorService.findByPrincipal();
@@ -153,30 +156,18 @@ public class RendezvousService {
 				u.getAttendances().remove(rendezvous);
 		//	userService.save(u);
 
-
 		for (final Rendezvous r : rendezvouses)
 			r.getRendezvouses().remove(rendezvous);
 
-		
-		if(!questions.isEmpty()){
-		for(Question q: questions){
-			
+		if (!questions.isEmpty())
+			for (final Question q : questions)
 				this.questionService.deleteByAdmin(q);
-			}
-		}
-		
-		if(!announcements.isEmpty()){
-			for(Announcement a: announcements){
-				
-					this.announcementService.delete(a);
-				}
-			}
 
-		
-		
+		if (!announcements.isEmpty())
+			for (final Announcement a : announcements)
+				this.announcementService.delete(a);
 
 		this.rendezvousRepository.delete(rendezvous);
-
 
 		this.onlyDelete(rendezvous);
 
@@ -318,10 +309,44 @@ public class RendezvousService {
 		final Rendezvous res = this.rendezvousRepository.findByCommentId(commentId);
 		return res;
 	}
-	
-	public Rendezvous findByAnnouncementId(Integer announcementId){
+
+	public Rendezvous findByAnnouncementId(final Integer announcementId) {
 		Assert.notNull(announcementId);
 		final Rendezvous res = this.rendezvousRepository.findByAnnouncementId(announcementId);
+		return res;
+	}
+
+	public Rendezvous reconstruct(final CreateRendezvous createRendezvous, final BindingResult binding) {
+		Rendezvous res;
+		res = this.create();
+		res.setName(createRendezvous.getName());
+		res.setDescription(createRendezvous.getDescription());
+		res.setMoment(createRendezvous.getMoment());
+		res.setPicture(createRendezvous.getPicture());
+		res.setLocationLatitude(createRendezvous.getLocationLatitude());
+		res.setLocationLongitude(createRendezvous.getLocationLongitude());
+		res.setFinalMode(createRendezvous.isFinalMode());
+		res.setAdultOnly(createRendezvous.isAdultOnly());
+		return res;
+	}
+
+	public Rendezvous reconstruct(final Rendezvous rendezvous, final BindingResult binding) {
+		Rendezvous res;
+		if (rendezvous.getId() == 0)
+			res = rendezvous;
+		else {
+			res = this.rendezvousRepository.findOne(rendezvous.getId());
+			res.setName(rendezvous.getName());
+			res.setDescription(rendezvous.getDescription());
+			res.setMoment(rendezvous.getMoment());
+			res.setPicture(rendezvous.getPicture());
+			res.setLocationLatitude(rendezvous.getLocationLatitude());
+			res.setLocationLongitude(rendezvous.getLocationLongitude());
+			res.setFinalMode(rendezvous.getFinalMode());
+			res.setAdultOnly(rendezvous.getAdultOnly());
+			this.validator.validate(res, binding);
+		}
+
 		return res;
 	}
 
