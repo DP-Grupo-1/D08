@@ -3,6 +3,7 @@ package controllers.user;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.validation.Valid;
 
@@ -38,6 +39,8 @@ public class RendezvousUserController extends AbstractController {
 	//Listing ----------------------------------------------------
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
+		
+		Date actualMoment = new Date(System.currentTimeMillis() - 1000);
 		ModelAndView result;
 		Collection<Rendezvous> rendezvouses = new ArrayList<Rendezvous>();
 		final User logged = this.userService.findByPrincipal();
@@ -47,6 +50,7 @@ public class RendezvousUserController extends AbstractController {
 		result = new ModelAndView("rendezvous/list");
 		result.addObject("rendezvouses", rendezvouses);
 		result.addObject("requestURI", "rendezvous/user/list.do");
+		result.addObject("actualMoment", actualMoment);
 
 		return result;
 	}

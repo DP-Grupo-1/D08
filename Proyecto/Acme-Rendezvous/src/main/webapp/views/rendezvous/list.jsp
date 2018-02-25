@@ -61,7 +61,8 @@
 		<spring:message code="rendezvous.description" var="descriptionHeader" />
 		<display:column property="description" title="${descriptionHeader}"
 			sortable="true" />		
-
+		
+		
 		<spring:message code="rendezvous.moment" var="momentHeader" />
     	<spring:message code="rendezvous.moment.format" var="momentFormat" />
 		<display:column property="moment"
@@ -80,7 +81,10 @@
 		<spring:message code="rendezvous.adultOnly" var="adultOnlyHeader" />
 		<display:column property="adultOnly" title="${adultOnlyHeader}" sortable="true" />
 			
+			
+			
 		<spring:message code="rendezvous.flag" var="flagHeader" />
+		
 		<display:column property="flag" title="${flagHeader}" sortable="true" />
 		
 		 <display:column >
