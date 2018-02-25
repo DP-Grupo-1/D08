@@ -98,6 +98,16 @@ public class RendezvousService {
 		saved = this.rendezvousRepository.save(rendezvous);
 		return saved;
 	}
+	
+	public Rendezvous rsvp(final Rendezvous rendezvous) {
+		Collection<User> attendants= rendezvous.getAttendants();
+		User principal = this.userService.findByPrincipal();
+		attendants.add(principal);
+		rendezvous.setAttendants(attendants);
+		Rendezvous saved;
+		saved = this.rendezvousRepository.save(rendezvous);
+		return saved;
+	}
 
 	public void onlyDelete(final Rendezvous rendezvous) {
 
