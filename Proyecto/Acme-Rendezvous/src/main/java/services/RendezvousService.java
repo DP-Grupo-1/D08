@@ -120,48 +120,58 @@ public class RendezvousService {
 	}
 
 	public void deleteByAdmin(final Rendezvous rendezvous) {
-
+		System.out.println("llego aqui2");
 		Assert.notNull(rendezvous);
+		System.out.println("llego aqui3");
 		Collection<Question> questions = questionService.findAllByrendezvous(rendezvous.getId());
+		System.out.println("llego aqui4");
 		Collection<Announcement> announcements = rendezvous.getAnnouncements();
+		System.out.println("llego aqui5");
 		Collection<User> attendants = rendezvous.getAttendants();
+		System.out.println("llego aqui6");
 		Assert.notNull(this.findOne(rendezvous.getId()));
+		System.out.println("llego aqui7");
 
 		final Administrator admin = this.administratorService.findByPrincipal();
 		Assert.notNull(admin);
 
+		System.out.println("llego aqui8");
 		final Collection<Rendezvous> rendezvouses = this.findRendezvousParents(rendezvous.getId());
+		System.out.println("llego aqui9");
 		if(!rendezvouses.isEmpty()){
+			System.out.println("llego aqui10");
 		for (final Rendezvous r : rendezvouses)
+			
 			r.getRendezvouses().remove(rendezvous);
 		}
-		
+		System.out.println("llego aqui11");
 		if(!questions.isEmpty()){
+			System.out.println("llego aqui111");
 		for(Question q: questions){
 			
 				this.questionService.deleteByAdmin(q);
 			}
 		}
-		
+		System.out.println("llego aqui12");
 		if(!announcements.isEmpty()){
 			for(Announcement a: announcements){
 				
 					this.announcementService.delete(a);
 				}
 			}
-		
+		System.out.println("llego aqui13");
 		if(!attendants.isEmpty()){
 			for(User u: attendants){
 				
 					u.getAttendances().remove(rendezvous);
-					userService.save(u);
+					
 				}
 			}
 		
 		
-
+		System.out.println("llego aqui14");
 		this.rendezvousRepository.delete(rendezvous);
-
+		System.out.println("llego aqui15");
 	}
 
 	public Collection<Rendezvous> findAll() {
@@ -177,7 +187,7 @@ public class RendezvousService {
 	}
 
 	public Rendezvous findOne(final int rendezvousId) {
-		final Rendezvous res = this.findOneOnly(rendezvousId);
+		final Rendezvous res = this.rendezvousRepository.findOne(rendezvousId);
 		if (res.getMoment().before(new Date()) && res.getFlag() == Flag.ACTIVE){
 			res.setFlag(Flag.PASSED);
 			this.onlySave(res);
@@ -185,10 +195,10 @@ public class RendezvousService {
 		return res;
 	}
 	
-	public Rendezvous findOneOnly(final int rendezvousId) {
-		final Rendezvous res = this.rendezvousRepository.findOne(rendezvousId);
-		return res;
-	}
+//	public Rendezvous findOneOnly(final int rendezvousId) {
+//		final Rendezvous res = this.rendezvousRepository.findOne(rendezvousId);
+//		return res;
+//	}
 
 	// Other business methods ----------------------------------
 
