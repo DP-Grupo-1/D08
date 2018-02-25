@@ -121,21 +121,19 @@ public class RendezvousService {
 	public void deleteByAdmin(final Rendezvous rendezvous) {
 
 		Assert.notNull(rendezvous);
-<<<<<<< HEAD
+
 		final Collection<Question> questions = this.questionService.findAllByrendezvous(rendezvous.getId());
 		final Collection<Announcement> announcements = rendezvous.getAnnouncements();
 		final Collection<User> attendants = rendezvous.getAttendants();
-=======
-		Collection<Question> questions = questionService.findAllByrendezvous(rendezvous.getId());
-		Collection<Announcement> announcements = rendezvous.getAnnouncements();
->>>>>>> d38d26de6579d15be4cccd523b7aec9df18330b0
+
+	
 		Assert.notNull(this.findOne(rendezvous.getId()));
 
 		final Administrator admin = this.administratorService.findByPrincipal();
 		Assert.notNull(admin);
 
 		final Collection<Rendezvous> rendezvouses = this.findRendezvousParents(rendezvous.getId());
-<<<<<<< HEAD
+
 		if (!rendezvouses.isEmpty())
 			for (final Rendezvous r : rendezvouses)
 				r.getRendezvouses().remove(rendezvous);
@@ -153,7 +151,7 @@ public class RendezvousService {
 				u.getAttendances().remove(rendezvous);
 		//	userService.save(u);
 
-=======
+
 		for (final Rendezvous r : rendezvouses)
 			r.getRendezvouses().remove(rendezvous);
 
@@ -173,7 +171,7 @@ public class RendezvousService {
 			}
 		
 		
->>>>>>> d38d26de6579d15be4cccd523b7aec9df18330b0
+
 		this.rendezvousRepository.delete(rendezvous);
 
 		this.onlyDelete(rendezvous);

@@ -59,7 +59,6 @@ public class AnnouncementService {
 		final Administrator administrator = this.administratorService.findByPrincipal();
 		Assert.notNull(administrator);
 
-		//	Assert.isTrue(this.announcementRepository.exists(announcement.getId()));
 
 		this.announcementRepository.delete(announcement);
 	}
