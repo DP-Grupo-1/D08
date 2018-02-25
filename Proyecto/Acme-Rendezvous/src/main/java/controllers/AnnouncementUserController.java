@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import security.LoginService;
 import security.UserAccount;
 import services.AnnouncementService;
+import services.RendezvousService;
 import services.UserService;
 import domain.Announcement;
 import domain.Rendezvous;
@@ -37,6 +38,9 @@ public class AnnouncementUserController extends AbstractController {
 	//Services ----------------------------------------------------------
 	@Autowired
 	private AnnouncementService		announcementService;
+
+	@Autowired
+	private RendezvousService		rendezvousService;
 
 	@Autowired
 	private UserService				userService;
@@ -77,8 +81,8 @@ public class AnnouncementUserController extends AbstractController {
 		return res;
 	}
 	//Save --------------------------------------------------
-	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Announcement announcement, final BindingResult binding) {
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(@Valid final Announcement announcement, @RequestParam final Integer rendezvousId, final BindingResult binding) {
 		ModelAndView result;
 
 		if (binding.hasErrors()) {
@@ -86,7 +90,13 @@ public class AnnouncementUserController extends AbstractController {
 			result = this.createEditModelAndView(announcement);
 		} else
 			try {
-				this.announcementService.save(announcement);
+				Announcement a = this.announcementService.save(announcement);
+
+				Rendezvous r = this.rendezvousService.findOne(rendezvousId);
+				r.getAnnouncements().add(a);
+
+				this.rendezvousService.save(r);
+
 				result = new ModelAndView("redirect:list.do");
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(announcement, "announcement.commit.error");

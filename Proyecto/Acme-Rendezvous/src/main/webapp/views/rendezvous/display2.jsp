@@ -72,7 +72,11 @@
     </display:column> 
     
     <display:column >
-	<a  href="user/list.do?rendezvousId=${row.id}"><spring:message code="rendezvous.attendants" /></a>
+	<a href="announcement/list.do?rendezvousId=${row.id}"><spring:message code="rendezvous.announcements" /></a>
+    </display:column>
+    
+      <display:column >
+	<a href="user/list.do?rendezvousId=${row.id}"><spring:message code="rendezvous.attendants" /></a>
     </display:column>
     
     <spring:message code="rendezvous.comments" var="commentsHeader" />
@@ -156,6 +160,10 @@
    	    
    	<display:column >
    	<a  href="user/list.do?rendezvousId=${row.id}"><spring:message code="rendezvous.attendants" /></a>
+    </display:column>
+    
+     <display:column >
+	<a href="announcement/list.do?rendezvousId=${row.id}"><spring:message code="rendezvous.announcements" /></a>
     </display:column>
 
 	<spring:message code="rendezvous.adultOnly" var="rendezvousAdultOnlyHeader" />
