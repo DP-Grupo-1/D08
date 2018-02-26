@@ -28,16 +28,7 @@
 	requestURI="${requestURI}" class="displaytag" keepStatus="true">
 
 
-	<!-- Edit -->
-	<security:authorize access="hasRole('USER')">
-		<!-- Display -->
-		<display:column>
-			<a href="comment/user/edit.do?commentId=${row.id}">
-				<spring:message code="comment.list.edit" />
-			</a>
-		</display:column>
-	</security:authorize>
-
+	
 
 
 	<!-- Attributes -->
@@ -84,7 +75,3 @@
 
 </display:table>
 
-<div>
-		<a href="comment/user/create.do?rendezvousId=${rendezvousId}"><spring:message
-				code="comment.create" /></a>
-	</div>

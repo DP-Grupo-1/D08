@@ -17,6 +17,8 @@ import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
+import javax.persistence.CascadeType;
+
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
@@ -141,7 +143,7 @@ public class Rendezvous extends DomainEntity {
 		this.rendezvouses = rendezvouses;
 	}
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@NotNull
 	@Valid
 	public Collection<Comment> getComments() {

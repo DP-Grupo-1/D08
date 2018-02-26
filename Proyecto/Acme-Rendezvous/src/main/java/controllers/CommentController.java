@@ -47,7 +47,6 @@ public class CommentController extends AbstractController {
 			Comment comment;
 			comment = this.commentService.findOne(commentId);
 
-			//POR HACER LA QUERY EN COMMENT REPOSITORY
 
 			res = new ModelAndView("comment/display");
 			res.addObject("comment", comment);
