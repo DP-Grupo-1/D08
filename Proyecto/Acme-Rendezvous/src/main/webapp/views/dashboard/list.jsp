@@ -29,7 +29,8 @@
 <table class="dashboard">
 	<tr> <td><spring:message code="dashboard.1.1" /></td> <td><jstl:out value="${avgRendezvousPerUser}"/></td>	</tr>
 	<tr> <td><spring:message code="dashboard.1.2" /> <td></td>	</tr>
-	<tr> <td><spring:message code="dashboard.2" /> <td></td>	</tr>
+	<tr> <td><spring:message code="dashboard.2.1" /> <td><jstl:out value="${ratioCreators}"></jstl:out></td>	</tr>
+	<tr> <td><spring:message code="dashboard.2.2" /> <td><jstl:out value="${ratioUsersSinRendezvous }"></jstl:out></td>	</tr>
 	<tr> <td><spring:message code="dashboard.3.1" /> </td> <td> <jstl:out value="${avgUsersPerRendezvous}"/> </td> </tr>
 	<tr> <td><spring:message code="dashboard.3.2" /> </td> <td> <jstl:out value="${stddevUsersPerRendezvous}"/> </td> </tr>
 	<tr> <td><spring:message code="dashboard.4.1" /> </td> <td> <jstl:out value="${avgRSVPsPerUser}"/> </td>	</tr>
@@ -40,6 +41,15 @@
 											</jstl:forEach> </td>
 	</tr>
 	<tr> <td><spring:message code="dashboard.17.2.1" /> </td> <td> <jstl:out value="${avgOfAnnouncementsPerRendezvous}"/> </td>	</tr>
-	<tr> <td><spring:message code="dashboard.17.2.2" /> </td> <td> </td>	</tr>										
+	<tr> <td><spring:message code="dashboard.17.2.2" /> </td> <td> <jstl:out value="${stddAnnouncementsPerRendezvous }"></jstl:out> </td>	</tr>
+	<tr> <td><spring:message code="dashboard.17.2.3"/> </td> <td> <jstl:forEach var="x" items="${above75AverageOfAnnouncementsPerRendezvous}" varStatus="status">
+												<a href="rendezvous/display.do?rendezvousId=${x.id}"><jstl:out value="${x.name}" /></a><jstl:if test="${not status.last}">,</jstl:if> 
+											</jstl:forEach></td> </tr>	
+	<tr> <td><spring:message code="dashboard.17.2.4"/> </td> <td> <jstl:forEach var="x" items="${linkedGreaterAveragePlus10}" varStatus="status">
+												<a href="rendezvous/display.do?rendezvousId=${x.id}"><jstl:out value="${x.name}" /></a><jstl:if test="${not status.last}">,</jstl:if> 
+											</jstl:forEach></td> </tr>		
+	<tr> <td><spring:message code="dashboard.22.1.1" /> </td> <td> <jstl:out value="${avgRepliesPerComment}"/> </td>	</tr>	
+	<tr> <td><spring:message code="dashboard.22.1.2" /> </td> <td> <jstl:out value="${stdevRepliesPerComment}"/> </td>	</tr>							
+							
 </table>
 </security:authorize>

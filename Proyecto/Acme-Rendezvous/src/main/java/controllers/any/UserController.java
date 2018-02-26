@@ -81,6 +81,7 @@ public class UserController {
 	public ModelAndView create() {
 		ModelAndView res;
 		final Register user = new Register();
+		user.setAccept(false);
 		res = this.createEditModelAndView(user);
 
 		return res;
@@ -90,7 +91,7 @@ public class UserController {
 	public ModelAndView save(@Valid final Register registerUser, final BindingResult binding) {
 		Assert.notNull(registerUser);
 		ModelAndView res;
-		final User user = this.userService.reconstruct(registerUser, binding);
+
 		if (binding.hasErrors()) {
 			System.out.println(binding.getAllErrors());
 			res = this.createEditModelAndView(registerUser);
@@ -100,11 +101,15 @@ public class UserController {
 				String password;
 
 				encoder = new Md5PasswordEncoder();
+
+				final User user = this.userService.reconstruct(registerUser, binding);
 				password = encoder.encodePassword(user.getUserAccount().getPassword(), null);
 				user.getUserAccount().setPassword(password);
 				this.userService.save(user);
 				res = new ModelAndView("redirect:../welcome/index.do");
 			} catch (final Throwable error) {
+				//				if (registerUser.getAccept() == false)
+				//					res = this.createEditModelAndView(registerUser, "user.error.accept");
 				res = this.createEditModelAndView(registerUser, "user.error");
 			}
 		return res;

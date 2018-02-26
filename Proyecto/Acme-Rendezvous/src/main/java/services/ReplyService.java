@@ -33,7 +33,7 @@ public class ReplyService {
 
 	//Simple CRUD methods ------------------------
 
-	public Reply create(Comment comment) {
+	public Reply create(final Comment comment) {
 		final Date moment = new Date();
 		final Reply result = new Reply();
 		result.setMoment(moment);
@@ -41,28 +41,36 @@ public class ReplyService {
 
 	}
 
-	public Reply save(Reply reply) {
+	public Reply save(final Reply reply) {
 		Assert.notNull(reply);
 		Reply res;
-		User user = this.userService.findByPrincipal();
+
+		final User user = this.userService.findByPrincipal();
 		Assert.notNull(user);
+		final Collection<Reply> replies = user.getReplies();
 
-		final Date moment = new Date(System.currentTimeMillis() - 1000);
-
-		Assert.isTrue(reply.getMoment().after(moment));
-
-		res = this.replyRepository.save(reply);
+		if (reply.getId() == 0) {
+			res = this.replyRepository.save(reply);
+			replies.add(res);
+			user.setReplies(replies);
+			this.userService.save(user);
+		} else
+			res = this.replyRepository.save(reply);
 
 		return res;
 	}
 
 	public void delete(final Reply reply) {
 		Assert.notNull(reply);
-		Assert.isTrue(this.replyRepository.exists(reply.getId()));
-
+		
 		final Administrator administrator = this.administratorService.findByPrincipal();
-
 		Assert.notNull(administrator);
+		User user= userService.findByReplyId(reply.getId());
+		Assert.notNull(user);
+		
+		user.getReplies().remove(reply);
+		userService.save(user);
+			
 
 		this.replyRepository.delete(reply);
 	}

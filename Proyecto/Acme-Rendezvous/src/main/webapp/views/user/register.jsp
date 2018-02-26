@@ -27,6 +27,14 @@
 <acme:textbox code="user.postalAddress" path="postalAddress"/>
 <acme:textbox code="user.phoneNumber" path="phoneNumber"/>
 <acme:textbox code="user.email" path="email"/>
+<br>
+<a href="document/display.do"><spring:message code="user.document"/> </a>
+<br>
+<spring:message code="user.accept" />
+	<input type="checkbox" name="accept" 
+
+		value="true" />
+	<br>
 
    <input type="submit" name="save" value="<spring:message code='user.save' />" >
 <acme:cancel url="welcome/index.do" code="user.cancel"/>

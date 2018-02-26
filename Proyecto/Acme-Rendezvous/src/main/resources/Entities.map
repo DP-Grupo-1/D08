@@ -1,6 +1,9 @@
 #./src/main/resources/Entities.map
 <<<<<<< HEAD
-#Mon Feb 26 01:10:40 CET 2018
+#Mon Feb 26 11:30:18 CET 2018
+=======
+#Mon Feb 26 16:05:44 CET 2018
+>>>>>>> f10a2ce8df5af52e303c763f9b2e5af95720eb64
 question2=74
 question1=73
 answer2=67
@@ -20,25 +23,3 @@ reply2=65
 reply1=63
 user2=61
 user1=60
-=======
-#Mon Feb 26 01:38:22 CET 2018
-question2=70
-question1=69
-answer2=63
-userAccount3=54
-answer1=62
-userAccount2=53
-administrator1=55
-userAccount1=52
-rendezvous2=68
-rendezvous1=67
-comment2=60
-comment1=58
-announcement3=66
-announcement2=65
-announcement1=64
-reply2=61
-reply1=59
-user2=57
-user1=56
->>>>>>> 12110c09fb68ce192aebea3965d11057f7bd6e21
