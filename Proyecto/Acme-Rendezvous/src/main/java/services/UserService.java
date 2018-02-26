@@ -70,6 +70,13 @@ public class UserService {
 		return res;
 
 	}
+	
+	public User onlySave(final User user){
+		User saved;
+		
+		saved = this.userRepository.save(user);
+		return saved;
+	}
 	public User findByUserAccount(final UserAccount userAccount) {
 		Assert.notNull(userAccount);
 		final User res;

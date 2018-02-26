@@ -7,4 +7,7 @@ import domain.Reply;
 
 public interface ReplyRepository extends JpaRepository<Reply, Integer> {
 
+	
+	
+	
 }
