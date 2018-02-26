@@ -102,15 +102,17 @@ public class QuestionUserController extends AbstractController{
 			User principal = this.userService.findByPrincipal();
 			Assert.isTrue(!(rendezvous.getCreator().equals(principal)));
 			Collection<String> answers = new ArrayList<String>();
-			for(int i=0;i<questions.size();i++){
+			/*for(int i=0;i<questions.size();i++){
 				answers.add(new String());
-			}
+			}*/
 			AnswerQuestions answerQuestions = new AnswerQuestions();
 			answerQuestions.setQuestions(questions);
 			answerQuestions.setAnswers(answers);
 
 			result = this.createEditModelAndViewAnswer(answerQuestions);
+			result.addObject("answerQuestions", answerQuestions);
 			result.addObject("requestURI", "question/user/answerQuestions.do?rendezvousId=" + rendezvousId);
+
 			return result;
 		}
 
@@ -165,7 +167,6 @@ public class QuestionUserController extends AbstractController{
 			ModelAndView result;
 
 			result = new ModelAndView("question/user/answerQuestions");
-			result.addObject("answerQuestions", answerQuestions);
 			result.addObject("message", messageCode);
 			return result;
 		}

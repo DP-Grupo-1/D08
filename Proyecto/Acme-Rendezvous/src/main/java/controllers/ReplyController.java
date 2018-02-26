@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.CommentService;
+import services.ReplyService;
 
 import domain.Reply;
 
@@ -20,6 +21,9 @@ public class ReplyController extends AbstractController {
 
 	@Autowired
 	private CommentService	commentService;
+	
+	@Autowired
+	private ReplyService	replyService;
 
 
 	//Listing
@@ -29,13 +33,26 @@ public class ReplyController extends AbstractController {
 		Collection<Reply> replies;
 		replies = this.commentService.findByCommentId(commentId);
 
-		//POR HACER LA QUERY EN COMMENT REPOSITORY
-
 		res = new ModelAndView("reply/list");
 		res.addObject("replies", replies);
 		res.addObject("requestURI", "reply/list.do");
 		return res;
 	}
+	
+	
+	//Display
+			@RequestMapping(value = "/display", method = RequestMethod.GET)
+			public ModelAndView Display(@RequestParam(required = false) final Integer replyId) {
+				ModelAndView res;
+				 Reply reply;
+				reply = this.replyService.findOne(replyId);
+
+
+				res = new ModelAndView("reply/display");
+				res.addObject("reply", reply);
+				res.addObject("requestURI", "reply/display.do");
+				return res;
+			}
 
 	protected ModelAndView createEditModelAndView(final Reply reply) {
 		ModelAndView result;
