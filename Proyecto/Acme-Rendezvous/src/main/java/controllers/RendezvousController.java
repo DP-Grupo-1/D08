@@ -30,11 +30,7 @@ public class RendezvousController extends AbstractController {
 	@Autowired
 	UserService			userService;
 	@Autowired
-<<<<<<< HEAD
-	QuestionService			questionService;
-=======
 	QuestionService		questionService;
->>>>>>> 024f406c6d11d9fb930c95ecaa6b919457bfb467
 
 
 	//Constructors ------------------------------------------------------
@@ -46,7 +42,6 @@ public class RendezvousController extends AbstractController {
 
 		ModelAndView result;
 		Collection<Rendezvous> rendezvouses;
-		
 
 		rendezvouses = this.rendezvousService.findAll();
 
@@ -88,13 +83,8 @@ public class RendezvousController extends AbstractController {
 
 		rendezvous = this.rendezvousService.findOne(rendezvousId);
 		final Collection<Rendezvous> rendezvouses = this.rendezvousService.findAll();
-<<<<<<< HEAD
-		Collection<Question> questions = this.questionService.findAllByrendezvous(rendezvousId);
-		Boolean noQuestions = questions.isEmpty();
-=======
 		final Collection<Question> questions = this.questionService.findAllByRendezvous(rendezvousId);
 		final Boolean noQuestions = questions.isEmpty();
->>>>>>> 024f406c6d11d9fb930c95ecaa6b919457bfb467
 		result.addObject("rendezvous", rendezvous);
 		result.addObject("rendezvouses", rendezvouses);
 		result.addObject("noQuestions", noQuestions);

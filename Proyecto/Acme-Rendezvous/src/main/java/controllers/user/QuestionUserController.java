@@ -43,24 +43,6 @@ public class QuestionUserController extends AbstractController {
 	private UserService			userService;
 
 
-<<<<<<< HEAD
-			result = this.createEditModelAndViewQuestion(question);
-			result.addObject("requestURI", "question/user/edit.do?rendezvousId=" + rendezvousId);
-
-			return result;
-		}
-		
-		//Edit----------------------------------------------------------------------
-		@RequestMapping(value = "/edit", method = RequestMethod.GET)
-		public ModelAndView editQuestion(@RequestParam final int questionId) {
-			final ModelAndView res;
-			final Question question = this.questionService.findOne(questionId);
-			User principal = this.userService.findByPrincipal();
-			Assert.isTrue(question.getRendezvous().getCreator().equals(principal));
-			res = this.createEditModelAndViewQuestion(question);
-			return res;
-		}
-=======
 	//Creation--------------------------
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create(@RequestParam final Integer rendezvousId) {
@@ -84,7 +66,6 @@ public class QuestionUserController extends AbstractController {
 		res = this.createEditModelAndViewQuestion(question);
 		return res;
 	}
->>>>>>> 024f406c6d11d9fb930c95ecaa6b919457bfb467
 
 		@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 		public ModelAndView saveQuestion(@Valid final Question question, final BindingResult binding) {
@@ -115,17 +96,10 @@ public class QuestionUserController extends AbstractController {
 
 			ModelAndView result;
 			Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
-<<<<<<< HEAD
-			Collection<Question> questions = questionService.findAllByrendezvous(rendezvousId);
-			User principal = this.userService.findByPrincipal();
-			Assert.isTrue(!(rendezvous.getCreator().equals(principal)));
-			Collection<String> answers = new ArrayList<String>();
-=======
 			Collection<Question> questions = questionService.findAllByRendezvous(rendezvousId);
 			User principal = this.userService.findByPrincipal();
 			Assert.isTrue(!(rendezvous.getCreator().equals(principal)));
 			List<Answer> answers = new ArrayList<Answer>();
->>>>>>> 024f406c6d11d9fb930c95ecaa6b919457bfb467
 			for(int i=0;i<questions.size();i++){
 				Answer ans = new Answer();
 				ans.setAnswerer(principal);
@@ -138,14 +112,9 @@ public class QuestionUserController extends AbstractController {
 			result = this.createEditModelAndViewAnswer(answerQuestions);
 			result.addObject("answerQuestions", answerQuestions);
 			result.addObject("requestURI", "question/user/answerQuestions.do?rendezvousId=" + rendezvousId);
-<<<<<<< HEAD
-			return result;
-		}
-=======
 
 		return result;
 	}
->>>>>>> 024f406c6d11d9fb930c95ecaa6b919457bfb467
 
 		@RequestMapping(value = "/answerQuestions", method = RequestMethod.POST, params = "save")
 		public ModelAndView answerQuestions(@Valid AnswerQuestions answerQuestions, BindingResult binding) {
@@ -207,16 +176,8 @@ public class QuestionUserController extends AbstractController {
 
 	
 
-<<<<<<< HEAD
-			questions = questionService.findAllByPrincipalAndRendezvous(user.getId(), rendezvousId);
-			User principal = this.userService.findByPrincipal();
-			Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
-			Assert.isTrue(rendezvous.getCreator().equals(principal));
-			
-=======
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(@RequestParam final int rendezvousId) {
->>>>>>> 024f406c6d11d9fb930c95ecaa6b919457bfb467
 
 		ModelAndView result;
 		User user;
@@ -228,17 +189,9 @@ public class QuestionUserController extends AbstractController {
 		final Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
 		Assert.isTrue(rendezvous.getCreator().equals(principal));
 
-<<<<<<< HEAD
-			ModelAndView result;
-			Question question = this.questionService.findOne(questionId);
-			User principal = this.userService.findByPrincipal();
-			Assert.isTrue(question.getRendezvous().getCreator().equals(principal));
-			
-=======
 		result = new ModelAndView("question/list");
 		result.addObject("questions", questions);
 		result.addObject("requestURI", "question/user/list.do");
->>>>>>> 024f406c6d11d9fb930c95ecaa6b919457bfb467
 
 		return result;
 	}

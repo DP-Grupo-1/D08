@@ -81,10 +81,7 @@ public class UserController {
 	public ModelAndView create() {
 		ModelAndView res;
 		final Register user = new Register();
-<<<<<<< HEAD
-=======
 		user.setAccept(false);
->>>>>>> 024f406c6d11d9fb930c95ecaa6b919457bfb467
 		res = this.createEditModelAndView(user);
 
 		return res;
@@ -94,11 +91,7 @@ public class UserController {
 	public ModelAndView save(@Valid final Register registerUser, final BindingResult binding) {
 		Assert.notNull(registerUser);
 		ModelAndView res;
-<<<<<<< HEAD
-		final User user = this.userService.reconstruct(registerUser, binding);
-=======
 
->>>>>>> 024f406c6d11d9fb930c95ecaa6b919457bfb467
 		if (binding.hasErrors()) {
 			System.out.println(binding.getAllErrors());
 			res = this.createEditModelAndView(registerUser);
@@ -115,11 +108,8 @@ public class UserController {
 				this.userService.save(user);
 				res = new ModelAndView("redirect:../welcome/index.do");
 			} catch (final Throwable error) {
-<<<<<<< HEAD
-=======
 				//				if (registerUser.getAccept() == false)
 				//					res = this.createEditModelAndView(registerUser, "user.error.accept");
->>>>>>> 024f406c6d11d9fb930c95ecaa6b919457bfb467
 				res = this.createEditModelAndView(registerUser, "user.error");
 			}
 		return res;

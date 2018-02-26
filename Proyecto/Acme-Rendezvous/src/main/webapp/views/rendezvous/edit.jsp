@@ -33,55 +33,12 @@
 	<form:hidden path="comments" />
 	<form:hidden path="announcements" />
 	
-	<script>
-	function tester(moment) {
-		var d = new Date();
-		
-		var minutos = d.getMinutes();
-		var hora = d.getHours();
-		
-		var dia = d.getDate();
-		var mes = d.getMonth() +1;
-		var ano = d.getFullYear();
-		
-			
-		var campos = moment.split(' ');
-		
-		// 18/05/23
-		//dates[0] = 18, dates[1] = 05, dates[2] = 23
-		var dates = campos[0].split("/");
-		
-		// 13:30
-		//horas[0] = 13, horas[1] = 30
-		var horas = campos[1].split(":");
-		
-		if(dates[0] < ano){
-			alert("<spring:message code="rendezvous.error.moment" />");
-			return false;
-		} else if((dates[0] == ano) && dates[1] < mes){
-			alert("<spring:message code="rendezvous.error.moment" />");
-			return false;
-		} else if((dates[0] == ano) && (dates[1] == mes) && dates[2] < dia){
-			alert("<spring:message code="rendezvous.error.moment" />");
-			return false;
-		} else if((dates[0] == ano) && (dates[1] == mes) && (dates[2] == dia) && horas[0] < hora){
-			alert("<spring:message code="rendezvous.error.moment" />");
-			return false;
-	} else if((dates[0] == ano) && (dates[1] == mes) && (dates[2] == dia) && (horas[0] == hora) && (horas[1] < minutos)){
-			alert("<spring:message code="rendezvous.error.moment" />");
-			return false;
-		} else {
-			
-		}
-    
- }
-</script>
 	
     <acme:textbox code="rendezvous.name" path="name"/>
     
     <acme:textbox code="rendezvous.description" path="description"/>
     
-    <acme:textbox code="rendezvous.moment" path="moment" id="momentId" />
+    <acme:textbox code="rendezvous.moment" path="moment"/>
     
     <acme:textbox code="rendezvous.picture" path="picture"/>
     
@@ -107,7 +64,7 @@
 	
 	<jstl:if test="${rendezvous.finalMode==false || rendezvous.flag!=Flag.DELETED}">
 		<input type="submit" name="save"
-			value="<spring:message code="rendezvous.save"/>" onclick="return tester(this.form.momentId.value)"
+			value="<spring:message code="rendezvous.save"/>" 
 			/>&nbsp;
 	<input type="submit" name="delete"
 			value="<spring:message code="rendezvous.delete"/>" />&nbsp;
@@ -168,7 +125,7 @@
 
 	<input type="button" name="cancel"
 		value="<spring:message code="rendezvous.cancel" />"
-		onclick="javascript: relativeRedir('rendezvous/user/list.do'); checkFuture()" />
+		onclick="javascript: relativeRedir('rendezvous/user/list.do');" />
 	<br />
 
 </form:form>

@@ -34,11 +34,6 @@ public class UserService {
 	//	@Autowired
 	//	private ReplyService	replyService;
 	@Autowired
-<<<<<<< HEAD
-	private ReplyService	replyService;
-	@Autowired
-=======
->>>>>>> 024f406c6d11d9fb930c95ecaa6b919457bfb467
 	private Validator		validator;
 
 
@@ -124,10 +119,7 @@ public class UserService {
 
 	public User reconstruct(final Register registerUser, final BindingResult binding) {
 		User result;
-<<<<<<< HEAD
-=======
 		Assert.isTrue(registerUser.getAccept());
->>>>>>> 024f406c6d11d9fb930c95ecaa6b919457bfb467
 		result = this.create();
 		result.getUserAccount().setUsername(registerUser.getUsername());
 		result.getUserAccount().setPassword(registerUser.getPassword());
@@ -140,10 +132,6 @@ public class UserService {
 
 		return result;
 	}
-<<<<<<< HEAD
-
-=======
->>>>>>> 024f406c6d11d9fb930c95ecaa6b919457bfb467
 	public User reconstruct(final User user, final BindingResult binding) {
 		User res;
 		if (user.getId() == 0)
