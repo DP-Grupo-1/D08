@@ -18,16 +18,15 @@ import domain.Rendezvous;
 @RequestMapping("/dashboard/administrator")
 public class DashboardAdministratorController {
 
-
 	//Services----------------------------------------------------
 	@Autowired
 	AdministratorService	administratorService;
 
 	@Autowired
-	RendezvousService	rendezvousService;
+	RendezvousService		rendezvousService;
 
 	@Autowired
-	AnnouncementService announcementService;
+	AnnouncementService		announcementService;
 
 
 	//Listing -----------------------------------------------------------
@@ -37,12 +36,14 @@ public class DashboardAdministratorController {
 
 		//Level C-----------------------------------------------------------------------------------------------------
 		//1
-		Double avgRendezvousPerUser = this.rendezvousService.avgRendezvousPerUser();
+		final Double avgRendezvousPerUser = this.rendezvousService.avgRendezvousPerUser();
 		//2
+		final Double ratioCreators = this.rendezvousService.ratioCreators();
+		final Double ratioUsersSinRendezvous = this.rendezvousService.ratioUsersSinRendezvous();
 
 		//3
 		final Double avgUsersPerRendezvous = this.rendezvousService.avgUsersPerRendezvous();
-		final Double stddevUsersPerRendezvous =  this.rendezvousService.stddevUsersPerRendezvous();
+		final Double stddevUsersPerRendezvous = this.rendezvousService.stddevUsersPerRendezvous();
 
 		//4
 		final Double avgRSVPsPerUser = this.rendezvousService.avgRSVPsPerUser();
@@ -51,16 +52,17 @@ public class DashboardAdministratorController {
 		//5
 		final Collection<Rendezvous> top10RendezvousesByRSVPs = this.rendezvousService.top10RendezvousesByRSVPs();
 
-
 		//Level B
 		final Double avgOfAnnouncementsPerRendezvous = this.announcementService.avgOfAnnouncementsPerRendezvous();
-
-
 
 		res = new ModelAndView("dashboard/list");
 
 		//1
 		res.addObject("avgRendezvousPerUser", avgRendezvousPerUser);
+
+		//2
+		res.addObject("ratioCreators", ratioCreators);
+		res.addObject("ratioUsersSinRendezvous", ratioUsersSinRendezvous);
 
 		//3.1
 		res.addObject("avgUsersPerRendezvous", avgUsersPerRendezvous);
@@ -79,8 +81,6 @@ public class DashboardAdministratorController {
 
 		//B
 		res.addObject("avgOfAnnouncementsPerRendezvous", avgOfAnnouncementsPerRendezvous);
-
-
 
 		res.addObject("requestURI", "announcement/list.do");
 

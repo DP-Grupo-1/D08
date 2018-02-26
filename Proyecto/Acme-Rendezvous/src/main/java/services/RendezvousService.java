@@ -106,7 +106,7 @@ public class RendezvousService {
 	}
 
 	public Rendezvous rsvp(final Rendezvous rendezvous) {
-		final Collection<User> attendants= rendezvous.getAttendants();
+		final Collection<User> attendants = rendezvous.getAttendants();
 		final User principal = this.userService.findByPrincipal();
 		attendants.add(principal);
 		rendezvous.setAttendants(attendants);
@@ -165,9 +165,7 @@ public class RendezvousService {
 			for (final User u : attendants)
 				u.getAttendances().remove(rendezvous);
 
-
 		this.rendezvousRepository.delete(rendezvous);
-
 
 	}
 
@@ -229,11 +227,15 @@ public class RendezvousService {
 		final Double result = this.rendezvousRepository.avgRendezvousPerUser();
 		return result;
 	}
-	//
-	//	public Double ratioUserWithRendezvous() {
-	//		final Double result = this.rendezvousRepository.ratioUserWithRendezvous();
-	//		return result;
-	//	}
+
+	public Double ratioCreators() {
+		final Double result = this.rendezvousRepository.ratioCreators();
+		return result;
+	}
+	public Double ratioUsersSinRendezvous() {
+		final Double res = this.rendezvousRepository.ratioUsersSinRendezvous();
+		return res;
+	}
 
 	//3.1
 	public Double avgUsersPerRendezvous() {
@@ -274,17 +276,17 @@ public class RendezvousService {
 		return finalTop10RendezvousesByRSVPs;
 	}
 
-	//	private Collection<Rendezvous> above75AverageOfAnnouncementsPerRendezvous() {
-	//		final Collection<Rendezvous> result;
-	//		result = this.rendezvousRepository.above75AverageOfAnnouncementsPerRendezvous();
-	//		return result;
-	//	}
+	public Collection<Rendezvous> above75AverageOfAnnouncementsPerRendezvous() {
+		final Collection<Rendezvous> result;
+		result = this.rendezvousRepository.above75AverageOfAnnouncementsPerRendezvous();
+		return result;
+	}
 
-	//	private Collection<Rendezvous> LinkedGreaterAveragePlus10() {
-	//		final Collection<Rendezvous> result;
-	//		result = this.rendezvousRepository.linkedGreaterAveragePlus10();
-	//		return result;
-	//	}
+	public Collection<Rendezvous> LinkedGreaterAveragePlus10() {
+		final Collection<Rendezvous> result;
+		result = this.rendezvousRepository.linkedGreaterAveragePlus10();
+		return result;
+	}
 
 	private Collection<Rendezvous> findRendezvousParents(final int id) {
 		final Collection<Rendezvous> result;

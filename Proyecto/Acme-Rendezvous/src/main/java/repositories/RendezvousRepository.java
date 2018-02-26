@@ -39,8 +39,8 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous, Integer>
 	@Query("select count(DISTINCT r.creator)*1.0/(select count(u) from User u) from Rendezvous r")
 	Double ratioCreators();
 	//Ratio de usuario que NO han creado un rendezvous
-	//	@Query("select count(u)*1.0/(select count(us) from User us) " + "from User u where NOT EXISTS( select r.creator from Rendezvous r " + "where u.id=r.creator.id")
-	//	Double ratioUsersSinRendezvous();
+	@Query("select count(u)*1.0/(select count(us) from User us) " + "from User u where NOT EXISTS( select r.creator from Rendezvous r " + "where u.id=r.creator.id")
+	Double ratioUsersSinRendezvous();
 
 	//	Requisito 6.3 punto 3: La media y la desviación estándar de usuarios por reunión.
 	@Query("select avg(r.attendants.size) from Rendezvous r")
@@ -63,17 +63,17 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous, Integer>
 
 	//	//	Requisito 17.2 punto 2: Las reuniones cuyo número de anuncios está por encima del 75%
 	//	//	de la media del número de anuncios por reunión.
-	//	@Query("select r from Rendezvous r where r.announcements.size > (0.75*avg(r.announcements.size));")
-	//	Collection<Rendezvous> above75AverageOfAnnouncementsPerRendezvous();
+	@Query("select r from Rendezvous r group by r having r.announcements.size > (0.75*avg(r.announcements.size))")
+	Collection<Rendezvous> above75AverageOfAnnouncementsPerRendezvous();
 
 	//	Requisito 17.2 punto 3: Las reuniones que están conectadas a un número de reuniones
 	//	que sea (refiriéndose a ese número) la media sumado un 10%.
 
+	@Query("select r from Rendezvous r group by r having r.rendezvouses.size > (1.1*avg(r.rendezvouses.size))")
+	Collection<Rendezvous> linkedGreaterAveragePlus10();
+
 	@Query("select r1 from Rendezvous r1 join r1.rendezvouses r2 where r2.id = ?1")
 	Collection<Rendezvous> findRendezvousParents(int rendezvousId);
-
-	//	@Query("select rsvp from RSVP rsvp join rsvp.rendezvous r where r.id = ?1")
-	//	Collection<RSVP> findRSVPs(int rendezvousId);
 
 	@Query("select r from Rendezvous r join r.comments c where c.id=?1")
 	Rendezvous findByCommentId(int commentId);
