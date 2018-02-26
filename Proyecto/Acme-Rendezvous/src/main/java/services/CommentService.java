@@ -78,12 +78,7 @@ public class CommentService {
 		final Administrator administrator = this.administratorService.findByPrincipal();
 		Assert.notNull(administrator);
 		this.quitarCommentReply(comment);
-<<<<<<< HEAD
-		
-		
-=======
 
->>>>>>> f10a2ce8df5af52e303c763f9b2e5af95720eb64
 		this.commentRepository.delete(comment);
 	}
 

@@ -145,14 +145,12 @@ public class RendezvousService {
 	public void deleteByAdmin(final Rendezvous rendezvous) {
 
 		Assert.notNull(rendezvous);
-<<<<<<< HEAD
-=======
 
 		final Collection<Question> questions = this.questionService.findAllByRendezvous(rendezvous.getId());
 		final Collection<Announcement> announcements = rendezvous.getAnnouncements();
 		final Collection<User> attendants = rendezvous.getAttendants();
 
->>>>>>> f10a2ce8df5af52e303c763f9b2e5af95720eb64
+
 		Assert.notNull(this.findOne(rendezvous.getId()));
 
 		final Administrator admin = this.administratorService.findByPrincipal();
@@ -289,17 +287,17 @@ public class RendezvousService {
 		final Double result = this.rendezvousRepository.ratioCreators();
 		return result;
 	}
-<<<<<<< HEAD
+
 //	public Double ratioUsersSinRendezvous() {
 //		final Double res = this.rendezvousRepository.ratioUsersSinRendezvous();
 //		return res;
 //	}
-=======
+
 	//	public Double ratioUsersSinRendezvous() {
 	//		final Double res = this.rendezvousRepository.ratioUsersSinRendezvous();
 	//		return res;
 	//	}
->>>>>>> f10a2ce8df5af52e303c763f9b2e5af95720eb64
+
 
 	//3.1
 	public Double avgUsersPerRendezvous() {

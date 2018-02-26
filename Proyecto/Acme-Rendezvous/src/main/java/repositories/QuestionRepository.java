@@ -21,7 +21,7 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
 	//Requisito 22.1 punto 1: La media de preguntas por rendezvous.
 	@Query("select count(q)*1.0/(select count(r) from Rendezvous r) from Question q")
 	Double avgQuestionsPerRendezvous();
-<<<<<<< HEAD
+
 
 	@Query("select avg(q.answers.size) from Question q")
 	Double avgAnswersPerQuestions();
@@ -31,6 +31,5 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
 
 	//Requisito 22.1 punto 1: La desviación estándar de preguntas creadas por rendezvous.
 
-=======
->>>>>>> 9d114fa6ea2aa4d33e3ddf80e9661d22c009eed4
+
 }
