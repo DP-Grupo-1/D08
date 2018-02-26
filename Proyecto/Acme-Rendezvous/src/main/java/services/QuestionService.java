@@ -30,6 +30,7 @@ public class QuestionService {
 	@Autowired
 	private RendezvousService		rendezvousService;
 	@Autowired
+
 	private UserService				userService;
 
 	@Autowired
@@ -77,23 +78,20 @@ public class QuestionService {
 	public void deleteByAdmin(final Question question) {
 
 		Assert.notNull(question);
-		//<<<<<<< HEAD
-		//		final Administrator administrator = this.administratorService.findByPrincipal();
-		//		Assert.notNull(administrator);
-		//		this.questionRepository.delete(question);
-		//	}
-		//
-		//	public Collection<Question> findAllByPrincipalAndRendezvous(final int principalId, final int rendezvousId) {
-		//=======
 
 		final Administrator administrator = this.administratorService.findByPrincipal();
 		Assert.notNull(administrator);
-
 		this.questionRepository.delete(question);
 	}
 
 	public Collection<Question> findAllByPrincipalAndRendezvous(final int principalId, final int rendezvousId) {
-		return this.questionRepository.findAllByPrincipalAndRendezvous(principalId, rendezvousId);
+
+		Collection<Question> questions = new ArrayList<Question>();
+		questions = this.questionRepository.findAllByPrincipalAndRendezvous(principalId, rendezvousId);
+		final User user = this.userService.findByPrincipal();
+		Assert.notNull(user);
+		return questions;
+
 	}
 
 	public Collection<Question> findAllByrendezvous(final int rendezvousId) {
