@@ -7,7 +7,7 @@
  * TDG Licence, a copy of which you may download from 
  * http://www.tdg-seville.info/License.html
  --%>
-
+<div onload="prueba()"></div>
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 
@@ -19,6 +19,8 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+
+
 
 <!-- Listing grid -->
 
@@ -65,7 +67,7 @@
 		
 		<spring:message code="rendezvous.moment" var="momentHeader" />
     	<spring:message code="rendezvous.moment.format" var="momentFormat" />
-		<display:column property="moment"
+		<display:column property="moment" class="fecha"
 			title="${momentHeader}" titleKey="rendezvous.moment"
 			sortable="true" format="{0,date,${momentFormat }}" />
    	    
@@ -82,10 +84,18 @@
 		<display:column property="adultOnly" title="${adultOnlyHeader}" sortable="true" />
 			
 			
+
+		<spring:message code="rendezvous.flag" var="flagHeader" />
+		<display:column property="flag" class="indicador" title="${flagHeader}" sortable="true" />
+		
+		<jstl:set var="flag" value="${row.flag}" />
+		
+		
 			
 		<spring:message code="rendezvous.flag" var="flagHeader" />
 		
 		<display:column property="flag" title="${flagHeader}" sortable="true" />
+
 		
 		 <display:column >
 			<a href="user/list.do?rendezvousId=${row.id}"><spring:message code="rendezvous.attendants" /></a>
@@ -98,6 +108,57 @@
 		
 	</display:table>
 	
+	<script>	
+		window.onload = function prueba() {
+			
+			var actualFlag = document.getElementsByClassName("indicador");
+			var rendezvousDate = document.getElementsByClassName("fecha");
+			
+			
+			var d = new Date();
+			
+			var minutos = d.getMinutes();
+			var hora = d.getHours();
+			
+			var dia = d.getDate();
+			var mes = d.getMonth() +1;
+			var ano = d.getFullYear().toString().substr(-2);
+			
+			var i;
+			
+			for (i = 0; i < actualFlag.length; i++) {
+				
+				var campos = rendezvousDate[i].textContent.split(' ');
+				
+				// 18/05/23
+				//dates[0] = 18, dates[1] = 05, dates[2] = 23
+				var dates = campos[0].split("/");
+				
+				// 13:30
+				//horas[0] = 13, horas[1] = 30
+				var horas = campos[1].split(":");
+				
+				if(dates[0] > ano){
+					actualFlag[i].innerHTML = "ACTIVE";
+				} else if((dates[0] == ano) && dates[1] > mes){
+					actualFlag[i].innerHTML = "ACTIVE";
+				} else if((dates[0] == ano) && (dates[1] == mes) && dates[2] > dia){
+					actualFlag[i].innerHTML = "ACTIVE";
+				} else if((dates[0] == ano) && (dates[1] == mes) && (dates[2] == dia) && horas[0] > hora){
+					actualFlag[i].innerHTML = "ACTIVE";
+			} else if((dates[0] == ano) && (dates[1] == mes) && (dates[2] == dia) && (horas[0] == hora) && (horas[1] > minutos)){
+					actualFlag[i].innerHTML = "ACTIVE";
+				} else {
+					actualFlag[i].innerHTML = "PASSED";
+				}
+			}
+			
+
+		};
+		</script>
+		
+		
+		
 	<!-- Action links -->
 
     <security:authorize access="hasRole('USER')">
