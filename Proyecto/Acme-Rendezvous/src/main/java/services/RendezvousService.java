@@ -232,10 +232,10 @@ public class RendezvousService {
 		final Double result = this.rendezvousRepository.ratioCreators();
 		return result;
 	}
-	public Double ratioUsersSinRendezvous() {
-		final Double res = this.rendezvousRepository.ratioUsersSinRendezvous();
-		return res;
-	}
+	//	public Double ratioUsersSinRendezvous() {
+	//		final Double res = this.rendezvousRepository.ratioUsersSinRendezvous();
+	//		return res;
+	//	}
 
 	//3.1
 	public Double avgUsersPerRendezvous() {

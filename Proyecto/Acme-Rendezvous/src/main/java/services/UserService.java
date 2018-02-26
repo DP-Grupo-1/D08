@@ -29,9 +29,10 @@ public class UserService {
 	//Managed repository----------------------------------------------
 	@Autowired
 	private UserRepository	userRepository;
+
 	//Suporting services---------------------------------------------
-	@Autowired
-	private ReplyService	replyService;
+	//	@Autowired
+	//	private ReplyService	replyService;
 	@Autowired
 	private Validator		validator;
 
@@ -111,6 +112,7 @@ public class UserService {
 
 	public User reconstruct(final Register registerUser, final BindingResult binding) {
 		User result;
+		Assert.isTrue(registerUser.getAccept());
 		result = this.create();
 		result.getUserAccount().setUsername(registerUser.getUsername());
 		result.getUserAccount().setPassword(registerUser.getPassword());
@@ -123,7 +125,6 @@ public class UserService {
 
 		return result;
 	}
-
 	public User reconstruct(final User user, final BindingResult binding) {
 		User res;
 		if (user.getId() == 0)

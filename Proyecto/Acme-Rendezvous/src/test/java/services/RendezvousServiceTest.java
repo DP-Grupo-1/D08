@@ -78,4 +78,21 @@ public class RendezvousServiceTest extends AbstractTest {
 		Assert.isTrue(!this.rendezvousService.findAll().contains(rendezvous));
 		super.authenticate(null);
 	}
+	//	@Test
+	//	public void testAvgRendezvousPerUser() {
+	//		final Double avg = this.rendezvousService.avgRendezvousPerUser();
+	//		System.out.println("Media de rendezvouses por usuario: " + avg);
+	//	}
+	//	@Test
+	//	public void testRatioCreators() {
+	//		final Double ratio = this.rendezvousService.ratioCreators();
+	//		System.out.println("Ratio de usuarios que han creado al menos un rendezvous: " + ratio);
+	//	}
+
+	//	@Test
+	//	public void testRatioUsersSinRendezvous() {
+	//		final Double ratio = this.rendezvousService.ratioUsersSinRendezvous();
+	//		System.out.println("Ratio de usuarios que nunca han creado un rendezvous" + ratio);
+	//	}
+
 }
