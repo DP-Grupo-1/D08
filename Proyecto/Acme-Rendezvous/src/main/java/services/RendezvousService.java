@@ -112,7 +112,11 @@ public class RendezvousService {
 	}
 
 	public Rendezvous rsvp(final Rendezvous rendezvous) {
+<<<<<<< HEAD
+		final Collection<User> attendants= rendezvous.getAttendants();
+=======
 		final Collection<User> attendants = rendezvous.getAttendants();
+>>>>>>> 024f406c6d11d9fb930c95ecaa6b919457bfb467
 		final User principal = this.userService.findByPrincipal();
 		attendants.add(principal);
 		rendezvous.setAttendants(attendants);
@@ -153,10 +157,35 @@ public class RendezvousService {
 		final Administrator admin = this.administratorService.findByPrincipal();
 		Assert.notNull(admin);
 
+<<<<<<< HEAD
+		final Collection<Rendezvous> rendezvouses = this.findRendezvousParents(rendezvous.getId());
+
+		if (!rendezvouses.isEmpty())
+			for (final Rendezvous r : rendezvouses)
+				r.getRendezvouses().remove(rendezvous);
+
+		if (!questions.isEmpty())
+			for (final Question q : questions)
+				this.questionService.deleteByAdmin(q);
+
+		if (!announcements.isEmpty())
+			for (final Announcement a : announcements)
+				this.announcementService.delete(a);
+
+		if (!attendants.isEmpty())
+			for (final User u : attendants)
+				u.getAttendances().remove(rendezvous);
+
+
+		this.rendezvousRepository.delete(rendezvous);
+
+
+=======
 		Assert.isTrue(rendezvous.getFinalMode() == false);
 		Assert.isTrue(rendezvous.getFlag() != Flag.DELETED);
 		rendezvous.setFlag(Flag.DELETED);
 		this.onlySave(rendezvous);
+>>>>>>> 024f406c6d11d9fb930c95ecaa6b919457bfb467
 	}
 
 	//	public void deleteByAdmin(final Rendezvous rendezvous) {

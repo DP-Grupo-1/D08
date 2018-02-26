@@ -13,12 +13,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 024f406c6d11d9fb930c95ecaa6b919457bfb467
 import services.CommentService;
 import services.RendezvousService;
 
 import controllers.AbstractController;
 import domain.Comment;
 import domain.Rendezvous;
+<<<<<<< HEAD
+
+=======
+>>>>>>> 024f406c6d11d9fb930c95ecaa6b919457bfb467
 
 @Controller
 @RequestMapping("/comment/user")
@@ -30,6 +38,11 @@ public class CommentUserController extends AbstractController {
 	@Autowired
 	private RendezvousService rendezvousService;
 
+<<<<<<< HEAD
+	
+
+=======
+>>>>>>> 024f406c6d11d9fb930c95ecaa6b919457bfb467
 	// Creation--------------------------
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create(@RequestParam final Integer rendezvousId) {
@@ -42,6 +55,10 @@ public class CommentUserController extends AbstractController {
 
 		result = this.createEditModelAndView(comment);
 		result.addObject("rendezvousId", rendezvousId);
+<<<<<<< HEAD
+	
+=======
+>>>>>>> 024f406c6d11d9fb930c95ecaa6b919457bfb467
 
 		return result;
 	}
@@ -56,13 +73,46 @@ public class CommentUserController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+<<<<<<< HEAD
+	public ModelAndView save(@Valid final Comment comment,@RequestParam final Integer rendezvousId, 
+=======
 	public ModelAndView save(@Valid final Comment comment,
 			@RequestParam final Integer rendezvousId,
+>>>>>>> 024f406c6d11d9fb930c95ecaa6b919457bfb467
 			final BindingResult binding) {
 
 		ModelAndView result;
 		Collection<Comment> comments = new ArrayList<Comment>();
 
+<<<<<<< HEAD
+//		if (binding.hasErrors())
+//			result = this.createEditModelAndView(comment);
+//		else
+//
+//			try {
+				System.out.println("jacinto1");
+				this.commentService.save(comment);
+				System.out.println("jacinto2");
+				Rendezvous r = this.rendezvousService.findOne(rendezvousId);
+				System.out.println("jacinto3");
+				comments.addAll(r.getComments());
+				System.out.println("jacinto4");
+				comments.add(comment);
+				r.setComments(comments);
+				
+				
+				this.rendezvousService.save(r);
+				System.out.println("jacinto5");
+				result = new ModelAndView("redirect:/rendezvous/user/listRsvps.do");
+
+				
+//			}
+//
+//			catch (final Throwable oops) {
+//				result = this.createEditModelAndView(comment,
+//						"comment.comit.error");
+//			}
+=======
 		 if (binding.hasErrors())
 		 result = this.createEditModelAndView(comment);
 	 else
@@ -89,6 +139,7 @@ public class CommentUserController extends AbstractController {
 		 result = this.createEditModelAndView(comment,
 		 "comment.comit.error");
 		 }
+>>>>>>> 024f406c6d11d9fb930c95ecaa6b919457bfb467
 
 		return result;
 	}

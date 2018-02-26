@@ -57,6 +57,19 @@ public class CommentService {
 		final User user = this.userService.findByPrincipal();
 		Assert.notNull(user);
 		final Collection<Comment> comments = user.getComments();
+<<<<<<< HEAD
+		
+		
+
+		//		Assert.isTrue(comment.getMoment().b(moment));
+
+		if (comment.getId() == 0) {
+			
+			res = this.commentRepository.save(comment);
+			comments.add(res);
+			user.setComments(comments);
+			userService.save(user);
+=======
 
 		if (comment.getId() == 0) {
 
@@ -64,13 +77,14 @@ public class CommentService {
 			comments.add(res);
 			user.setComments(comments);
 			this.userService.save(user);
+>>>>>>> 024f406c6d11d9fb930c95ecaa6b919457bfb467
 		} else
 			res = this.commentRepository.save(comment);
 		return res;
 	}
 
 	public void delete(final Comment comment) {
-		
+
 		Assert.notNull(comment);
 		final Administrator administrator = this.administratorService.findByPrincipal();
 		Assert.notNull(administrator);
@@ -110,6 +124,18 @@ public class CommentService {
 		return replies;
 	}
 
+<<<<<<< HEAD
+	public Comment reconstruct(final Comment comment,final BindingResult binding){
+		Comment res = null;
+		if(comment.getId()==0)
+			res=comment;
+		else{
+			//res.set
+		}
+		
+		return res;
+		
+=======
 	public Comment reconstruct(final Comment comment, final BindingResult binding) {
 		Comment res = null;
 		if (comment.getId() == 0)
@@ -131,5 +157,6 @@ public class CommentService {
 		Double res;
 		res = this.commentRepository.stdevRepliesPerComment();
 		return res;
+>>>>>>> 024f406c6d11d9fb930c95ecaa6b919457bfb467
 	}
 }
