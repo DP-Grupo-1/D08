@@ -23,6 +23,8 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
 	Double avgQuestionsPerRendezvous();
 
 
+
+
 	@Query("select avg(q.answers.size) from Question q")
 	Double avgAnswersPerQuestions();
 
@@ -30,6 +32,8 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
 	Double stdevAnswersPerQuestions();
 
 	//Requisito 22.1 punto 1: La desviación estándar de preguntas creadas por rendezvous.
+
+
 
 
 }

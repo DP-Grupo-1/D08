@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,11 +65,11 @@ public class AnswerService {
 		return saved;
 	}
 	
-	public void saveAll(final Collection<String> answers, final Collection<Question> questions) {
+	public void saveAll(final List<Answer> answers, final Collection<Question> questions) {
 		for(int i = 0;i < questions.size();i++){
 			Question question = (Question) questions.toArray()[i];
 			Answer created = this.create(question.getId());
-			String answer = (String) answers.toArray()[i];
+			String answer = answers.get(i).getWritten();
 			created.setWritten(answer);
 			this.save(created, question);
 		}

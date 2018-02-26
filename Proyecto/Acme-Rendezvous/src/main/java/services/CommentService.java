@@ -79,6 +79,8 @@ public class CommentService {
 		Assert.notNull(administrator);
 		this.quitarCommentReply(comment);
 
+
+
 		this.commentRepository.delete(comment);
 	}
 
