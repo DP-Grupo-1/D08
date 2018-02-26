@@ -40,7 +40,7 @@ public class CommentController extends AbstractController {
 		return res;
 	}
 	
-	//Listing
+	//Display
 		@RequestMapping(value = "/display", method = RequestMethod.GET)
 		public ModelAndView Display(@RequestParam(required = false) final Integer commentId) {
 			ModelAndView res;

@@ -1,13 +1,12 @@
-
 package controllers.user;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,12 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 import security.LoginService;
 import security.UserAccount;
 import services.CommentService;
-import services.RendezvousService;
 import services.ReplyService;
 import services.UserService;
 import controllers.AbstractController;
 import domain.Comment;
-import domain.Rendezvous;
 import domain.Reply;
 import domain.User;
 
@@ -30,19 +27,16 @@ import domain.User;
 @RequestMapping("/reply/user")
 public class ReplyUserController extends AbstractController {
 
-	
+	@Autowired
+	private ReplyService replyService;
 
 	@Autowired
-	private ReplyService			replyService;
-	
-	@Autowired
-	private CommentService			commentService;
-	
-	@Autowired
-	private UserService			userService;
+	private CommentService commentService;
 
+	@Autowired
+	private UserService userService;
 
-	//Creation--------------------------
+	// Creation--------------------------
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create(@RequestParam final Integer commentId) {
 		ModelAndView result;
@@ -52,14 +46,11 @@ public class ReplyUserController extends AbstractController {
 
 		result = this.createEditModelAndView(reply);
 
-		result.addObject("requestURI", "reply/user/create.do?commentId=" + comment.getId());
-
+		result.addObject("commentId", commentId);
 		return result;
 	}
 
-
-
-	//Edit----------------------------------------------------------------------
+	// Edit----------------------------------------------------------------------
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int replyId) {
 		final ModelAndView res;
@@ -69,46 +60,48 @@ public class ReplyUserController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Reply reply, final BindingResult binding) {
+	public ModelAndView save(@Valid final Reply reply,@RequestParam final Integer commentId, final BindingResult binding) {
 
 		ModelAndView result;
-
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(reply);
-		else
-
-			try {
+		Collection<Reply> replies = new ArrayList<Reply>();
+//		
+//		if (binding.hasErrors())
+//			result = this.createEditModelAndView(reply);
+//		else
+//
+//			try {
+//				
 				
-				if (reply.getId() != 0) {
-					this.replyService.save(reply);
-					result = new ModelAndView("redirect:/reply/list.do");
-				} else {
 
-					final Reply respuesta= this.replyService.save(reply);
+				 this.replyService.save(reply);
 
+				Comment c = commentService.findOne(commentId);
 					
-					final UserAccount useraccount = LoginService.getPrincipal();
-					final User user= this.userService.findByUserAccount(useraccount);
-
-					Collection<Reply> replies = user.getReplies();
-					replies.add(respuesta);
-					user.setReplies(replies);
+				replies.addAll(c.getReplies());
+				
+				replies.add(reply);
+				
+				c.setReplies(replies);
+				
+				commentService.save(c);
+					
 					
 
-					result = new ModelAndView("redirect:/reply/list.do");
-				}
-			}
-
-			catch (final Throwable oops) {
-				result = this.createEditModelAndView(reply, "reply.comit.error");
-			}
+					result = new ModelAndView("redirect:/rendezvous/user/listRsvps.do");
+	//			}
+//			}
+//
+//			catch (final Throwable oops) {
+//				result = this.createEditModelAndView(reply, "reply.comit.error");
+	//}
 
 		return result;
 	}
 
-	//DELETE
+	// DELETE
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(@Valid final Reply reply, final BindingResult binding) {
+	public ModelAndView delete(@Valid final Reply reply,
+			final BindingResult binding) {
 
 		ModelAndView result;
 
@@ -133,7 +126,8 @@ public class ReplyUserController extends AbstractController {
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final Reply reply, final String messageCode) {
+	protected ModelAndView createEditModelAndView(final Reply reply,
+			final String messageCode) {
 		ModelAndView result;
 
 		result = new ModelAndView("reply/user/edit");

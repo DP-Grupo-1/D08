@@ -36,9 +36,9 @@ public class CommentUserController extends AbstractController {
 		ModelAndView result;
 		Comment comment;
 		Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
-		System.out.println("llego aqui 1");
+	
 		comment = this.commentService.create(rendezvous);
-		System.out.println("llego aqui 2");
+		
 
 		result = this.createEditModelAndView(comment);
 		result.addObject("rendezvousId", rendezvousId);

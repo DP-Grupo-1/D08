@@ -28,21 +28,11 @@
 	requestURI="${requestURI}" class="displaytag" keepStatus="true">
 
 
-	<!-- Edit -->
-	<security:authorize access="hasRole('USER')">
-		<!-- Display -->
-		<display:column>
-			<a href="reply/user/edit.do?replyId=${row.id}">
-				<spring:message code="reply.list.edit" />
-			</a>
-		</display:column>
-	</security:authorize>
-
 
 
 	<!-- Attributes -->
 
-	<spring:message code="reply.moment" var="momentHeader" />
+	<spring:message code="reply.date" var="momentHeader" />
 	<display:column property="moment" title="${momentHeader}" sortable="true" />
 
 	<spring:message code="reply.text" var="textHeader" />
@@ -54,9 +44,9 @@
 
 <!-- Display reply -->
 	<spring:message code="reply.display" var="nameHeader" />
-	<display:column title="${nameHeader}">
+	<display:column>
 			<a href="reply/display.do?replyId=${row.id}">
-				${row.text}
+				<spring:message code="reply.display"/>
 			</a>
 	</display:column>
 

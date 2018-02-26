@@ -44,15 +44,22 @@ public class ReplyService {
 	public Reply save(Reply reply) {
 		Assert.notNull(reply);
 		Reply res;
+		
 		User user = this.userService.findByPrincipal();
 		Assert.notNull(user);
-
-		final Date moment = new Date(System.currentTimeMillis() - 1000);
-
-		Assert.isTrue(reply.getMoment().after(moment));
-
-		res = this.replyRepository.save(reply);
-
+		Collection<Reply> replies = user.getReplies();
+		
+		if(reply.getId() == 0){
+			res = this.replyRepository.save(reply);
+			replies.add(res);
+			user.setReplies(replies);
+			userService.save(user);
+		}
+		
+		else{
+			res = this.replyRepository.save(reply);
+		}
+		
 		return res;
 	}
 

@@ -58,6 +58,13 @@
 				<spring:message code="comment.replies"/>
 			</a>
 	</display:column>
+	
+	<display:column>
+	<div>
+		<a href="reply/user/create.do?commentId=${row.id}"><spring:message
+				code="reply.create" /></a>
+	</div>
+</display:column>
 	 
 
 	
