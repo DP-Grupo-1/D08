@@ -57,17 +57,13 @@ public class CommentService {
 		final User user = this.userService.findByPrincipal();
 		Assert.notNull(user);
 		final Collection<Comment> comments = user.getComments();
-		
-		
-
-	
 
 		if (comment.getId() == 0) {
-			
+
 			res = this.commentRepository.save(comment);
 			comments.add(res);
 			user.setComments(comments);
-			userService.save(user);
+			this.userService.save(user);
 		} else
 			res = this.commentRepository.save(comment);
 		return res;
@@ -79,18 +75,16 @@ public class CommentService {
 		final Administrator administrator = this.administratorService.findByPrincipal();
 		Assert.notNull(administrator);
 		this.quitarCommentReply(comment);
-		
+
 		this.commentRepository.delete(comment);
 	}
 
 	private void quitarCommentReply(final Comment comment) {
 		final Collection<Reply> replies = comment.getReplies();
 		if (!replies.isEmpty())
-	
-		for (final Reply r : replies) {
-			
-			this.userService.findByReplyId(r.getId()).getReplies().remove(r);
-		}
+
+			for (final Reply r : replies)
+				this.userService.findByReplyId(r.getId()).getReplies().remove(r);
 		this.rendezvousService.findByCommentId(comment.getId()).getComments().remove(comment);
 		this.userService.findByCommentId(comment.getId()).getComments().remove(comment);
 	}
@@ -114,15 +108,26 @@ public class CommentService {
 		return replies;
 	}
 
-	public Comment reconstruct(final Comment comment,final BindingResult binding){
+	public Comment reconstruct(final Comment comment, final BindingResult binding) {
 		Comment res = null;
-		if(comment.getId()==0)
-			res=comment;
-		else{
+		if (comment.getId() == 0)
+			res = comment;
+		else {
 			//res.set
 		}
-		
+
 		return res;
-		
+
+	}
+	//DASHBOARD
+	public Double avgRepliesPerComment() {
+		Double res;
+		res = this.commentRepository.avgRepliesPerComment();
+		return res;
+	}
+	public Double stdevRepliesPerComment() {
+		Double res;
+		res = this.commentRepository.stdevRepliesPerComment();
+		return res;
 	}
 }

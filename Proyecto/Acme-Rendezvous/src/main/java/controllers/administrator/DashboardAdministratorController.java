@@ -11,6 +11,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.AdministratorService;
 import services.AnnouncementService;
+import services.CommentService;
+import services.QuestionService;
 import services.RendezvousService;
 import domain.Rendezvous;
 
@@ -27,6 +29,12 @@ public class DashboardAdministratorController {
 
 	@Autowired
 	AnnouncementService		announcementService;
+
+	@Autowired
+	QuestionService			questionService;
+
+	@Autowired
+	CommentService			commentService;
 
 
 	//Listing -----------------------------------------------------------
@@ -63,6 +71,10 @@ public class DashboardAdministratorController {
 		res = new ModelAndView("dashboard/list");
 		//4
 		final Collection<Rendezvous> linkedGreaterAveragePlus10 = this.rendezvousService.LinkedGreaterAveragePlus10();
+		//Level A
+		//1
+		final Double avgRepliesPerComment = this.commentService.avgRepliesPerComment();
+		final Double stdevRepliesPerComment = this.commentService.stdevRepliesPerComment();
 
 		//1
 		res.addObject("avgRendezvousPerUser", avgRendezvousPerUser);
@@ -93,7 +105,9 @@ public class DashboardAdministratorController {
 		res.addObject("linkedGreaterAveragePlus10", linkedGreaterAveragePlus10);
 		res.addObject("requestURI", "announcement/list.do");
 
+		//A
+		res.addObject("avgRepliesPerComment", avgRepliesPerComment);
+		res.addObject("stdevRepliesPerComment", stdevRepliesPerComment);
 		return res;
 	}
-
 }
