@@ -2,6 +2,7 @@ package controllers.user;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -14,16 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import security.LoginService;
-import security.UserAccount;
 import services.AnswerService;
-import services.CommentService;
 import services.QuestionService;
 import services.RendezvousService;
 import services.UserService;
-
 import controllers.AbstractController;
-import domain.Comment;
+import domain.Answer;
 import domain.Question;
 import domain.Rendezvous;
 import domain.User;
@@ -101,16 +98,17 @@ public class QuestionUserController extends AbstractController{
 			Collection<Question> questions = questionService.findAllByrendezvous(rendezvousId);
 			User principal = this.userService.findByPrincipal();
 			Assert.isTrue(!(rendezvous.getCreator().equals(principal)));
-			Collection<String> answers = new ArrayList<String>();
-			/*for(int i=0;i<questions.size();i++){
-				answers.add(new String());
-			}*/
+			List<Answer> answers = new ArrayList<Answer>();
+			for(int i=0;i<questions.size();i++){
+				Answer ans = new Answer();
+				ans.setAnswerer(principal);
+				answers.add(ans);
+			}
 			AnswerQuestions answerQuestions = new AnswerQuestions();
 			answerQuestions.setQuestions(questions);
 			answerQuestions.setAnswers(answers);
 
 			result = this.createEditModelAndViewAnswer(answerQuestions);
-			result.addObject("answerQuestions", answerQuestions);
 			result.addObject("requestURI", "question/user/answerQuestions.do?rendezvousId=" + rendezvousId);
 
 			return result;
@@ -126,7 +124,9 @@ public class QuestionUserController extends AbstractController{
 			else
 
 				try {
-					
+						for(Answer s : answerQuestions.getAnswers()){
+							Assert.notNull(s.getWritten(), "You must answer every question");
+						}
 						this.answerService.saveAll(answerQuestions.getAnswers(), answerQuestions.getQuestions());
 						result = new ModelAndView("redirect:/welcome/index.do");
 					
@@ -167,6 +167,7 @@ public class QuestionUserController extends AbstractController{
 			ModelAndView result;
 
 			result = new ModelAndView("question/user/answerQuestions");
+			result.addObject("answerQuestions", answerQuestions);
 			result.addObject("message", messageCode);
 			return result;
 		}
