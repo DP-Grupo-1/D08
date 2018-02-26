@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import repositories.AnswerRepository;
 import domain.Answer;
 import domain.Question;
+import domain.Rendezvous;
 import domain.User;
 
 @Service
@@ -23,6 +24,8 @@ public class AnswerService {
 
 	@Autowired
 	private QuestionService		questionService;
+	@Autowired
+	private RendezvousService		rendezvousService;
 	@Autowired
 	private UserService			userService;
 
@@ -54,6 +57,10 @@ public class AnswerService {
 		answers.add(answer);
 		question.setAnswers(answers);
 		this.questionService.save(question);
+		Rendezvous rendezvous = question.getRendezvous();
+		if(!(rendezvous.getAttendants().contains(principal))){
+			this.rendezvousService.rsvp(rendezvous);
+		}
 		return saved;
 	}
 	

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
 
 import repositories.CommentRepository;
 import domain.Administrator;
@@ -40,12 +41,10 @@ public class CommentService {
 	//Simple CRUD methods ------------------------
 
 	public Comment create(final Rendezvous rendezvous) {
-		Collection<Reply> replies = new ArrayList<Reply>();
+		final Collection<Reply> replies = new ArrayList<Reply>();
 		final Date moment = new Date();
 		final Comment result = new Comment();
-		
-		
-		
+
 		result.setReplies(replies);
 		result.setMoment(moment);
 		return result;
@@ -57,28 +56,25 @@ public class CommentService {
 		Comment res;
 		final User user = this.userService.findByPrincipal();
 		Assert.notNull(user);
-		Collection<Comment> comments = user.getComments();
-		System.out.println("llego aqui save2");
-
-//		Assert.isTrue(comment.getMoment().b(moment));
+		final Collection<Comment> comments = user.getComments();
 		
-		if(comment.getId() == 0){
-			System.out.println("llego aqui save3");
+		
+
+		//		Assert.isTrue(comment.getMoment().b(moment));
+
+		if (comment.getId() == 0) {
+			
 			res = this.commentRepository.save(comment);
-			System.out.println("llego aqui save4");
 			comments.add(res);
 			user.setComments(comments);
-			//userService.save(user);
-			System.out.println("llego aqui save5");
-		}
-		else{
-		res = this.commentRepository.save(comment);
-		}
+			userService.save(user);
+		} else
+			res = this.commentRepository.save(comment);
 		return res;
 	}
 
 	public void delete(final Comment comment) {
-		
+
 		Assert.notNull(comment);
 		final Administrator administrator = this.administratorService.findByPrincipal();
 		Assert.notNull(administrator);
@@ -118,4 +114,15 @@ public class CommentService {
 		return replies;
 	}
 
+	public Comment reconstruct(final Comment comment,final BindingResult binding){
+		Comment res = null;
+		if(comment.getId()==0)
+			res=comment;
+		else{
+			//res.set
+		}
+		
+		return res;
+		
+	}
 }

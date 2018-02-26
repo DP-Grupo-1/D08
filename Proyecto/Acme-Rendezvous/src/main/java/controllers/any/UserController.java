@@ -19,6 +19,7 @@ import services.RendezvousService;
 import services.UserService;
 import domain.Rendezvous;
 import domain.User;
+import forms.Register;
 
 @Controller
 @RequestMapping("/user")
@@ -79,19 +80,20 @@ public class UserController {
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView res;
-		final User user = this.userService.create();
+		final Register user = new Register();
 		res = this.createEditModelAndView(user);
 
 		return res;
 	}
 	//Edit----------------------------------------------------------------------------
 	@RequestMapping(value = "/register", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final User user, final BindingResult binding) {
-		Assert.notNull(user);
+	public ModelAndView save(@Valid final Register registerUser, final BindingResult binding) {
+		Assert.notNull(registerUser);
 		ModelAndView res;
+		final User user = this.userService.reconstruct(registerUser, binding);
 		if (binding.hasErrors()) {
 			System.out.println(binding.getAllErrors());
-			res = this.createEditModelAndView(user);
+			res = this.createEditModelAndView(registerUser);
 		} else
 			try {
 				Md5PasswordEncoder encoder;
@@ -103,12 +105,12 @@ public class UserController {
 				this.userService.save(user);
 				res = new ModelAndView("redirect:../welcome/index.do");
 			} catch (final Throwable error) {
-				res = this.createEditModelAndView(user, "user.error");
+				res = this.createEditModelAndView(registerUser, "user.error");
 			}
 		return res;
 
 	}
-	private ModelAndView createEditModelAndView(final User user) {
+	private ModelAndView createEditModelAndView(final Register user) {
 		ModelAndView result;
 
 		result = this.createEditModelAndView(user, null);
@@ -116,11 +118,11 @@ public class UserController {
 		return result;
 	}
 
-	private ModelAndView createEditModelAndView(final User user, final String message) {
+	private ModelAndView createEditModelAndView(final Register user, final String message) {
 		ModelAndView result;
 
 		result = new ModelAndView("user/register");
-		result.addObject("user", user);
+		result.addObject("register", user);
 		result.addObject("message", message);
 
 		return result;

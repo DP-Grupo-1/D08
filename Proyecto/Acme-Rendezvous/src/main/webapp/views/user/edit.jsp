@@ -19,10 +19,12 @@
 
 <form:hidden path="id"/>
 <form:hidden path="version"/>
-<form:hidden path="userAccount.authorities"/>
+<form:hidden path="userAccount"/>
+<form:hidden path="attendances"/>
 <form:hidden path="comments"/>
 <form:hidden path="replies"/>
-<form:hidden path="attendances"/>
+
+
 
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 

@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -62,6 +63,8 @@ public class QuestionUserController extends AbstractController{
 		public ModelAndView editQuestion(@RequestParam final int questionId) {
 			final ModelAndView res;
 			final Question question = this.questionService.findOne(questionId);
+			User principal = this.userService.findByPrincipal();
+			Assert.isTrue(question.getRendezvous().getCreator().equals(principal));
 			res = this.createEditModelAndViewQuestion(question);
 			return res;
 		}
@@ -90,11 +93,14 @@ public class QuestionUserController extends AbstractController{
 		}
 		
 		//Edit----------------------------------------------------------------------
-		@RequestMapping(value = "/answerQuestions", method = RequestMethod.POST, params = "answerQuestions")
-		public ModelAndView answerQuestions(@RequestParam final int rendezvousId, BindingResult binding) {
+		@RequestMapping(value = "/answerQuestions", method = RequestMethod.GET)
+		public ModelAndView answerQuestions(@RequestParam final int rendezvousId) {
 
 			ModelAndView result;
+			Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
 			Collection<Question> questions = questionService.findAllByrendezvous(rendezvousId);
+			User principal = this.userService.findByPrincipal();
+			Assert.isTrue(!(rendezvous.getCreator().equals(principal)));
 			Collection<String> answers = new ArrayList<String>();
 			for(int i=0;i<questions.size();i++){
 				answers.add(new String());
@@ -105,7 +111,6 @@ public class QuestionUserController extends AbstractController{
 
 			result = this.createEditModelAndViewAnswer(answerQuestions);
 			result.addObject("requestURI", "question/user/answerQuestions.do?rendezvousId=" + rendezvousId);
-
 			return result;
 		}
 
@@ -174,6 +179,10 @@ public class QuestionUserController extends AbstractController{
 			Collection<Question> questions;
 
 			questions = questionService.findAllByPrincipalAndRendezvous(user.getId(), rendezvousId);
+			User principal = this.userService.findByPrincipal();
+			Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
+			Assert.isTrue(rendezvous.getCreator().equals(principal));
+			
 
 			result = new ModelAndView("question/list");
 			result.addObject("questions", questions);
@@ -187,6 +196,9 @@ public class QuestionUserController extends AbstractController{
 
 			ModelAndView result;
 			Question question = this.questionService.findOne(questionId);
+			User principal = this.userService.findByPrincipal();
+			Assert.isTrue(question.getRendezvous().getCreator().equals(principal));
+			
 
 			result = new ModelAndView("question/answers");
 			result.addObject("answers", question.getAnswers());

@@ -89,7 +89,18 @@
 
 	<spring:message code="rendezvous.flag" var="flagHeader" />
 	<display:column property="flag" title="${flagHeader}" sortable="true" />
+	
+	
+	<display:column>
+		  <a href="rendezvous/display.do?rendezvousId=${row.id}"><spring:message code="rendezvous.list.display" /></a>
+	 </display:column>
 
+    
+     <security:authorize access="hasRole('ADMIN')">   
+	<display:column>
+		  <a href="rendezvous/administrator/delete.do?rendezvousId=${row.id}"><spring:message code="rendezvous.delete" /></a>
+	 </display:column>
+    </security:authorize>
 	
 
 
