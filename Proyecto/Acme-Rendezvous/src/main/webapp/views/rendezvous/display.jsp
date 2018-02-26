@@ -169,18 +169,11 @@
 		</script>
 
 <security:authorize access="hasRole('USER')">
-	<jstl:choose> 
-	<jstl:when test="${hasUserRSVPd==false}">
-	  	<a href="rendezvous/user/attend.do?rendezvousId=${row.id}">
-		  	<spring:message code="rendezvous.attend" />
-		</a>	
-	</jstl:when>
-	<jstl:otherwise>
+	<jstl:if test="${hasUserRSVPd==true}">
 	  	<a href="rendezvous/user/noAttend.do?rendezvousId=${row.id}">
 		  	<spring:message code="rendezvous.noAttend" />
 		</a>	
-	</jstl:otherwise>
-	</jstl:choose>
+	</jstl:if>
 	<br>
 </security:authorize> 
 
