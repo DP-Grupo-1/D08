@@ -37,7 +37,7 @@
 	</display:column>
 
     <spring:message code="rendezvous.moment" var="momentHeader" />
-	<display:column property="moment" title="${momentHeader}" class="fecha" sortable="true">
+	<display:column property="moment" title="${momentHeader}" class="fecha" sortable="true" format="{0,date,${rendezvousMomentFormat }}">
 	</display:column>
 
 	<spring:message code="rendezvous.picture" var="pictureHeader" />

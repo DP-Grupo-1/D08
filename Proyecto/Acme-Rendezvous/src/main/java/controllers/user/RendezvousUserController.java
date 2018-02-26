@@ -121,7 +121,7 @@ public class RendezvousUserController extends AbstractController {
 				result = new ModelAndView("redirect:../display.do?rendezvousId=" + saved.getId());
 			} catch (final Throwable error) {
 				System.out.println(error);
-				result = this.createEditModelAndView(rendezvous, "rendezvous.comit.error");
+				result = this.createEditModelAndView(rendezvous, "rendezvous.commit.error");
 			}
 		return result;
 	}
@@ -135,7 +135,7 @@ public class RendezvousUserController extends AbstractController {
 			this.rendezvousService.deleteByUser(rendezvous);
 			result = new ModelAndView("redirect:../display.do?rendezvousId=" + rendezvous.getId());
 		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(rendezvous, "rendezvous.comit.error");
+			result = this.createEditModelAndView(rendezvous, "rendezvous.commit.error");
 		}
 		return result;
 	}

@@ -52,7 +52,7 @@ public class RendezvousAdministratorController extends AbstractController {
 				final Rendezvous saved = this.rendezvousService.save(rendezvous);
 				result = new ModelAndView("redirect:../display.do?rendezvousId=" + saved.getId());
 			} catch (final Throwable error) {
-				result = this.createEditModelAndView(rendezvous, "rendezvous.comit.error");
+				result = this.createEditModelAndView(rendezvous, "rendezvous.commit.error");
 			}
 		return result;
 	}
