@@ -1,5 +1,6 @@
 package controllers.user;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.validation.Valid;
@@ -12,15 +13,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import security.LoginService;
-import security.UserAccount;
+
 import services.CommentService;
 import services.RendezvousService;
-import services.UserService;
+
 import controllers.AbstractController;
 import domain.Comment;
 import domain.Rendezvous;
-import domain.User;
+
 
 @Controller
 @RequestMapping("/comment/user")
@@ -32,8 +32,7 @@ public class CommentUserController extends AbstractController {
 	@Autowired
 	private RendezvousService rendezvousService;
 
-	@Autowired
-	private UserService userService;
+	
 
 	// Creation--------------------------
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
@@ -46,9 +45,8 @@ public class CommentUserController extends AbstractController {
 		System.out.println("llego aqui 2");
 
 		result = this.createEditModelAndView(comment);
-		result.addObject("rendezvousId", rendezvous.getId());
-		result.addObject("requestURI", "comment/user/create.do?rendezvousId="
-				+ rendezvousId);
+		result.addObject("rendezvousId", rendezvousId);
+	
 
 		return result;
 	}
@@ -63,23 +61,35 @@ public class CommentUserController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Comment comment,
+	public ModelAndView save(@Valid final Comment comment,@RequestParam final Integer rendezvousId, 
 			final BindingResult binding) {
 
 		ModelAndView result;
-//
+		Collection<Comment> comments = new ArrayList<Comment>();
+
 //		if (binding.hasErrors())
 //			result = this.createEditModelAndView(comment);
 //		else
 //
 //			try {
-				System.out.println("llego aqui controller");
+				System.out.println("jacinto1");
 				this.commentService.save(comment);
-				result = new ModelAndView("redirect:/comment/list.do");
+				System.out.println("jacinto2");
+				Rendezvous r = this.rendezvousService.findOne(rendezvousId);
+				System.out.println("jacinto3");
+				comments.addAll(r.getComments());
+				System.out.println("jacinto4");
+				comments.add(comment);
+				r.setComments(comments);
+				
+				
+				this.rendezvousService.save(r);
+				System.out.println("jacinto5");
+				result = new ModelAndView("redirect:/rendezvous/user/listRsvps.do");
 
-				System.out.println("llego aqui controller2");
+				
 //			}
-
+//
 //			catch (final Throwable oops) {
 //				result = this.createEditModelAndView(comment,
 //						"comment.comit.error");

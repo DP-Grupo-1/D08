@@ -57,18 +57,17 @@ public class CommentService {
 		final User user = this.userService.findByPrincipal();
 		Assert.notNull(user);
 		final Collection<Comment> comments = user.getComments();
-		System.out.println("llego aqui save2");
+		
+		
 
 		//		Assert.isTrue(comment.getMoment().b(moment));
 
 		if (comment.getId() == 0) {
-			System.out.println("llego aqui save3");
+			
 			res = this.commentRepository.save(comment);
-			System.out.println("llego aqui save4");
 			comments.add(res);
 			user.setComments(comments);
-			//userService.save(user);
-			System.out.println("llego aqui save5");
+			userService.save(user);
 		} else
 			res = this.commentRepository.save(comment);
 		return res;
