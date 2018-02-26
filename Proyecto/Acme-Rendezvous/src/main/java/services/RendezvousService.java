@@ -138,7 +138,7 @@ public class RendezvousService {
 
 		Assert.notNull(rendezvous);
 
-		final Collection<Question> questions = this.questionService.findAllByrendezvous(rendezvous.getId());
+		final Collection<Question> questions = this.questionService.findAllByRendezvous(rendezvous.getId());
 		final Collection<Announcement> announcements = rendezvous.getAnnouncements();
 		final Collection<User> attendants = rendezvous.getAttendants();
 

@@ -30,7 +30,6 @@ public class QuestionService {
 	@Autowired
 	private RendezvousService		rendezvousService;
 	@Autowired
-
 	private UserService				userService;
 
 	@Autowired
@@ -94,8 +93,40 @@ public class QuestionService {
 
 	}
 
-	public Collection<Question> findAllByrendezvous(final int rendezvousId) {
+	public Collection<Question> findAllByRendezvous(final int rendezvousId) {
 		return this.questionRepository.findAllByRendezvous(rendezvousId);
+	}
+
+	public Double avgQuestionsPerRendezvous() {
+		return this.questionRepository.avgQuestionsPerRendezvous();
+	}
+
+	//Requisito 22.1 punto 1: La desviación estándar de preguntas creadas por rendezvous.
+	public Double stddevRendezvousPerUser() {
+		Double stddev = 0.0;
+		final Double avgQuestions = this.avgQuestionsPerRendezvous();
+
+		stddev = Math.sqrt(this.sumQuestions() / this.totalQuestions() - avgQuestions * avgQuestions);
+
+		return stddev;
+	}
+
+	private Integer totalQuestions() {
+		Integer numQuestions = 0;
+		for (final Rendezvous r1 : this.rendezvousService.findAll()) {
+			final Collection<Question> questions = this.findAllByRendezvous(r1.getId());
+			numQuestions = numQuestions + questions.size();
+		}
+		return numQuestions;
+	}
+
+	private Integer sumQuestions() {
+		Integer sumQuestions = 0;
+		for (final Rendezvous r2 : this.rendezvousService.findAll()) {
+			final Collection<Question> questions = this.findAllByRendezvous(r2.getId());
+			sumQuestions = sumQuestions + questions.size() * questions.size();
+		}
+		return sumQuestions;
 	}
 
 	//Prune domain object------------------------------------------------------------
