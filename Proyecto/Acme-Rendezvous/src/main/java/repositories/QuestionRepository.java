@@ -1,3 +1,4 @@
+
 package repositories;
 
 import java.util.Collection;
@@ -10,12 +11,26 @@ import domain.Question;
 
 @Repository
 public interface QuestionRepository extends JpaRepository<Question, Integer> {
-	
+
 	@Query("select q from Question q where q.creator.id = ?1 and q.rendezvous.id = ?2")
 	Collection<Question> findAllByPrincipalAndRendezvous(int principalId, int rendezvousId);
 
 	@Query("select q from Question q where q.rendezvous.id = ?1")
 	Collection<Question> findAllByRendezvous(int rendezvousId);
-	
 
+	//Requisito 22.1 punto 1: La media de preguntas por rendezvous.
+	@Query("select count(q)*1.0/(select count(r) from Rendezvous r) from Question q")
+	Double avgQuestionsPerRendezvous();
+<<<<<<< HEAD
+
+	@Query("select avg(q.answers.size) from Question q")
+	Double avgAnswersPerQuestions();
+
+	@Query("select sqrt(sum(q.answers.size*q.answers.size)/count(q.answers.size)-" + "(avg(q.answers.size)*avg(q.answers.size) ))" + " from Question q")
+	Double stdevAnswersPerQuestions();
+
+	//Requisito 22.1 punto 1: La desviación estándar de preguntas creadas por rendezvous.
+
+=======
+>>>>>>> 9d114fa6ea2aa4d33e3ddf80e9661d22c009eed4
 }
