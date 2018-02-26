@@ -47,9 +47,13 @@
 											</jstl:forEach></td> </tr>	
 	<tr> <td><spring:message code="dashboard.17.2.4"/> </td> <td> <jstl:forEach var="x" items="${linkedGreaterAveragePlus10}" varStatus="status">
 												<a href="rendezvous/display.do?rendezvousId=${x.id}"><jstl:out value="${x.name}" /></a><jstl:if test="${not status.last}">,</jstl:if> 
-											</jstl:forEach></td> </tr>		
-	<tr> <td><spring:message code="dashboard.22.1.1" /> </td> <td> <jstl:out value="${avgRepliesPerComment}"/> </td>	</tr>	
-	<tr> <td><spring:message code="dashboard.22.1.2" /> </td> <td> <jstl:out value="${stdevRepliesPerComment}"/> </td>	</tr>							
+											</jstl:forEach></td> </tr>	
+	<tr> <td><spring:message code="dashboard.22.1.1" /> </td> <td> <jstl:out value="${avgQuestionsPerRendezvous}"/> </td>	</tr>
+	<tr> <td><spring:message code="dashboard.22.1.2" /> </td> <td> <jstl:out value="${stdevQuestionsPerRendezvous}"/> </td>	</tr>	
+	<tr> <td><spring:message code="dashboard.22.1.3" /> </td> <td> <jstl:out value="${avgAnswersPerQuestions}"/> </td>	</tr>
+	<tr> <td><spring:message code="dashboard.22.1.4" /> </td> <td> <jstl:out value="${stdevAnswersPerQuestions}"/> </td>	</tr>
+	<tr> <td><spring:message code="dashboard.22.1.5" /> </td> <td> <jstl:out value="${avgRepliesPerComment}"/> </td>	</tr>	
+	<tr> <td><spring:message code="dashboard.22.1.6" /> </td> <td> <jstl:out value="${stdevRepliesPerComment}"/> </td>	</tr>							
 							
 </table>
 </security:authorize>
