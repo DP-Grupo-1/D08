@@ -29,17 +29,19 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous, Integer>
 	@Query("select r from Rendezvous r where r.creator.id=?1")
 	Collection<Rendezvous> findByCreatorId(int creatorId);
 
-	//	//	Requisito 6.3 punto 1: La media y la desviación estándar de reuniones creadas por usuario.
+	//Requisito 6.3 punto 1: La media y la desviación estándar de reuniones creadas por usuario.
 	@Query("select count(r)*1.0/(select count(u) from User u) from Rendezvous r")
 	Double avgRendezvousPerUser();
 
 	//@Query("select stddev(u.rendezvouses.size) from User u")
 	//Double stddevRendezvousPerUser()
-	//	//	Requisito 6.3 punto 2: Ratio de usuarios que han creado al menos una reunión.
+
+	//Requisito 6.3 punto 2: Ratio de usuarios que han creado al menos una reunión.
 	@Query("select count(DISTINCT r.creator)*1.0/(select count(u) from User u) from Rendezvous r")
 	Double ratioCreators();
+
 	//Ratio de usuario que NO han creado un rendezvous
-	//	@Query("select count(u)*1.0/(select count(us) from User us) " + "from User u where NOT EXISTS( select r.creator from Rendezvous r " + "where u.id=r.creator.id")
+	//	@Query("select count(u)*1.0/(select count(us) from User us) from User u where NOT EXISTS(select r.creator from Rendezvous r AND u.id=r.creator.id)")
 	//	Double ratioUsersSinRendezvous();
 
 	//	Requisito 6.3 punto 3: La media y la desviación estándar de usuarios por reunión.
@@ -57,12 +59,12 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous, Integer>
 	@Query("select stddev(u.attendances.size) from User u")
 	Double stddevRSVPsPerUser();
 
-	//	//	Requisito 6.3 punto 5: Top 10 de reuniones en las que más usuarios han RSPVd.
+	//	Requisito 6.3 punto 5: Top 10 de reuniones en las que más usuarios han RSPVd.
 	@Query("select r from Rendezvous r order by r.attendants.size DESC")
 	Collection<Rendezvous> top10RendezvousesByRSVPs();
 
-	//	//	Requisito 17.2 punto 2: Las reuniones cuyo número de anuncios está por encima del 75%
-	//	//	de la media del número de anuncios por reunión.
+	//	Requisito 17.2 punto 2: Las reuniones cuyo número de anuncios está por encima del 75%
+	//	de la media del número de anuncios por reunión.
 	@Query("select r from Rendezvous r group by r having r.announcements.size > (0.75*avg(r.announcements.size))")
 	Collection<Rendezvous> above75AverageOfAnnouncementsPerRendezvous();
 
