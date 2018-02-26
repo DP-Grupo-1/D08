@@ -10,8 +10,9 @@
 
 <form:form action="${requestURI}" modelAttribute="answerQuestions">
 	<jstl:forEach items="answerQuestions.questions" var="currentQuestion" varStatus="current">
-		<jstl:out value="${currentQuestion.question}"></jstl:out>
-		<acme:textbox code="currentQuestion.answers[${current.index}]" path="answers"/>
+	 	<jstl:set var="currentQuestion.questionToAnswer" value="${quest}" />
+		<jstl:out value="${quest}"></jstl:out>
+		<acme:textbox code="currentQuestion.answers" path="questions[${current.index}].answers[${current.index}]"/>
 		<br/>
 	</jstl:forEach>
 	<input type="submit" name="save"

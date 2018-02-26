@@ -90,9 +90,9 @@ public class AnnouncementUserController extends AbstractController {
 			result = this.createEditModelAndView(announcement);
 		} else
 			try {
-				Announcement a = this.announcementService.save(announcement);
+				final Announcement a = this.announcementService.save(announcement);
 
-				Rendezvous r = this.rendezvousService.findOne(rendezvousId);
+				final Rendezvous r = this.rendezvousService.findOne(rendezvousId);
 				r.getAnnouncements().add(a);
 
 				this.rendezvousService.save(r);
@@ -105,19 +105,6 @@ public class AnnouncementUserController extends AbstractController {
 		return result;
 	}
 
-	//Delete ------------------------------------------------
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(final Announcement announcement, final BindingResult binding) {
-		ModelAndView result;
-
-		try {
-			this.announcementService.delete(announcement);
-			result = new ModelAndView("redirect:list.do");
-		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(announcement, "announcement.commit.error");
-		}
-		return result;
-	}
 
 	protected ModelAndView createEditModelAndView(final Announcement announcement) {
 		ModelAndView result;
