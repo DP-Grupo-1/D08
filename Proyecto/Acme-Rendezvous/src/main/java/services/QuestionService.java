@@ -102,7 +102,7 @@ public class QuestionService {
 	}
 
 	//Requisito 22.1 punto 1: La desviación estándar de preguntas creadas por rendezvous.
-	public Double stddevRendezvousPerUser() {
+	public Double stddevQuestionPerRendezvous() {
 		Double stddev = 0.0;
 		final Double avgQuestions = this.avgQuestionsPerRendezvous();
 
@@ -127,6 +127,17 @@ public class QuestionService {
 			sumQuestions = sumQuestions + questions.size() * questions.size();
 		}
 		return sumQuestions;
+	}
+
+	public Double avgAnswersPerQuestions() {
+		Double res;
+		res = this.questionRepository.avgAnswersPerQuestions();
+		return res;
+	}
+	public Double stdevAnswerPerQuestions() {
+		Double res;
+		res = this.questionRepository.stdevAnswersPerQuestions();
+		return res;
 	}
 
 	//Prune domain object------------------------------------------------------------

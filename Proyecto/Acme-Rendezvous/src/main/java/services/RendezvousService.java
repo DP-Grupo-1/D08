@@ -157,7 +157,7 @@ public class RendezvousService {
 		final Collection<Question> questions = this.questionService.findAllByRendezvous(rendezvous.getId());
 		final Collection<Announcement> announcements = rendezvous.getAnnouncements();
 		final Collection<User> attendants = rendezvous.getAttendants();
-		
+
 		Assert.notNull(this.findOne(rendezvous.getId()));
 
 		final Administrator admin = this.administratorService.findByPrincipal();
@@ -299,10 +299,16 @@ public class RendezvousService {
 //		final Double res = this.rendezvousRepository.ratioUsersSinRendezvous();
 //		return res;
 //	}
+
+
+
 	//	public Double ratioUsersSinRendezvous() {
 	//		final Double res = this.rendezvousRepository.ratioUsersSinRendezvous();
 	//		return res;
 	//	}
+
+
+
 
 	//3.1
 	public Double avgUsersPerRendezvous() {

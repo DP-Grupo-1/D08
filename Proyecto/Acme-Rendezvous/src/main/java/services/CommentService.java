@@ -70,14 +70,14 @@ public class CommentService {
 	}
 
 	public void delete(final Comment comment) {
-		User user = userService.findByCommentId(comment.getId());
-		Assert.notNull(user);
 		
-
 		Assert.notNull(comment);
 		final Administrator administrator = this.administratorService.findByPrincipal();
 		Assert.notNull(administrator);
 		this.quitarCommentReply(comment);
+
+
+
 		this.commentRepository.delete(comment);
 	}
 

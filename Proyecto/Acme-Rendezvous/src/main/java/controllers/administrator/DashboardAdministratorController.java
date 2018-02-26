@@ -73,6 +73,12 @@ public class DashboardAdministratorController {
 		final Collection<Rendezvous> linkedGreaterAveragePlus10 = this.rendezvousService.LinkedGreaterAveragePlus10();
 		//Level A
 		//1
+		final Double avgQuestionsPerRendezvous = this.questionService.avgQuestionsPerRendezvous();
+		final Double stdevQuestionsPerRendezvous = this.questionService.stddevQuestionPerRendezvous();
+		//2
+		final Double avgAnswersPerQuestions = this.questionService.avgAnswersPerQuestions();
+		final Double stdevAnswersPerQuestions = this.questionService.stdevAnswerPerQuestions();
+		//3
 		final Double avgRepliesPerComment = this.commentService.avgRepliesPerComment();
 		final Double stdevRepliesPerComment = this.commentService.stdevRepliesPerComment();
 
@@ -108,6 +114,10 @@ public class DashboardAdministratorController {
 		//A
 		res.addObject("avgRepliesPerComment", avgRepliesPerComment);
 		res.addObject("stdevRepliesPerComment", stdevRepliesPerComment);
+		res.addObject("avgQuestionsPerRendezvous", avgQuestionsPerRendezvous);
+		res.addObject("stdevQuestionsPerRendezvous", stdevQuestionsPerRendezvous);
+		res.addObject("avgAnswersPerQuestions", avgAnswersPerQuestions);
+		res.addObject("stdevAnswersPerQuestions", stdevAnswersPerQuestions);
 		return res;
 	}
 }

@@ -28,6 +28,4 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
 	@Query("select sqrt(sum(q.answers.size*q.answers.size)/count(q.answers.size)-" + "(avg(q.answers.size)*avg(q.answers.size) ))" + " from Question q")
 	Double stdevAnswersPerQuestions();
 
-	//Requisito 22.1 punto 1: La desviación estándar de preguntas creadas por rendezvous.
-
 }
