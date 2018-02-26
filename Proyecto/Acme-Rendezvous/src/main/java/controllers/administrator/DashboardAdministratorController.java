@@ -39,7 +39,7 @@ public class DashboardAdministratorController {
 		final Double avgRendezvousPerUser = this.rendezvousService.avgRendezvousPerUser();
 		//2
 		final Double ratioCreators = this.rendezvousService.ratioCreators();
-		final Double ratioUsersSinRendezvous = this.rendezvousService.ratioUsersSinRendezvous();
+		//		final Double ratioUsersSinRendezvous = this.rendezvousService.ratioUsersSinRendezvous();
 
 		//3
 		final Double avgUsersPerRendezvous = this.rendezvousService.avgUsersPerRendezvous();
@@ -62,7 +62,7 @@ public class DashboardAdministratorController {
 
 		//2
 		res.addObject("ratioCreators", ratioCreators);
-		res.addObject("ratioUsersSinRendezvous", ratioUsersSinRendezvous);
+		//		res.addObject("ratioUsersSinRendezvous", ratioUsersSinRendezvous);
 
 		//3.1
 		res.addObject("avgUsersPerRendezvous", avgUsersPerRendezvous);
