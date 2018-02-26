@@ -69,8 +69,7 @@ public class QuestionService {
 		return question;
 	}
 
-
-	public Question save(final Question question){
+	public Question save(final Question question) {
 
 		final Question saved = this.questionRepository.save(question);
 		return saved;
@@ -92,6 +91,7 @@ public class QuestionService {
 		final User user = this.userService.findByPrincipal();
 		Assert.notNull(user);
 		return questions;
+
 	}
 
 	public Collection<Question> findAllByrendezvous(final int rendezvousId) {
