@@ -41,7 +41,11 @@ public interface RendezvousRepository extends JpaRepository<Rendezvous, Integer>
 	Double ratioCreators();
 
 	//Ratio de usuario que NO han creado un rendezvous
+<<<<<<< HEAD
 	//	@Query("select count(u)*1.0/(select count(us) from User us) from User u where NOT EXISTS(select r.creator from Rendezvous r AND u.id=r.creator.id)")
+=======
+	//	@Query("select count(u)*1.0/(select count(us) from User us) " + "from User u where NOT EXISTS( select r.creator from Rendezvous r " + "where u.id=r.creator.id")
+>>>>>>> dd08945dff12bf4fdd110ea34a96ea28430ff882
 	//	Double ratioUsersSinRendezvous();
 
 	//	Requisito 6.3 punto 3: La media y la desviación estándar de usuarios por reunión.

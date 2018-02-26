@@ -41,6 +41,12 @@
 											</jstl:forEach> </td>
 	</tr>
 	<tr> <td><spring:message code="dashboard.17.2.1" /> </td> <td> <jstl:out value="${avgOfAnnouncementsPerRendezvous}"/> </td>	</tr>
-	<tr> <td><spring:message code="dashboard.17.2.2" /> </td> <td> </td>	</tr>										
+	<tr> <td><spring:message code="dashboard.17.2.2" /> </td> <td> <jstl:out value="${stddAnnouncementsPerRendezvous }"></jstl:out> </td>	</tr>
+	<tr> <td><spring:message code="dashboard.17.2.3"/> </td> <td> <jstl:forEach var="x" items="${above75AverageOfAnnouncementsPerRendezvous}" varStatus="status">
+												<a href="rendezvous/display.do?rendezvousId=${x.id}"><jstl:out value="${x.name}" /></a><jstl:if test="${not status.last}">,</jstl:if> 
+											</jstl:forEach></td> </tr>	
+	<tr> <td><spring:message code="dashboard.17.2.4"/> </td> <td> <jstl:forEach var="x" items="${linkedGreaterAveragePlus10}" varStatus="status">
+												<a href="rendezvous/display.do?rendezvousId=${x.id}"><jstl:out value="${x.name}" /></a><jstl:if test="${not status.last}">,</jstl:if> 
+											</jstl:forEach></td> </tr>									
 </table>
 </security:authorize>

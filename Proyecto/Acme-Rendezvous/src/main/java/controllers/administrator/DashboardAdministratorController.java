@@ -39,7 +39,11 @@ public class DashboardAdministratorController {
 		final Double avgRendezvousPerUser = this.rendezvousService.avgRendezvousPerUser();
 		//2
 		final Double ratioCreators = this.rendezvousService.ratioCreators();
+<<<<<<< HEAD
 		//		final Double ratioUsersSinRendezvous = this.rendezvousService.ratioUsersSinRendezvous();
+=======
+		//final Double ratioUsersSinRendezvous = this.rendezvousService.ratioUsersSinRendezvous();
+>>>>>>> dd08945dff12bf4fdd110ea34a96ea28430ff882
 
 		//3
 		final Double avgUsersPerRendezvous = this.rendezvousService.avgUsersPerRendezvous();
@@ -53,9 +57,15 @@ public class DashboardAdministratorController {
 		final Collection<Rendezvous> top10RendezvousesByRSVPs = this.rendezvousService.top10RendezvousesByRSVPs();
 
 		//Level B
+		//1
 		final Double avgOfAnnouncementsPerRendezvous = this.announcementService.avgOfAnnouncementsPerRendezvous();
-
+		//2
+		final Double stddAnnouncementsPerRendezvous = this.announcementService.stddAnnouncementsPerRendezvous();
+		//3
+		final Collection<Rendezvous> above75AverageOfAnnouncementsPerRendezvous = this.rendezvousService.above75AverageOfAnnouncementsPerRendezvous();
 		res = new ModelAndView("dashboard/list");
+		//4
+		final Collection<Rendezvous> linkedGreaterAveragePlus10 = this.rendezvousService.LinkedGreaterAveragePlus10();
 
 		//1
 		res.addObject("avgRendezvousPerUser", avgRendezvousPerUser);
@@ -81,7 +91,9 @@ public class DashboardAdministratorController {
 
 		//B
 		res.addObject("avgOfAnnouncementsPerRendezvous", avgOfAnnouncementsPerRendezvous);
-
+		res.addObject("stddAnnouncementsPerRendezvous", stddAnnouncementsPerRendezvous);
+		res.addObject("above75AverageOfAnnouncementsPerRendezvous", above75AverageOfAnnouncementsPerRendezvous);
+		res.addObject("linkedGreaterAveragePlus10", linkedGreaterAveragePlus10);
 		res.addObject("requestURI", "announcement/list.do");
 
 		return res;

@@ -81,6 +81,7 @@ public class UserController {
 	public ModelAndView create() {
 		ModelAndView res;
 		final Register user = new Register();
+		user.setAccept(false);
 		res = this.createEditModelAndView(user);
 
 		return res;
