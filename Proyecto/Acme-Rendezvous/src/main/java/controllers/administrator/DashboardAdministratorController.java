@@ -37,13 +37,10 @@ public class DashboardAdministratorController {
 		//Level C-----------------------------------------------------------------------------------------------------
 		//1
 		final Double avgRendezvousPerUser = this.rendezvousService.avgRendezvousPerUser();
+
 		//2
 		final Double ratioCreators = this.rendezvousService.ratioCreators();
-<<<<<<< HEAD
-		//		final Double ratioUsersSinRendezvous = this.rendezvousService.ratioUsersSinRendezvous();
-=======
 		//final Double ratioUsersSinRendezvous = this.rendezvousService.ratioUsersSinRendezvous();
->>>>>>> dd08945dff12bf4fdd110ea34a96ea28430ff882
 
 		//3
 		final Double avgUsersPerRendezvous = this.rendezvousService.avgUsersPerRendezvous();
