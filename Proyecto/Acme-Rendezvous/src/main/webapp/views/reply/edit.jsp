@@ -20,19 +20,14 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <security:authorize access="hasRole('USER')">
-<form:form action="reply/user/edit.do" modelAttribute="reply">
+<form:form action="reply/user/edit.do?commentId=${commentId}" modelAttribute="reply">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-	
+	<form:hidden path="moment" />
 
 	
-	<form:label path="date">
-		<spring:message code="reply.date" />:
-	</form:label>
-	<form:input path="date" />
-	<form:errors cssClass="error" path="date" />
-	<br />
+	
 	
 	<form:label path="text">
 		<spring:message code="reply.text" />:

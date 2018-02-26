@@ -36,25 +36,13 @@
 		
 	
 		
-		
-			
-	
-			
-				
-		
 			<b>	<spring:message	code="reply.date" />: </b>
-				<jstl:out  value="${reply.date}" /> <br>	
+				<jstl:out  value="${reply.moment}" /> <br>	
 
 
 			<b>	<spring:message	code="reply.text" />: </b>
 				<jstl:out  value="${reply.text}" /> <br>	
-				
-				
-
-		
-		
-		
-				
+	
 			
 		
 		</div>

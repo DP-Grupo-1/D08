@@ -11,6 +11,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.AdministratorService;
 import services.AnnouncementService;
+import services.CommentService;
+import services.QuestionService;
 import services.RendezvousService;
 import domain.Rendezvous;
 
@@ -18,16 +20,21 @@ import domain.Rendezvous;
 @RequestMapping("/dashboard/administrator")
 public class DashboardAdministratorController {
 
-
 	//Services----------------------------------------------------
 	@Autowired
 	AdministratorService	administratorService;
 
 	@Autowired
-	RendezvousService	rendezvousService;
+	RendezvousService		rendezvousService;
 
 	@Autowired
-	AnnouncementService announcementService;
+	AnnouncementService		announcementService;
+
+	@Autowired
+	QuestionService			questionService;
+
+	@Autowired
+	CommentService			commentService;
 
 
 	//Listing -----------------------------------------------------------
@@ -37,12 +44,15 @@ public class DashboardAdministratorController {
 
 		//Level C-----------------------------------------------------------------------------------------------------
 		//1
-		Double avgRendezvousPerUser = this.rendezvousService.avgRendezvousPerUser();
+		final Double avgRendezvousPerUser = this.rendezvousService.avgRendezvousPerUser();
+
 		//2
+		final Double ratioCreators = this.rendezvousService.ratioCreators();
+		//final Double ratioUsersSinRendezvous = this.rendezvousService.ratioUsersSinRendezvous();
 
 		//3
 		final Double avgUsersPerRendezvous = this.rendezvousService.avgUsersPerRendezvous();
-		final Double stddevUsersPerRendezvous =  this.rendezvousService.stddevUsersPerRendezvous();
+		final Double stddevUsersPerRendezvous = this.rendezvousService.stddevUsersPerRendezvous();
 
 		//4
 		final Double avgRSVPsPerUser = this.rendezvousService.avgRSVPsPerUser();
@@ -51,16 +61,33 @@ public class DashboardAdministratorController {
 		//5
 		final Collection<Rendezvous> top10RendezvousesByRSVPs = this.rendezvousService.top10RendezvousesByRSVPs();
 
-
 		//Level B
+		//1
 		final Double avgOfAnnouncementsPerRendezvous = this.announcementService.avgOfAnnouncementsPerRendezvous();
-
-
-
+		//2
+		final Double stddAnnouncementsPerRendezvous = this.announcementService.stddAnnouncementsPerRendezvous();
+		//3
+		final Collection<Rendezvous> above75AverageOfAnnouncementsPerRendezvous = this.rendezvousService.above75AverageOfAnnouncementsPerRendezvous();
 		res = new ModelAndView("dashboard/list");
+		//4
+		final Collection<Rendezvous> linkedGreaterAveragePlus10 = this.rendezvousService.LinkedGreaterAveragePlus10();
+		//Level A
+		//1
+		final Double avgQuestionsPerRendezvous = this.questionService.avgQuestionsPerRendezvous();
+		final Double stdevQuestionsPerRendezvous = this.questionService.stddevQuestionPerRendezvous();
+		//2
+		final Double avgAnswersPerQuestions = this.questionService.avgAnswersPerQuestions();
+		final Double stdevAnswersPerQuestions = this.questionService.stdevAnswerPerQuestions();
+		//3
+		final Double avgRepliesPerComment = this.commentService.avgRepliesPerComment();
+		final Double stdevRepliesPerComment = this.commentService.stdevRepliesPerComment();
 
 		//1
 		res.addObject("avgRendezvousPerUser", avgRendezvousPerUser);
+
+		//2
+		res.addObject("ratioCreators", ratioCreators);
+		//		res.addObject("ratioUsersSinRendezvous", ratioUsersSinRendezvous);
 
 		//3.1
 		res.addObject("avgUsersPerRendezvous", avgUsersPerRendezvous);
@@ -79,12 +106,18 @@ public class DashboardAdministratorController {
 
 		//B
 		res.addObject("avgOfAnnouncementsPerRendezvous", avgOfAnnouncementsPerRendezvous);
-
-
-
+		res.addObject("stddAnnouncementsPerRendezvous", stddAnnouncementsPerRendezvous);
+		res.addObject("above75AverageOfAnnouncementsPerRendezvous", above75AverageOfAnnouncementsPerRendezvous);
+		res.addObject("linkedGreaterAveragePlus10", linkedGreaterAveragePlus10);
 		res.addObject("requestURI", "announcement/list.do");
 
+		//A
+		res.addObject("avgRepliesPerComment", avgRepliesPerComment);
+		res.addObject("stdevRepliesPerComment", stdevRepliesPerComment);
+		res.addObject("avgQuestionsPerRendezvous", avgQuestionsPerRendezvous);
+		res.addObject("stdevQuestionsPerRendezvous", stdevQuestionsPerRendezvous);
+		res.addObject("avgAnswersPerQuestions", avgAnswersPerQuestions);
+		res.addObject("stdevAnswersPerQuestions", stdevAnswersPerQuestions);
 		return res;
 	}
-
 }

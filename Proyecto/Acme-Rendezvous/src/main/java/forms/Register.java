@@ -15,6 +15,10 @@ public class Register {
 	private Integer	postalAddress;
 	private String	phoneNumber;
 	private String	email;
+<<<<<<< HEAD
+=======
+	private boolean	accept;
+>>>>>>> 024f406c6d11d9fb930c95ecaa6b919457bfb467
 
 
 	@NotBlank
@@ -77,4 +81,15 @@ public class Register {
 		this.email = email;
 	}
 
+<<<<<<< HEAD
+=======
+	public boolean getAccept() {
+		return this.accept;
+	}
+
+	public void setAccept(final boolean accept) {
+		this.accept = accept;
+	}
+
+>>>>>>> 024f406c6d11d9fb930c95ecaa6b919457bfb467
 }

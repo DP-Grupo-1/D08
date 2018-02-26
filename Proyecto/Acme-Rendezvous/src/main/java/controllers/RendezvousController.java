@@ -30,7 +30,11 @@ public class RendezvousController extends AbstractController {
 	@Autowired
 	UserService			userService;
 	@Autowired
+<<<<<<< HEAD
 	QuestionService			questionService;
+=======
+	QuestionService		questionService;
+>>>>>>> 024f406c6d11d9fb930c95ecaa6b919457bfb467
 
 
 	//Constructors ------------------------------------------------------
@@ -45,7 +49,6 @@ public class RendezvousController extends AbstractController {
 		
 
 		rendezvouses = this.rendezvousService.findAll();
-
 
 		result = new ModelAndView("rendezvous/list");
 		result.addObject("rendezvouses", rendezvouses);
@@ -62,21 +65,20 @@ public class RendezvousController extends AbstractController {
 		result = new ModelAndView("rendezvous/display");
 
 		try {
-			UserAccount userAcc = LoginService.getPrincipal();
-			User u = this.userService.findByUserAccount(userAcc);
+			final UserAccount userAcc = LoginService.getPrincipal();
+			final User u = this.userService.findByUserAccount(userAcc);
 
 			Boolean hasUserRSVPd = false;
 
-			if(u != null){
+			if (u != null) {
 				//Rendezvouses a los que el usuario va a asistir (RSVPs)
-				Collection<Rendezvous> rendezvouses = this.rendezvousService.findByUserId(u.getId());
+				final Collection<Rendezvous> rendezvouses = this.rendezvousService.findByUserId(u.getId());
 
-				for(Rendezvous r: rendezvouses){
-					if(r.getId() == rendezvousId){
+				for (final Rendezvous r : rendezvouses)
+					if (r.getId() == rendezvousId) {
 						hasUserRSVPd = true;
 						break;
 					}
-				}
 
 			}
 			result.addObject("hasUserRSVPd", hasUserRSVPd);
@@ -86,8 +88,13 @@ public class RendezvousController extends AbstractController {
 
 		rendezvous = this.rendezvousService.findOne(rendezvousId);
 		final Collection<Rendezvous> rendezvouses = this.rendezvousService.findAll();
+<<<<<<< HEAD
 		Collection<Question> questions = this.questionService.findAllByrendezvous(rendezvousId);
 		Boolean noQuestions = questions.isEmpty();
+=======
+		final Collection<Question> questions = this.questionService.findAllByRendezvous(rendezvousId);
+		final Boolean noQuestions = questions.isEmpty();
+>>>>>>> 024f406c6d11d9fb930c95ecaa6b919457bfb467
 		result.addObject("rendezvous", rendezvous);
 		result.addObject("rendezvouses", rendezvouses);
 		result.addObject("noQuestions", noQuestions);
@@ -104,24 +111,23 @@ public class RendezvousController extends AbstractController {
 		result = new ModelAndView("rendezvous/display2");
 
 		try {
-			Rendezvous rendezvous = this.rendezvousService.findByAnnouncementId(announcementId);
+			final Rendezvous rendezvous = this.rendezvousService.findByAnnouncementId(announcementId);
 			result.addObject("rendezvous", rendezvous);
 
-			UserAccount userAcc = LoginService.getPrincipal();
-			User u = this.userService.findByUserAccount(userAcc);
+			final UserAccount userAcc = LoginService.getPrincipal();
+			final User u = this.userService.findByUserAccount(userAcc);
 
 			Boolean hasUserRSVPd = false;
 
-			if(u != null){
+			if (u != null) {
 				//Rendezvouses a los que el usuario va a asistir (RSVPs)
-				Collection<Rendezvous> rendezvouses = this.rendezvousService.findByUserId(u.getId());
+				final Collection<Rendezvous> rendezvouses = this.rendezvousService.findByUserId(u.getId());
 
-				for(Rendezvous r: rendezvouses){
-					if(r.getId() == rendezvous.getId()){
+				for (final Rendezvous r : rendezvouses)
+					if (r.getId() == rendezvous.getId()) {
 						hasUserRSVPd = true;
 						break;
 					}
-				}
 
 			}
 
@@ -131,7 +137,6 @@ public class RendezvousController extends AbstractController {
 		}
 
 		final Collection<Rendezvous> rendezvouses = this.rendezvousService.findAll();
-
 
 		result.addObject("rendezvouses", rendezvouses);
 		result.addObject("requestURI", "rendezvous/display2.do");

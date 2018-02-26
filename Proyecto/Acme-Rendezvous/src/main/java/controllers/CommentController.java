@@ -40,14 +40,13 @@ public class CommentController extends AbstractController {
 		return res;
 	}
 	
-	//Listing
+	//Display
 		@RequestMapping(value = "/display", method = RequestMethod.GET)
 		public ModelAndView Display(@RequestParam(required = false) final Integer commentId) {
 			ModelAndView res;
 			Comment comment;
 			comment = this.commentService.findOne(commentId);
 
-			//POR HACER LA QUERY EN COMMENT REPOSITORY
 
 			res = new ModelAndView("comment/display");
 			res.addObject("comment", comment);

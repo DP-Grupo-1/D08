@@ -84,12 +84,19 @@
 		<display:column property="adultOnly" title="${adultOnlyHeader}" sortable="true" />
 			
 			
+<<<<<<< HEAD
 		<spring:message code="rendezvous.flag" var="flagHeader" />
 		<display:column property="flag" class="indicador" title="${flagHeader}" sortable="true" />
 		
 		<jstl:set var="flag" value="${row.flag}" />
 		
 		
+=======
+			
+		<spring:message code="rendezvous.flag" var="flagHeader" />
+		
+		<display:column property="flag" title="${flagHeader}" sortable="true" />
+>>>>>>> 024f406c6d11d9fb930c95ecaa6b919457bfb467
 		
 		 <display:column >
 			<a href="user/list.do?rendezvousId=${row.id}"><spring:message code="rendezvous.attendants" /></a>

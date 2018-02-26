@@ -1,7 +1,13 @@
 package forms;
 
 import java.util.Collection;
+import java.util.List;
 
+import javax.persistence.ElementCollection;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
+import domain.Answer;
 import domain.Question;
 
 public class AnswerQuestions {
@@ -12,18 +18,21 @@ public class AnswerQuestions {
 
 
 	private Collection<Question>	questions;
-	private Collection<String>	answers;
+	private List<Answer>	answers;
 	
+	@ElementCollection
 	public Collection<Question> getQuestions() {
 		return questions;
 	}
 	public void setQuestions(Collection<Question> questions) {
 		this.questions = questions;
 	}
-	public Collection<String> getAnswers() {
+	@NotEmpty
+	@ElementCollection
+	public List<Answer> getAnswers() {
 		return answers;
 	}
-	public void setAnswers(Collection<String> answers) {
+	public void setAnswers(List<Answer> answers) {
 		this.answers = answers;
 	}
 
