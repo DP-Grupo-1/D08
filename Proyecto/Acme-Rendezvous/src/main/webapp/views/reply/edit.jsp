@@ -27,11 +27,11 @@
 	
 
 	
-	<form:label path="date">
+	<form:label path="moment">
 		<spring:message code="reply.date" />:
 	</form:label>
-	<form:input path="date" />
-	<form:errors cssClass="error" path="date" />
+	<form:input path="moment" />
+	<form:errors cssClass="error" path="moment" />
 	<br />
 	
 	<form:label path="text">

@@ -60,7 +60,7 @@ public class CommentService {
 		
 		
 
-		//		Assert.isTrue(comment.getMoment().b(moment));
+	
 
 		if (comment.getId() == 0) {
 			
@@ -79,16 +79,16 @@ public class CommentService {
 		final Administrator administrator = this.administratorService.findByPrincipal();
 		Assert.notNull(administrator);
 		this.quitarCommentReply(comment);
-		System.out.println("llega aqui 4");
+		
 		this.commentRepository.delete(comment);
 	}
 
 	private void quitarCommentReply(final Comment comment) {
 		final Collection<Reply> replies = comment.getReplies();
 		if (!replies.isEmpty())
-			System.out.println("llega aqui1");
+	
 		for (final Reply r : replies) {
-			System.out.println("llega aqui2");
+			
 			this.userService.findByReplyId(r.getId()).getReplies().remove(r);
 		}
 		this.rendezvousService.findByCommentId(comment.getId()).getComments().remove(comment);

@@ -42,8 +42,8 @@
 
 	<!-- Attributes -->
 
-	<spring:message code="reply.date" var="dateHeader" />
-	<display:column property="date" title="${dateHeader}" sortable="true" />
+	<spring:message code="reply.moment" var="momentHeader" />
+	<display:column property="moment" title="${momentHeader}" sortable="true" />
 
 	<spring:message code="reply.text" var="textHeader" />
 	<display:column property="text" title="${textHeader}" sortable="true" />
@@ -56,7 +56,7 @@
 	<spring:message code="reply.display" var="nameHeader" />
 	<display:column title="${nameHeader}">
 			<a href="reply/display.do?replyId=${row.id}">
-				${row.name}
+				${row.text}
 			</a>
 	</display:column>
 
