@@ -51,18 +51,23 @@ public class AnswerService {
 	}
 
 	public Answer save(final Answer answer, final Question question) {
-		final User principal = this.userService.findByPrincipal();
-		answer.setAnswerer(principal);
-		final Answer saved = this.answerRepository.save(answer);
-		final Collection<Answer> answers = question.getAnswers();
-		answers.add(answer);
-		question.setAnswers(answers);
-		this.questionService.save(question);
-		Rendezvous rendezvous = question.getRendezvous();
-		if(!(rendezvous.getAttendants().contains(principal))){
-			this.rendezvousService.rsvp(rendezvous);
+		try {
+			final User principal = this.userService.findByPrincipal();
+			answer.setAnswerer(principal);
+			final Answer saved = this.answerRepository.save(answer);
+			final Collection<Answer> answers = question.getAnswers();
+			answers.add(answer);
+			question.setAnswers(answers);
+			this.questionService.save(question);
+			Rendezvous rendezvous = question.getRendezvous();
+			if(!(rendezvous.getAttendants().contains(principal))){
+				this.rendezvousService.rsvp(rendezvous);
+			}
+			return saved;
+		} catch(final Exception oops) {
+			System.out.println(oops.getMessage());
+			return null;
 		}
-		return saved;
 	}
 	
 	public void saveAll(final List<Answer> answers, final Collection<Question> questions) {

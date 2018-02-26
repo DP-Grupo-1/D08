@@ -14,11 +14,6 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Access(AccessType.PROPERTY)
-@Table(uniqueConstraints = {
-	@UniqueConstraint(columnNames = {
-		"answerer_id"
-	})
-})
 public class Answer extends DomainEntity {
 
 	// Attributes -------------------------------------------------------------

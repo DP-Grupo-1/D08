@@ -113,13 +113,21 @@ public class RendezvousService {
 	}
 
 	public Rendezvous rsvp(final Rendezvous rendezvous) {
-		final Collection<User> attendants = rendezvous.getAttendants();
-		final User principal = this.userService.findByPrincipal();
-		attendants.add(principal);
-		rendezvous.setAttendants(attendants);
-		Rendezvous saved;
-		saved = this.rendezvousRepository.save(rendezvous);
-		return saved;
+		try {
+			final Collection<User> attendants = rendezvous.getAttendants();
+			final User principal = this.userService.findByPrincipal();
+			if (!attendants.contains(principal)) {
+				attendants.add(principal);
+			}
+			rendezvous.setAttendants(attendants);
+			Rendezvous saved;
+			saved = this.rendezvousRepository.save(rendezvous);
+			return saved;
+		} catch(final Exception oops) {
+			System.out.println(oops.getMessage());
+			return null;
+		}
+		
 	}
 
 	public void onlyDelete(final Rendezvous rendezvous) {

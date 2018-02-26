@@ -99,6 +99,7 @@ public class QuestionUserController extends AbstractController {
 			Collection<Question> questions = questionService.findAllByRendezvous(rendezvousId);
 			User principal = this.userService.findByPrincipal();
 			Assert.isTrue(!(rendezvous.getCreator().equals(principal)));
+			Assert.isTrue(!(rendezvous.getAttendants().contains(principal)));
 			List<Answer> answers = new ArrayList<Answer>();
 			for(int i=0;i<questions.size();i++){
 				Answer ans = new Answer();

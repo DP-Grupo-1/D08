@@ -82,12 +82,15 @@ public class RendezvousController extends AbstractController {
 		}
 
 		rendezvous = this.rendezvousService.findOne(rendezvousId);
+		User user = this.userService.findByPrincipal();
 		final Collection<Rendezvous> rendezvouses = this.rendezvousService.findAll();
 		final Collection<Question> questions = this.questionService.findAllByRendezvous(rendezvousId);
 		final Boolean noQuestions = questions.isEmpty();
+		Boolean rsvped = rendezvous.getAttendants().contains(user);
 		result.addObject("rendezvous", rendezvous);
 		result.addObject("rendezvouses", rendezvouses);
 		result.addObject("noQuestions", noQuestions);
+		result.addObject("rsvped", rsvped);
 		result.addObject("requestURI", "rendezvous/display.do");
 
 		return result;
