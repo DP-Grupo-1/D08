@@ -6,6 +6,8 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.Index;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -15,6 +17,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
+@Table(indexes = {
+	@Index(columnList = "moment")
+})
 public class Announcement extends DomainEntity {
 
 	private Date	moment;
@@ -48,6 +53,5 @@ public class Announcement extends DomainEntity {
 	public void setDescription(final String description) {
 		this.description = description;
 	}
-
 
 }
