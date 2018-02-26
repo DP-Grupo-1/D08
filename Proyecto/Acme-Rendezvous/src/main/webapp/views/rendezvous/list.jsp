@@ -33,7 +33,7 @@
 			<display:column>
 				<a href="rendezvous/display.do?rendezvousId=${row.id}">
 					<spring:message code="rendezvous.list.display" />
-				</a> <br/>
+				</a>
 				  <jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
 		  			<a href="announcement/user/create.do?rendezvousId=${row.id}"><spring:message code="announcement.create" /></a>
    		 		</jstl:if>
