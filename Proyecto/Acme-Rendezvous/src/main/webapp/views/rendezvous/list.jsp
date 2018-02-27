@@ -95,7 +95,7 @@
 		
 
 		
-		 <display:column >
+		 <display:column>
 			<a href="user/list.do?rendezvousId=${row.id}"><spring:message code="rendezvous.attendants" /></a>
         </display:column>
         
