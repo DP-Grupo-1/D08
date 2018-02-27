@@ -34,13 +34,16 @@
 				<a href="rendezvous/display.do?rendezvousId=${row.id}">
 					<spring:message code="rendezvous.list.display" />
 				</a> <br/>
+				
+				<jstl:if test="${row.flag != 'DELETED'}">
 				  <jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
 		  			<a href="announcement/user/create.do?rendezvousId=${row.id}"><spring:message code="announcement.create" /></a>
    		 		</jstl:if>
-				<br/>
-			<jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
-			<jstl:if test="${row.finalMode == false}">
-				<a href="rendezvous/user/edit.do?rendezvousId=${row.id}"><spring:message code="rendezvous.edit"/></a>
+					<br/>
+				<jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
+				<jstl:if test="${row.finalMode == false}">
+					<a href="rendezvous/user/edit.do?rendezvousId=${row.id}"><spring:message code="rendezvous.edit"/></a>
+					</jstl:if>
 				</jstl:if>
 			</jstl:if>
 			
