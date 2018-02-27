@@ -70,13 +70,11 @@ public class CommentService {
 	}
 
 	public void delete(final Comment comment) {
-		
+
 		Assert.notNull(comment);
 		final Administrator administrator = this.administratorService.findByPrincipal();
 		Assert.notNull(administrator);
 		this.quitarCommentReply(comment);
-
-
 
 		this.commentRepository.delete(comment);
 	}
@@ -111,11 +109,17 @@ public class CommentService {
 	}
 
 	public Comment reconstruct(final Comment comment, final BindingResult binding) {
-		Comment res = null;
+		Comment res;
 		if (comment.getId() == 0)
 			res = comment;
 		else {
-			//res.set
+			res = this.commentRepository.findOne(comment.getId());
+			res.setText(comment.getText());
+			res.setPicture(comment.getPicture());
+			res.setMoment(comment.getMoment());
+			//Se supone que hace falta
+			//res.setReplies(comment.getReplies());
+
 		}
 
 		return res;

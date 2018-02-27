@@ -1,3 +1,4 @@
+
 package controllers.user;
 
 import java.util.ArrayList;
@@ -15,30 +16,33 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.CommentService;
 import services.RendezvousService;
-
+import services.UserService;
 import controllers.AbstractController;
 import domain.Comment;
 import domain.Rendezvous;
+import domain.User;
 
 @Controller
 @RequestMapping("/comment/user")
 public class CommentUserController extends AbstractController {
 
 	@Autowired
-	private CommentService commentService;
+	private CommentService		commentService;
 
 	@Autowired
-	private RendezvousService rendezvousService;
+	private RendezvousService	rendezvousService;
+	@Autowired
+	private UserService			userService;
+
 
 	// Creation--------------------------
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create(@RequestParam final Integer rendezvousId) {
 		ModelAndView result;
 		Comment comment;
-		Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
-	
+		final Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
+
 		comment = this.commentService.create(rendezvous);
-		
 
 		result = this.createEditModelAndView(comment);
 		result.addObject("rendezvousId", rendezvousId);
@@ -56,47 +60,49 @@ public class CommentUserController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Comment comment,
-			@RequestParam final Integer rendezvousId,
-			final BindingResult binding) {
+	public ModelAndView save(@Valid Comment comment, @RequestParam final Integer rendezvousId, final BindingResult binding) {
 
 		ModelAndView result;
-		Collection<Comment> comments = new ArrayList<Comment>();
+		final Collection<Comment> comments = new ArrayList<Comment>();
+		final User user = this.userService.findByPrincipal();
+		comment = this.commentService.reconstruct(comment, binding);
+		if (binding.hasErrors()) {
+			result = this.createEditModelAndView(comment);
+			System.out.println("llega aqui1");
+		} else
+			try {
+				final Comment saved = this.commentService.save(comment);
+				//				comments.add(saved);
+				//				user.setComments(comments);
+				//				this.userService.save(user);
 
-		 if (binding.hasErrors())
-		 result = this.createEditModelAndView(comment);
-	 else
-		
-		 try {
+				final Rendezvous r = this.rendezvousService.findOne(rendezvousId);
 
-		this.commentService.save(comment);
+				comments.addAll(r.getComments());
 
-		Rendezvous r = this.rendezvousService.findOne(rendezvousId);
+				//	comments.add(comment);
+				comments.add(saved);
 
-		comments.addAll(r.getComments());
+				r.setComments(comments);
 
-		comments.add(comment);
+				this.rendezvousService.save(r);
+				//	r.getComments().add(saved);
 
-		r.setComments(comments);
+				result = new ModelAndView("redirect:/rendezvous/user/listRsvps.do");
 
-		this.rendezvousService.save(r);
+			}
 
-		result = new ModelAndView("redirect:/rendezvous/user/listRsvps.do");
+			catch (final Throwable oops) {
+				result = this.createEditModelAndView(comment, "comment.comit.error");
+				System.out.println("llega aqui2");
 
-		 }
-		
-		 catch (final Throwable oops) {
-		 result = this.createEditModelAndView(comment,
-		 "comment.comit.error");
-		 }
-
+			}
 		return result;
 	}
 
 	// DELETE
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(@Valid final Comment comment,
-			final BindingResult binding) {
+	public ModelAndView delete(@Valid final Comment comment, final BindingResult binding) {
 
 		ModelAndView result;
 
@@ -108,8 +114,7 @@ public class CommentUserController extends AbstractController {
 		}
 
 		catch (final Throwable oops) {
-			result = this
-					.createEditModelAndView(comment, "comment.comit.error");
+			result = this.createEditModelAndView(comment, "comment.comit.error");
 
 		}
 		return result;
@@ -122,8 +127,7 @@ public class CommentUserController extends AbstractController {
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final Comment comment,
-			final String messageCode) {
+	protected ModelAndView createEditModelAndView(final Comment comment, final String messageCode) {
 		ModelAndView result;
 
 		result = new ModelAndView("comment/user/edit");

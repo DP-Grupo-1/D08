@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 
 import repositories.UserRepository;
 import security.Authority;
@@ -30,12 +29,12 @@ public class UserService {
 	@Autowired
 	private UserRepository	userRepository;
 
+
 	//Suporting services---------------------------------------------
 	//	@Autowired
 	//	private ReplyService	replyService;
-	@Autowired
-	private Validator		validator;
-
+	//	@Autowired
+	//	private Validator		validator;
 
 	//CRUD methods-------------------------------------------------------
 	public User create() {
@@ -70,10 +69,10 @@ public class UserService {
 		return res;
 
 	}
-	
-	public User onlySave(final User user){
+
+	public User onlySave(final User user) {
 		User saved;
-		
+
 		saved = this.userRepository.save(user);
 		return saved;
 	}
@@ -132,21 +131,21 @@ public class UserService {
 
 		return result;
 	}
-	public User reconstruct(final User user, final BindingResult binding) {
-		User res;
-		if (user.getId() == 0)
-			res = user;
-		else {
-			res = this.userRepository.findOne(user.getId());
-			res.setName(user.getName());
-			res.setSurname(user.getSurname());
-			res.setPostalAddress(user.getPostalAddress());
-			res.setPhoneNumber(user.getPhoneNumber());
-			res.setEmail(user.getEmail());
-			this.validator.validate(res, binding);
-
-		}
-		return res;
-	}
+	//	public User reconstruct(final User user, final BindingResult binding) {
+	//		User res;
+	//		if (user.getId() == 0)
+	//			res = user;
+	//		else {
+	//			res = this.userRepository.findOne(user.getId());
+	//			res.setName(user.getName());
+	//			res.setSurname(user.getSurname());
+	//			res.setPostalAddress(user.getPostalAddress());
+	//			res.setPhoneNumber(user.getPhoneNumber());
+	//			res.setEmail(user.getEmail());
+	//			this.validator.validate(res, binding);
+	//
+	//		}
+	//		return res;
+	//	}
 
 }

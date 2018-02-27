@@ -23,7 +23,6 @@
 
 <security:authorize access="hasRole('USER')">
 <form:form action="rendezvous/user/edit.do" modelAttribute="rendezvous">
-
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	<form:hidden path="flag" />
@@ -32,6 +31,7 @@
 	<form:hidden path="rendezvouses" />
 	<form:hidden path="comments" />
 	<form:hidden path="announcements" />
+
 	
 	<script>
 	function tester(moment) {

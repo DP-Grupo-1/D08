@@ -1,3 +1,4 @@
+
 package controllers.user;
 
 import java.util.ArrayList;
@@ -67,115 +68,116 @@ public class QuestionUserController extends AbstractController {
 		return res;
 	}
 
-		@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-		public ModelAndView saveQuestion(@Valid final Question question, final BindingResult binding) {
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+	public ModelAndView saveQuestion(@Valid Question question, final BindingResult binding) {
 
-			ModelAndView result;
+		ModelAndView result;
 
-			if (binding.hasErrors())
-				result = this.createEditModelAndViewQuestion(question);
-			else
+		if (binding.hasErrors()) {
+			System.out.println(binding.getAllErrors());
+			result = this.createEditModelAndViewQuestion(question);
+		} else
 
-				try {
-					
-						this.questionService.save(question);
-						result = new ModelAndView("redirect:/welcome/index.do");
-					
+			try {
+
+				this.questionService.save(question);
+				question = this.questionService.reconstruct(question, binding);
+				if (binding.hasErrors()) {
+					System.out.println(binding.getAllErrors());
+					result = this.createEditModelAndViewQuestion(question);
 				}
+				result = new ModelAndView("redirect:/welcome/index.do");
 
-				catch (final Throwable oops) {
-					result = this.createEditModelAndViewQuestion(question, "question.comit.error");
-				}
-
-			return result;
-		}
-		
-		//Edit----------------------------------------------------------------------
-		@RequestMapping(value = "/answerQuestions", method = RequestMethod.GET)
-		public ModelAndView answerQuestions(@RequestParam final int rendezvousId) {
-
-			ModelAndView result;
-			Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
-			Collection<Question> questions = questionService.findAllByRendezvous(rendezvousId);
-			User principal = this.userService.findByPrincipal();
-			Assert.isTrue(!(rendezvous.getCreator().equals(principal)));
-			Assert.isTrue(!(rendezvous.getAttendants().contains(principal)));
-			List<Answer> answers = new ArrayList<Answer>();
-			for(int i=0;i<questions.size();i++){
-				Answer ans = new Answer();
-				ans.setAnswerer(principal);
-				answers.add(ans);
 			}
-			AnswerQuestions answerQuestions = new AnswerQuestions();
-			answerQuestions.setQuestions(questions);
-			answerQuestions.setAnswers(answers);
 
-			result = this.createEditModelAndViewAnswer(answerQuestions);
-			result.addObject("answerQuestions", answerQuestions);
-			result.addObject("requestURI", "question/user/answerQuestions.do?rendezvousId=" + rendezvousId);
+			catch (final Throwable oops) {
+				result = this.createEditModelAndViewQuestion(question, "question.comit.error");
+			}
+
+		return result;
+	}
+	//Edit----------------------------------------------------------------------
+	@RequestMapping(value = "/answerQuestions", method = RequestMethod.GET)
+	public ModelAndView answerQuestions(@RequestParam final int rendezvousId) {
+
+		ModelAndView result;
+		final Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
+		final Collection<Question> questions = this.questionService.findAllByRendezvous(rendezvousId);
+		final User principal = this.userService.findByPrincipal();
+		Assert.isTrue(!(rendezvous.getCreator().equals(principal)));
+		Assert.isTrue(!(rendezvous.getAttendants().contains(principal)));
+		final List<Answer> answers = new ArrayList<Answer>();
+		for (int i = 0; i < questions.size(); i++) {
+			final Answer ans = new Answer();
+			ans.setAnswerer(principal);
+			answers.add(ans);
+		}
+		final AnswerQuestions answerQuestions = new AnswerQuestions();
+		answerQuestions.setQuestions(questions);
+		answerQuestions.setAnswers(answers);
+
+		result = this.createEditModelAndViewAnswer(answerQuestions);
+		result.addObject("answerQuestions", answerQuestions);
+		result.addObject("requestURI", "question/user/answerQuestions.do?rendezvousId=" + rendezvousId);
 
 		return result;
 	}
 
-		@RequestMapping(value = "/answerQuestions", method = RequestMethod.POST, params = "save")
-		public ModelAndView answerQuestions(@Valid AnswerQuestions answerQuestions, BindingResult binding) {
+	@RequestMapping(value = "/answerQuestions", method = RequestMethod.POST, params = "save")
+	public ModelAndView answerQuestions(@Valid final AnswerQuestions answerQuestions, final BindingResult binding) {
 
-			ModelAndView result;
+		ModelAndView result;
 
-			if (binding.hasErrors())
-				result = this.createEditModelAndViewAnswer(answerQuestions);
-			else
+		if (binding.hasErrors())
+			result = this.createEditModelAndViewAnswer(answerQuestions);
+		else
 
-				try {
-						for(Answer s : answerQuestions.getAnswers()){
-							Assert.notNull(s.getWritten(), "You must answer every question");
-						}
-						this.answerService.saveAll(answerQuestions.getAnswers(), answerQuestions.getQuestions());
-						result = new ModelAndView("redirect:/welcome/index.do");
-					
-				}
+			try {
+				for (final Answer s : answerQuestions.getAnswers())
+					Assert.notNull(s.getWritten(), "You must answer every question");
+				this.answerService.saveAll(answerQuestions.getAnswers(), answerQuestions.getQuestions());
+				result = new ModelAndView("redirect:/welcome/index.do");
 
-				catch (final Throwable oops) {
-					result = this.createEditModelAndViewAnswer(answerQuestions, "question.comit.error");
-				}
+			}
 
-			return result;
-		}
+			catch (final Throwable oops) {
+				result = this.createEditModelAndViewAnswer(answerQuestions, "question.comit.error");
+			}
 
+		return result;
+	}
 
-		protected ModelAndView createEditModelAndViewQuestion(final Question question) {
-			ModelAndView result;
+	protected ModelAndView createEditModelAndViewQuestion(final Question question) {
+		ModelAndView result;
 
-			result = this.createEditModelAndViewQuestion(question, null);
-			return result;
-		}
+		result = this.createEditModelAndViewQuestion(question, null);
+		return result;
+	}
 
-		protected ModelAndView createEditModelAndViewQuestion(final Question question, final String messageCode) {
-			ModelAndView result;
+	protected ModelAndView createEditModelAndViewQuestion(final Question question, final String messageCode) {
+		ModelAndView result;
 
-			result = new ModelAndView("question/edit");
-			result.addObject("question", question);
-			result.addObject("message", messageCode);
-			return result;
-		}
-		
-		protected ModelAndView createEditModelAndViewAnswer(final AnswerQuestions answerQuestions) {
-			ModelAndView result;
+		result = new ModelAndView("question/edit");
+		result.addObject("question", question);
+		result.addObject("message", messageCode);
+		return result;
+	}
 
-			result = this.createEditModelAndViewAnswer(answerQuestions, null);
-			return result;
-		}
+	protected ModelAndView createEditModelAndViewAnswer(final AnswerQuestions answerQuestions) {
+		ModelAndView result;
 
-		protected ModelAndView createEditModelAndViewAnswer(final AnswerQuestions answerQuestions, final String messageCode) {
-			ModelAndView result;
+		result = this.createEditModelAndViewAnswer(answerQuestions, null);
+		return result;
+	}
 
-			result = new ModelAndView("question/user/answerQuestions");
-			result.addObject("answerQuestions", answerQuestions);
-			result.addObject("message", messageCode);
-			return result;
-		}
+	protected ModelAndView createEditModelAndViewAnswer(final AnswerQuestions answerQuestions, final String messageCode) {
+		ModelAndView result;
 
-	
+		result = new ModelAndView("question/user/answerQuestions");
+		result.addObject("answerQuestions", answerQuestions);
+		result.addObject("message", messageCode);
+		return result;
+	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(@RequestParam final int rendezvousId) {

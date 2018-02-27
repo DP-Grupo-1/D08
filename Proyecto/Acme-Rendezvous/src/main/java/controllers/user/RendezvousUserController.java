@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -39,8 +37,8 @@ public class RendezvousUserController extends AbstractController {
 	//Listing ----------------------------------------------------
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
-		
-		Date actualMoment = new Date(System.currentTimeMillis() - 1000);
+
+		final Date actualMoment = new Date(System.currentTimeMillis() - 1000);
 		ModelAndView result;
 		Collection<Rendezvous> rendezvouses = new ArrayList<Rendezvous>();
 		final User logged = this.userService.findByPrincipal();
@@ -109,14 +107,22 @@ public class RendezvousUserController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Rendezvous rendezvous, final BindingResult binding) {
+	public ModelAndView save(Rendezvous rendezvous, final BindingResult binding) {
 		ModelAndView result;
 
 		if (binding.hasErrors()) {
+
 			System.out.println(binding.getAllErrors());
+			System.out.println("llega aqui 1");
 			result = this.createEditModelAndView(rendezvous);
 		} else
 			try {
+				rendezvous = this.rendezvousService.reconstruct(rendezvous, binding);
+				if (binding.hasErrors()) {
+					result = this.createEditModelAndView(rendezvous);
+					System.out.println(binding.getAllErrors());
+					System.out.println("llega aqui 2");
+				}
 				final Rendezvous saved = this.rendezvousService.save(rendezvous);
 				result = new ModelAndView("redirect:../display.do?rendezvousId=" + saved.getId());
 			} catch (final Throwable error) {
@@ -127,7 +133,7 @@ public class RendezvousUserController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(@Valid final Rendezvous rendezvous, final BindingResult binding) {
+	public ModelAndView delete(final Rendezvous rendezvous, final BindingResult binding) {
 
 		ModelAndView result;
 

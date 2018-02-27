@@ -148,9 +148,11 @@ public class QuestionService {
 		else {
 			res = this.questionRepository.findOne(question.getId());
 			res.setQuestionToAnswer(question.getQuestionToAnswer());
+			res.setAnswers(question.getAnswers());
+			res.setCreator(question.getCreator());
+			res.setRendezvous(question.getRendezvous());
 			this.validator.validate(res, binding);
 		}
 		return res;
 	}
-
 }
