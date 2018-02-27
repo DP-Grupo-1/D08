@@ -27,7 +27,6 @@ public class AnswerQuestions {
 	public void setQuestions(Collection<Question> questions) {
 		this.questions = questions;
 	}
-	@NotEmpty
 	@ElementCollection
 	public List<Answer> getAnswers() {
 		return answers;

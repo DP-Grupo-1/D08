@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import services.RendezvousService;
 import services.UserService;
 import controllers.AbstractController;
+import domain.Flag;
 import domain.Rendezvous;
 import domain.User;
 
@@ -209,37 +210,52 @@ public class RendezvousUserController extends AbstractController {
 	// Link ------------------------------------------------------
 
 	@RequestMapping(value = "/rendezvouses", method = RequestMethod.GET)
-	public ModelAndView rendezvouses(@RequestParam final int rendezvousId) {
+	public ModelAndView rendezvouses(@RequestParam final int rendezvousId, final RedirectAttributes redirectAttrs) {
 		ModelAndView result;
-		Rendezvous rendezvous;
-
-		rendezvous = this.rendezvousService.findOne(rendezvousId);
-		Assert.notNull(rendezvous);
-
-		Collection<Rendezvous> rendezvouses;
-		User u;
-		u = this.userService.findByPrincipal();
-		Assert.notNull(u);
-		rendezvouses = this.rendezvousService.findAll();
-		rendezvouses.remove(rendezvous);
-		Assert.notNull(rendezvouses);
-
-		result = new ModelAndView("rendezvous/user/rendezvouses");
-		result.addObject("rendezvous", rendezvous);
-		result.addObject("rendezvousId", rendezvousId);
-		result.addObject("userId", u.getId());
-		result.addObject("rendezvouses", rendezvouses);
+		
+		try {
+			Rendezvous rendezvous;
+			Collection<Rendezvous> rendezvouses;
+			User u;
+			rendezvous = this.rendezvousService.findOne(rendezvousId);
+			Assert.notNull(rendezvous);
+			Assert.isTrue(!(rendezvous.getFlag().equals(Flag.DELETED)), "The rendezvous is deleted");
+			u = this.userService.findByPrincipal();
+			Assert.notNull(u);
+			rendezvouses = this.rendezvousService.findAll();
+			rendezvouses.remove(rendezvous);
+			Assert.notNull(rendezvouses);
+			
+			result = new ModelAndView("rendezvous/user/rendezvouses");
+			result.addObject("rendezvous", rendezvous);
+			result.addObject("rendezvousId", rendezvousId);
+			result.addObject("userId", u.getId());
+			result.addObject("rendezvouses", rendezvouses);
+			
+			redirectAttrs.addFlashAttribute("message", "rendezvous.commit.ok");
+			redirectAttrs.addFlashAttribute("msgType", "success");
+		} catch (final Throwable oops) {
+			System.out.println(oops.getMessage());
+			System.out.println(oops.getLocalizedMessage());
+			redirectAttrs.addFlashAttribute("message", "rendezvous.commit.error");
+			redirectAttrs.addFlashAttribute("msgType", "danger");
+		}
+		
+		result = new ModelAndView("redirect:list.do");
+		
 
 		return result;
 	}
 
 	@RequestMapping(value = "/link", method = RequestMethod.GET)
 	public ModelAndView qualify(@RequestParam final int rendezvousId, @RequestParam final int rendezvousLinkId, final RedirectAttributes redirectAttrs) {
-		ModelAndView result;
-		
-//		try {
+			ModelAndView result;
+		try {
+			
+			
 			final Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
 			Assert.notNull(rendezvous);
+			Assert.isTrue(!(rendezvous.getFlag().equals(Flag.DELETED)), "The rendezvous is deleted");
 			final Rendezvous rendezvousLink = this.rendezvousService.findOne(rendezvousLinkId);
 			Assert.notNull(rendezvousLink);
 			Collection<Rendezvous> rendezvouses = new ArrayList<Rendezvous>();
@@ -250,12 +266,12 @@ public class RendezvousUserController extends AbstractController {
 
 			redirectAttrs.addFlashAttribute("message", "rendezvous.commit.ok");
 			redirectAttrs.addFlashAttribute("msgType", "success");
-//		} catch (final Throwable oops) {
-//			System.out.println(oops.getMessage());
-//			System.out.println(oops.getLocalizedMessage());
-//			redirectAttrs.addFlashAttribute("message", "rendezvous.commit.error");
-//			redirectAttrs.addFlashAttribute("msgType", "danger");
-//		}
+		} catch (final Throwable oops) {
+			System.out.println(oops.getMessage());
+			System.out.println(oops.getLocalizedMessage());
+			redirectAttrs.addFlashAttribute("message", "rendezvous.commit.error");
+			redirectAttrs.addFlashAttribute("msgType", "danger");
+		}
 
 		result = new ModelAndView("redirect:list.do");
 		return result;

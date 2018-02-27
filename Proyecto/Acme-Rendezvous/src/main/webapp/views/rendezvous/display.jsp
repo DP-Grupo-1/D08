@@ -87,74 +87,57 @@
  		</a>	
     </display:column> 
     
-<security:authorize access="hasRole('USER')">
-
-	
-	   
-    <jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
-	
-		<%-- <jstl:if test="${row.flag != 'DELETED'}"> --%>
-		
-			
-			
-		
-			<display:column >
-			<a  href="rendezvous/user/rendezvouses.do?rendezvousId=${row.id}"><spring:message code="rendezvous.link" /></a>
-			</display:column>
-		
-		</jstl:if>
-			       <display:column>
+    <display:column>
 			<a href="question/list.do?rendezvousId=${row.id}"><spring:message code="question.list"/></a>
-			
-		</display:column>
-    		
-			
-			<%-- </jstl:if> --%>
-			
-			
-			<jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
-			<display:column>
-				<a href="question/user/create.do?rendezvousId=${row.id}"><spring:message code="question.create"/></a>
+	</display:column>
+    <security:authorize access="hasRole('USER')">
+    	<jstl:if test="${row.creator.userAccount.username != pageContext.request.userPrincipal.name}">
+	    	 <jstl:if test="${noQuestions eq false && rsvped eq false}">
+	    	 	<display:column>
+					<a href="question/user/answerQuestions.do?rendezvousId=${row.id}"><spring:message code="rsvp.create"/></a>
+				</display:column>
+	    	 </jstl:if>
+	    	 <jstl:if test="${noQuestions eq true && rsvped eq false}">
+	    	 	<display:column>
+					<a href="rendezvous/user/attend.do?rendezvousId=${row.id}">
+		  			<spring:message code="rsvp.create" />
+					</a>
 			</display:column>
-			</jstl:if>
-			
-
-		 <jstl:if test="${row.creator.userAccount.username != pageContext.request.userPrincipal.name}">
-		 
-		 <jstl:if test="${noQuestions eq false && rsvped eq false}">
-			<display:column>
-				<a href="question/user/answerQuestions.do?rendezvousId=${row.id}"><spring:message code="rsvp.create"/></a>
-			</display:column>
-			</jstl:if>
-		 
-		 <jstl:if test="${noQuestions eq true && rsvped eq false}">
-			<display:column>
-				<a href="rendezvous/user/attend.do?rendezvousId=${row.id}">
-		  	<spring:message code="rsvp.create" />
-				</a>
-			</display:column>
-			</jstl:if>
-			
-	
-		</jstl:if>
-		
-		
-	</security:authorize>
-	
-	
-	   
-
+	    	 </jstl:if>
+	    	 <jstl:if test="${rsvped==true}">
+	    	 	<display:column>
+	    	 		<a href="rendezvous/user/noAttend.do?rendezvousId=${row.id}">
+		  			<spring:message code="rendezvous.noAttend" />
+					</a>
+	    	 	</display:column>
+	    	 </jstl:if>
+    	</jstl:if>
+    	<jstl:if test="${row.creator.userAccount.username == pageContext.request.userPrincipal.name}">
+    		<jstl:if test="${row.flag != 'DELETED'}">
+	    		<jstl:if test="${row.finalMode == false}">
+	    			 <a href="rendezvous/user/edit.do?rendezvousId=${row.id}">
+           				<spring:message code="rendezvous.edit" />
+        			 </a>
+	    		</jstl:if>
+	    		<display:column >
+					<a  href="rendezvous/user/rendezvouses.do?rendezvousId=${row.id}"><spring:message code="rendezvous.link" /></a>
+				</display:column>
+				<display:column>
+					<a href="question/user/create.do?rendezvousId=${row.id}"><spring:message code="question.create"/></a>
+				</display:column>
+	    	</jstl:if>
+    	</jstl:if>
+    </security:authorize>
+    
+    <security:authorize access="hasRole('ADMIN')">
+    	<jstl:if test="${row.flag != 'DELETED'}">
+    		 <a href="rendezvous/administrator/delete.do?rendezvousId=${row.id}">
+			   <spring:message code="rendezvous.delete" />
+			 </a>
+    	</jstl:if>
+    </security:authorize>
+    
 </display:table>
-<jstl:if test="${row.creator.userAccount.username != pageContext.request.userPrincipal.name}">
-<security:authorize access="hasRole('USER')">
-	<jstl:if test="${rsvped==true}">
-	  	<a href="rendezvous/user/noAttend.do?rendezvousId=${row.id}">
-		  	<spring:message code="rendezvous.noAttend" />
-		</a>
-	</jstl:if>		
-	<br>
-</security:authorize>
-</jstl:if>
 
 <script>	
 		window.onload = function prueba() {
@@ -206,33 +189,7 @@
 			}
 		};
 		</script>
-
-
-
- 
-
-<jstl:if test="${row.flag != 'DELETED'}">
-	<security:authorize access="hasRole('ADMIN')">
-			 <a href="rendezvous/administrator/delete.do?rendezvousId=${row.id}">
-			   <spring:message code="rendezvous.delete" />
-			 </a>
-			 <br>
-	</security:authorize>
-
-
-
-<security:authorize access="hasRole('USER')">
-      <jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
-      <jstl:if test="${row.finalMode == false}">
-         <a href="rendezvous/user/edit.do?rendezvousId=${row.id}">
-           <spring:message code="rendezvous.edit" />
-         </a>
-         </jstl:if>
-       </jstl:if>    
-</security:authorize>
-</jstl:if>
-
-
+		
 <!-- 							 Rendezvouses linked										-->
 <h1><spring:message code="rendezvous.linked" /></h1>
 <display:table pagesize="5" class="displaytag" keepStatus="true"
@@ -293,4 +250,4 @@
     </jstl:if>
     </security:authorize> 
   
-</display:table>
+</display:table>		

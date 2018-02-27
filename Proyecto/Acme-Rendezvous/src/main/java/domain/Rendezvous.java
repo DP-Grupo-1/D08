@@ -72,6 +72,7 @@ public class Rendezvous extends DomainEntity {
 	@Future
 	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
 	@Temporal(TemporalType.TIMESTAMP)
+	@NotNull
 	public Date getMoment() {
 		return this.moment;
 	}
