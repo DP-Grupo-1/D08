@@ -57,17 +57,18 @@ public class RendezvousController extends AbstractController {
 	public ModelAndView Display(@RequestParam final Integer rendezvousId) {                                                        //Listeo de viajes
 		ModelAndView result;
 		Rendezvous rendezvous;
+		rendezvous = this.rendezvousService.findOne(rendezvousId);
+		Boolean rsvped = true;
 		result = new ModelAndView("rendezvous/display");
 
 		try {
-			final UserAccount userAcc = LoginService.getPrincipal();
-			final User u = this.userService.findByUserAccount(userAcc);
-
+		
 			Boolean hasUserRSVPd = false;
 
 			if (u != null) {
 				//Rendezvouses a los que el usuario va a asistir (RSVPs)
 				final Collection<Rendezvous> rendezvouses = this.rendezvousService.findByUserId(u.getId());
+				rsvped = rendezvous.getAttendants().contains(u);
 
 				for (final Rendezvous r : rendezvouses)
 					if (r.getId() == rendezvousId) {
@@ -81,12 +82,9 @@ public class RendezvousController extends AbstractController {
 		} catch (final Throwable oops) {
 		}
 
-		rendezvous = this.rendezvousService.findOne(rendezvousId);
-		User user = this.userService.findByPrincipal();
 		final Collection<Rendezvous> rendezvouses = this.rendezvousService.findAll();
 		final Collection<Question> questions = this.questionService.findAllByRendezvous(rendezvousId);
 		final Boolean noQuestions = questions.isEmpty();
-		Boolean rsvped = rendezvous.getAttendants().contains(user);
 		result.addObject("rendezvous", rendezvous);
 		result.addObject("rendezvouses", rendezvouses);
 		result.addObject("noQuestions", noQuestions);

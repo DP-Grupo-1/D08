@@ -15,18 +15,16 @@
 	
 	<spring:message code="question.questionToAnswer" var="questionToAnswerHeader" />
 	<display:column property="questionToAnswer" title="${questionToAnswerHeader}" sortable="true" />
-	
+	<security:authorize access="hasRole('USER')">
+		<display:column>
+		<jstl:if test="${row.creator.userAccount.username==loggedactor.username}">
+			<a href="question/user/edit.do?questionId=${row.id}"><spring:message code="question.edit"/></a>
+		</jstl:if>
+		
+		</display:column>	
+	</security:authorize>
 	<display:column>
-	<jstl:if test="${row.creator.userAccount.username==loggedactor.username}">
-		<a href="question/user/edit.do?questionId=${row.id}"><spring:message code="question.edit"/></a>
-	</jstl:if>
-	
-	</display:column>	
-	
-	<display:column>
-	<jstl:if test="${row.creator.userAccount.username==loggedactor.username}">
-		<a href="question/user/answers.do?questionId=${row.id}"><spring:message code="question.answers"/></a>
-	</jstl:if>
+		<a href="question/answers.do?questionId=${row.id}"><spring:message code="question.answers"/></a>
 	
 	</display:column>	
 

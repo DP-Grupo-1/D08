@@ -15,11 +15,11 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Access(AccessType.PROPERTY)
-@Table(uniqueConstraints = {
-	@UniqueConstraint(columnNames = {
-		"userAccount_id"
-	})
-})
+//@Table(uniqueConstraints = {
+//	@UniqueConstraint(columnNames = {
+//		"userAccount_id"
+//	})
+//})
 public class User extends Actor {
 
 	//Relationships-----------------------------------------------------------

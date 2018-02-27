@@ -90,6 +90,24 @@ public class QuestionUserController extends AbstractController {
 			return result;
 		}
 		
+		@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
+		public ModelAndView delete(@Valid Question question, BindingResult binding) {
+
+			ModelAndView result;
+
+			if (binding.hasErrors()) {
+				result = createEditModelAndViewQuestion(question);
+			} else {
+				try {
+					questionService.deleteByUser(question);
+					result = new ModelAndView("redirect:/welcome/index.do");
+				} catch (Throwable oops) {
+					result = createEditModelAndViewQuestion(question, "question.commit.error");
+				}
+			}
+			return result;
+		}
+		
 		//Edit----------------------------------------------------------------------
 		@RequestMapping(value = "/answerQuestions", method = RequestMethod.GET)
 		public ModelAndView answerQuestions(@RequestParam final int rendezvousId) {
@@ -174,42 +192,5 @@ public class QuestionUserController extends AbstractController {
 			result.addObject("message", messageCode);
 			return result;
 		}
-
-	
-
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam final int rendezvousId) {
-
-		ModelAndView result;
-		User user;
-		user = this.userService.findByPrincipal();
-		Collection<Question> questions;
-
-		questions = this.questionService.findAllByPrincipalAndRendezvous(user.getId(), rendezvousId);
-		final User principal = this.userService.findByPrincipal();
-		final Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
-		Assert.isTrue(rendezvous.getCreator().equals(principal));
-
-		result = new ModelAndView("question/list");
-		result.addObject("questions", questions);
-		result.addObject("requestURI", "question/user/list.do");
-
-		return result;
-	}
-
-	@RequestMapping(value = "/answers", method = RequestMethod.GET)
-	public ModelAndView answers(@RequestParam final int questionId) {
-
-		ModelAndView result;
-		final Question question = this.questionService.findOne(questionId);
-		final User principal = this.userService.findByPrincipal();
-		Assert.isTrue(question.getRendezvous().getCreator().equals(principal));
-
-		result = new ModelAndView("question/answers");
-		result.addObject("answers", question.getAnswers());
-		result.addObject("requestURI", "question/user/answers.do");
-
-		return result;
-	}
 
 }
