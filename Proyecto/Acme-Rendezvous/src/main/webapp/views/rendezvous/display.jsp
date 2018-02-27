@@ -85,8 +85,6 @@
  			<spring:message code="rendezvous.comments" />
  		</a>	
     </display:column> 
-    
-<security:authorize access="hasRole('USER')">
 	
 	<jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
 
@@ -121,7 +119,6 @@
 				<a href="question/user/list.do?rendezvousId=${row.id}"><spring:message code="question.list"/></a>
 			</display:column>
 </jstl:if>
-</security:authorize>
     <security:authorize access="hasRole('USER')">
     <jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
 	<display:column >
@@ -146,6 +143,7 @@
 			<a href="rendezvous/user/attend.do?rendezvousId=${row.id}"><spring:message code="rsvp.create"/></a>
 		</display:column>
 		</jstl:if>
+
 		
 		</jstl:if>
 </security:authorize>
