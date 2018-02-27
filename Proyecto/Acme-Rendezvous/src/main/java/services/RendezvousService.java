@@ -38,6 +38,8 @@ public class RendezvousService {
 	@Autowired
 	private AdministratorService	administratorService;
 
+<<<<<<< HEAD
+
 	@Autowired
 	private QuestionService			questionService;
 
@@ -50,6 +52,8 @@ public class RendezvousService {
 	@Autowired
 	private AnnouncementService		announcementService;
 
+=======
+>>>>>>> e1b03dc3279510378b031022805bacc9f65f747b
 
 	@Autowired
 	private Validator				validator;
@@ -171,6 +175,11 @@ public class RendezvousService {
 	}
 
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> e1b03dc3279510378b031022805bacc9f65f747b
 	public Collection<Rendezvous> findAll() {
 		final Collection<Rendezvous> result = this.rendezvousRepository.findAll();
 
