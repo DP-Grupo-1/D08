@@ -38,6 +38,20 @@ public class RendezvousService {
 	@Autowired
 	private AdministratorService	administratorService;
 
+<<<<<<< HEAD
+=======
+	@Autowired
+	private QuestionService			questionService;
+
+	@Autowired
+	private CommentService			commentService;
+
+	@Autowired
+	private ReplyService			replyService;
+
+	@Autowired
+	private AnnouncementService		announcementService;
+>>>>>>> a23fc55c6ab95bfbca6cebf171e06f02cd25679d
 
 	@Autowired
 	private Validator				validator;
@@ -103,18 +117,17 @@ public class RendezvousService {
 		try {
 			final Collection<User> attendants = rendezvous.getAttendants();
 			final User principal = this.userService.findByPrincipal();
-			if (!attendants.contains(principal)) {
+			if (!attendants.contains(principal))
 				attendants.add(principal);
-			}
 			rendezvous.setAttendants(attendants);
 			Rendezvous saved;
 			saved = this.rendezvousRepository.save(rendezvous);
 			return saved;
-		} catch(final Exception oops) {
+		} catch (final Exception oops) {
 			System.out.println(oops.getMessage());
 			return null;
 		}
-		
+
 	}
 
 	public void onlyDelete(final Rendezvous rendezvous) {
@@ -135,25 +148,35 @@ public class RendezvousService {
 		rendezvous.setFlag(Flag.DELETED);
 		this.onlySave(rendezvous);
 	}
-	
-	
+
+
 	public void deleteByAdmin(final Rendezvous rendezvous) {
+
 
 		Assert.notNull(rendezvous);
 
-		
-		Assert.notNull(this.findOne(rendezvous.getId()));
-
 		final Administrator admin = this.administratorService.findByPrincipal();
+
 		Assert.notNull(admin);
 
-		
-		Assert.isTrue(rendezvous.getFlag() != Flag.DELETED);
-		rendezvous.setFlag(Flag.DELETED);
-		this.onlySave(rendezvous);
+		try {
+			Assert.isTrue(rendezvous.getFlag() != Flag.DELETED);
+
+			rendezvous.setFlag(Flag.DELETED);
+			this.onlySave(rendezvous);
+
+		} catch(final Exception oops) {
+			System.out.println(oops.getMessage());
+		}
+
+
 	}
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> a23fc55c6ab95bfbca6cebf171e06f02cd25679d
 
 	public Collection<Rendezvous> findAll() {
 		final Collection<Rendezvous> result = this.rendezvousRepository.findAll();
@@ -219,12 +242,6 @@ public class RendezvousService {
 		return result;
 	}
 
-//	public Double ratioUsersSinRendezvous() {
-//		final Double res = this.rendezvousRepository.ratioUsersSinRendezvous();
-//		return res;
-//	}
-
-
 
 	//	public Double ratioUsersSinRendezvous() {
 	//		final Double res = this.rendezvousRepository.ratioUsersSinRendezvous();
@@ -233,6 +250,16 @@ public class RendezvousService {
 
 
 
+
+	//	public Double ratioUsersSinRendezvous() {
+	//		final Double res = this.rendezvousRepository.ratioUsersSinRendezvous();
+	//		return res;
+	//	}
+
+	//	public Double ratioUsersSinRendezvous() {
+	//		final Double res = this.rendezvousRepository.ratioUsersSinRendezvous();
+	//		return res;
+	//	}
 
 	//3.1
 	public Double avgUsersPerRendezvous() {
@@ -271,6 +298,39 @@ public class RendezvousService {
 		}
 
 		return finalTop10RendezvousesByRSVPs;
+	}
+
+	//Requisito 6.3 punto 1: la desviación estándar de reuniones creadas por usuario.
+	public Double stddevRendezvousPerUser() {
+		Double stddev = 0.0;
+
+		stddev = Math.sqrt(this.sumRendezvouses() / this.numRendezvouses() - this.avgRendezvousPerUser() * this.avgRendezvousPerUser());
+
+		return stddev;
+	}
+
+	private Integer numRendezvouses() {
+		Integer numRendezvouses = 0;
+		for (final User u1 : this.userService.findAll()) {
+			final Collection<Rendezvous> rendezvouses = this.findByCreatorId(u1.getId());
+			numRendezvouses = numRendezvouses + rendezvouses.size();
+		}
+		return numRendezvouses;
+	}
+
+	private Integer sumRendezvouses() {
+		Integer sumRendezvouses = 0;
+		for (final User u2 : this.userService.findAll()) {
+			final Collection<Rendezvous> rendezvouses = this.findByCreatorId(u2.getId());
+			sumRendezvouses = sumRendezvouses + rendezvouses.size() * rendezvouses.size();
+		}
+		return sumRendezvouses;
+	}
+
+	//Requisito 6.3 punto 2
+	public Double ratioUsersSinRendezvous() {
+		final Double ratio = 1 - this.ratioCreators();
+		return ratio;
 	}
 
 	public Collection<Rendezvous> above75AverageOfAnnouncementsPerRendezvous() {

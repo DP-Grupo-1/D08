@@ -137,8 +137,10 @@
 			
 			var i;
 			
+			
 			for (i = 0; i < actualFlag.length; i++) {
 				
+			if(actualFlag[i].textContent != "DELETED"){
 				var campos = rendezvousDate[i].textContent.split(' ');
 				
 				// 18/05/23
@@ -164,7 +166,7 @@
 				}
 			}
 			
-
+			}
 		};
 		</script>
 

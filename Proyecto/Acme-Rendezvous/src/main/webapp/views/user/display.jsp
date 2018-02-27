@@ -136,7 +136,7 @@
 				// 13:30
 				//horas[0] = 13, horas[1] = 30
 				var horas = campos[1].split(":");
-				
+			if(actualFlag[i].textContent != "DELETED"){
 				if(dates[0] > ano){
 					actualFlag[i].innerHTML = "ACTIVE";
 				} else if((dates[0] == ano) && dates[1] > mes){
@@ -152,6 +152,6 @@
 				}
 			}
 			
-
+			}
 		};
 		</script>
