@@ -44,6 +44,7 @@
 		  </jstl:if>
 		</jstl:forEach>
 	<display:column>
+	
 	<jstl:choose> 
    	<jstl:when test="${!linked}">
 	    <a href="rendezvous/user/link.do?rendezvousId=${rendezvousId}&rendezvousLinkId=${row.id}">

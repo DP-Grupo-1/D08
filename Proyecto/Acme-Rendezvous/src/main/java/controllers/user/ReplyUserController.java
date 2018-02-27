@@ -60,17 +60,17 @@ public class ReplyUserController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Reply reply,@RequestParam final Integer commentId, final BindingResult binding) {
+	public ModelAndView save(@RequestParam final Integer commentId, @Valid final Reply reply, final BindingResult binding) {
 
 		ModelAndView result;
 		Collection<Reply> replies = new ArrayList<Reply>();
-//		
-//		if (binding.hasErrors())
-//			result = this.createEditModelAndView(reply);
-//		else
-//
-//			try {
-//				
+		
+		if (binding.hasErrors()) {
+			result = this.createEditModelAndView(reply);
+			result.addObject("commentId", commentId);
+		} else {
+			try {
+				
 				
 
 				 this.replyService.save(reply);
@@ -88,12 +88,12 @@ public class ReplyUserController extends AbstractController {
 					
 
 					result = new ModelAndView("redirect:/rendezvous/user/listRsvps.do");
-	//			}
-//			}
-//
-//			catch (final Throwable oops) {
-//				result = this.createEditModelAndView(reply, "reply.comit.error");
-	//}
+				}
+
+			catch (final Throwable oops) {
+				result = this.createEditModelAndView(reply, "reply.comit.error");
+			}
+		}
 
 		return result;
 	}

@@ -8,23 +8,22 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.Index;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
-@Table(indexes = {
-	@Index(columnList = "moment")
-})
+//@Table(indexes = {
+//	@Index(columnList = "moment")
+//})
 public class Comment extends DomainEntity {
 
 	private Date				moment;
@@ -45,7 +44,7 @@ public class Comment extends DomainEntity {
 	public void setMoment(final Date moment) {
 		this.moment = moment;
 	}
-
+	
 	@NotBlank
 	public String getText() {
 		return this.text;
@@ -53,7 +52,7 @@ public class Comment extends DomainEntity {
 	public void setText(final String text) {
 		this.text = text;
 	}
-
+	
 	@URL
 	@NotBlank
 	public String getPicture() {

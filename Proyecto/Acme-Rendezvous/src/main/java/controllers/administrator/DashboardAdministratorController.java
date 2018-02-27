@@ -45,8 +45,7 @@ public class DashboardAdministratorController {
 		//Level C-----------------------------------------------------------------------------------------------------
 		//1
 		final Double avgRendezvousPerUser = this.rendezvousService.avgRendezvousPerUser();
-		final Double stddevRendezvousPerUser = this.rendezvousService.stddevRendezvousPerUser();
-
+		Double stddevRendezvousPerUser = this.rendezvousService.stddevRendezvousPerUser();
 		//2
 		final Double ratioCreators = this.rendezvousService.ratioCreators();
 		final Double ratioUsersSinRendezvous = this.rendezvousService.ratioUsersSinRendezvous();
@@ -85,15 +84,16 @@ public class DashboardAdministratorController {
 
 		//1
 		res.addObject("avgRendezvousPerUser", avgRendezvousPerUser);
+		
 		res.addObject("stddevRendezvousPerUser", stddevRendezvousPerUser);
-
 		//2
 		res.addObject("ratioCreators", ratioCreators);
 		res.addObject("ratioUsersSinRendezvous", ratioUsersSinRendezvous);
 
 		//3.1
 		res.addObject("avgUsersPerRendezvous", avgUsersPerRendezvous);
-
+		
+		
 		//3.2
 		res.addObject("stddevUsersPerRendezvous", stddevUsersPerRendezvous);
 

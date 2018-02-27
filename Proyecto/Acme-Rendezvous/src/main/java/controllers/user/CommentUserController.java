@@ -1,3 +1,4 @@
+
 package controllers.user;
 
 import java.util.ArrayList;
@@ -15,33 +16,47 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.CommentService;
 import services.RendezvousService;
-
+import services.UserService;
 import controllers.AbstractController;
 import domain.Comment;
 import domain.Rendezvous;
+import domain.User;
 
 @Controller
 @RequestMapping("/comment/user")
 public class CommentUserController extends AbstractController {
 
 	@Autowired
-	private CommentService commentService;
+	private CommentService		commentService;
 
 	@Autowired
-	private RendezvousService rendezvousService;
+	private RendezvousService	rendezvousService;
+	@Autowired
+	private UserService			userService;
+
 
 	// Creation--------------------------
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create(@RequestParam final Integer rendezvousId) {
-		ModelAndView result;
+		ModelAndView result = null;
 		Comment comment;
-		Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
+<<<<<<< HEAD
+		final Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
 
+=======
+		Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
+		try {
+>>>>>>> 1e6661ab45b47c2cc938b9c180f90614b66b7289
 		comment = this.commentService.create(rendezvous);
 
 		result = this.createEditModelAndView(comment);
 		result.addObject("rendezvousId", rendezvousId);
-
+		}
+		
+	 catch (final Throwable oops) {
+		result = new ModelAndView("redirect:/");
+		System.out.println(oops);
+	}
 		return result;
 	}
 
@@ -55,16 +70,57 @@ public class CommentUserController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Comment comment,
-			@RequestParam final Integer rendezvousId,
+<<<<<<< HEAD
+	public ModelAndView save(@Valid Comment comment, @RequestParam final Integer rendezvousId, final BindingResult binding) {
+
+		ModelAndView result;
+		final Collection<Comment> comments = new ArrayList<Comment>();
+		final User user = this.userService.findByPrincipal();
+		comment = this.commentService.reconstruct(comment, binding);
+		if (binding.hasErrors()) {
+			result = this.createEditModelAndView(comment);
+			System.out.println("llega aqui1");
+		} else
+			try {
+				final Comment saved = this.commentService.save(comment);
+				//				comments.add(saved);
+				//				user.setComments(comments);
+				//				this.userService.save(user);
+
+				final Rendezvous r = this.rendezvousService.findOne(rendezvousId);
+
+				comments.addAll(r.getComments());
+
+				//	comments.add(comment);
+				comments.add(saved);
+
+				r.setComments(comments);
+
+				this.rendezvousService.save(r);
+				//	r.getComments().add(saved);
+
+				result = new ModelAndView("redirect:/rendezvous/user/listRsvps.do");
+
+			}
+
+			catch (final Throwable oops) {
+				result = this.createEditModelAndView(comment, "comment.comit.error");
+				System.out.println("llega aqui2");
+
+			}
+=======
+	public ModelAndView save(@RequestParam final Integer rendezvousId,
+			@Valid final Comment comment,
 			final BindingResult binding) {
 
 		ModelAndView result;
 		Collection<Comment> comments = new ArrayList<Comment>();
 
-		if (binding.hasErrors()) {
+		if (binding.hasErrors()){
 			result = this.createEditModelAndView(comment);
-		} else {
+			result.addObject("rendezvousId", rendezvousId);
+		}
+		else {
 
 			try {
 
@@ -87,16 +143,16 @@ public class CommentUserController extends AbstractController {
 
 			catch (final Throwable oops) {
 				result = this.createEditModelAndView(comment,
-						"comment.comit.error");
+						"comment.commit.error");
 			}
 		}
+>>>>>>> 1e6661ab45b47c2cc938b9c180f90614b66b7289
 		return result;
 	}
 
 	// DELETE
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(@Valid final Comment comment,
-			final BindingResult binding) {
+	public ModelAndView delete(@Valid final Comment comment, final BindingResult binding) {
 
 		ModelAndView result;
 
@@ -108,8 +164,12 @@ public class CommentUserController extends AbstractController {
 		}
 
 		catch (final Throwable oops) {
+<<<<<<< HEAD
+			result = this.createEditModelAndView(comment, "comment.comit.error");
+=======
 			result = this
-					.createEditModelAndView(comment, "comment.comit.error");
+					.createEditModelAndView(comment, "comment.commit.error");
+>>>>>>> 1e6661ab45b47c2cc938b9c180f90614b66b7289
 
 		}
 		return result;
@@ -122,13 +182,17 @@ public class CommentUserController extends AbstractController {
 		return result;
 	}
 
+<<<<<<< HEAD
+	protected ModelAndView createEditModelAndView(final Comment comment, final String messageCode) {
+=======
 	protected ModelAndView createEditModelAndView(final Comment comment,
-			final String messageCode) {
+			final String message) {
+>>>>>>> 1e6661ab45b47c2cc938b9c180f90614b66b7289
 		ModelAndView result;
 
 		result = new ModelAndView("comment/user/edit");
 		result.addObject("comment", comment);
-		result.addObject("message", messageCode);
+		result.addObject("message", message);
 		return result;
 	}
 

@@ -7,10 +7,8 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.Index;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -18,9 +16,9 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Access(AccessType.PROPERTY)
-@Table(indexes = {
-	@Index(columnList = "creator_id,rendezvous_id")
-})
+//@Table(indexes = {
+//	@Index(columnList = "creator_id,rendezvous_id")
+//})
 public class Question extends DomainEntity {
 
 	// Attributes -------------------------------------------------------------
