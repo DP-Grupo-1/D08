@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import domain.Answer;
 import domain.Question;
 
 @Repository
@@ -28,4 +29,6 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
 	@Query("select sqrt(sum(q.answers.size*q.answers.size)/count(q.answers.size)-" + "(avg(q.answers.size)*avg(q.answers.size) ))" + " from Question q")
 	Double stdevAnswersPerQuestions();
 
+	@Query("select q from Question q where ?1 in elements(q.answers) and q.rendezvous.id = ?2")
+	Question findQuestionByAnswer(Answer answer, int rendezvousId);
 }

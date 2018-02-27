@@ -17,9 +17,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import services.AnswerService;
+import services.QuestionService;
 import services.RendezvousService;
 import services.UserService;
 import controllers.AbstractController;
+import domain.Answer;
+import domain.Question;
 import domain.Rendezvous;
 import domain.User;
 
@@ -34,6 +38,12 @@ public class RendezvousUserController extends AbstractController {
 
 	@Autowired
 	private UserService			userService;
+	
+	@Autowired
+	private AnswerService			answerService;
+	
+	@Autowired
+	private QuestionService			questionService;
 
 
 	//Listing ----------------------------------------------------
@@ -177,7 +187,16 @@ public class RendezvousUserController extends AbstractController {
 
 			final User user = this.userService.findByPrincipal();
 			final Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
-
+			Collection<Answer> answersRendezvous = this.answerService.findAllByrendezvous(rendezvousId);
+			Collection<Answer> answersUser = this.answerService.findAllByAnswerer(user.getId());
+			answersRendezvous.retainAll(answersUser);
+			for(Answer a : answersRendezvous){
+				Question question = this.questionService.findQuestionByAnswer(a, rendezvousId);
+				Collection<Answer> answers = question.getAnswers();
+				answers.remove(a);
+				this.answerService.delete(a);
+			}
+			this.answerService.deleteAll(answersRendezvous);
 			Assert.notNull(user);
 			Assert.notNull(rendezvous);
 

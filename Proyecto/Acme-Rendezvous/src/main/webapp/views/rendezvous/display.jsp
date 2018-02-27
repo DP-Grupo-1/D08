@@ -92,12 +92,14 @@
 		<a  href="rendezvous/user/rendezvouses.do?rendezvousId=${row.id}"><spring:message code="rendezvous.link" /></a>
 	</display:column>
 	</jstl:if>
+	</security:authorize>
 	
-	<jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
        <display:column>
-			<a href="question/user/list.do?rendezvousId=${row.id}"><spring:message code="question.list"/></a>
+			<a href="question/list.do?rendezvousId=${row.id}"><spring:message code="question.list"/></a>
 			
 		</display:column>
+		<security:authorize access="hasRole('USER')">
+		<jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
 		<display:column>
 			<a href="question/user/create.do?rendezvousId=${row.id}"><spring:message code="question.create"/></a>
 		</display:column>
