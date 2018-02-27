@@ -146,10 +146,7 @@ public class RendezvousService {
 		this.onlySave(rendezvous);
 	}
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 28f23406f3b6e37caddac138e75b5b5a665379aa
 	public void deleteByAdmin(final Rendezvous rendezvous) {
 
 
@@ -172,71 +169,8 @@ public class RendezvousService {
 
 	}
 
-<<<<<<< HEAD
 
-=======
-	//	public void deleteByAdmin(final Rendezvous rendezvous) {
-	//	
-	//		Assert.notNull(rendezvous);
-	//	
-	//		final Collection<Question> questions = this.questionService.findAllByrendezvous(rendezvous.getId());
-	//		final Collection<Announcement> announcements = rendezvous.getAnnouncements();
-	//		final Collection<User> attendants = rendezvous.getAttendants();
-	//		Assert.notNull(this.findOne(rendezvous.getId()));
-	//		
-	//		final Administrator admin = this.administratorService.findByPrincipal();
-	//		Assert.notNull(admin);
-	//		
-	//		final Collection<Rendezvous> rendezvouses = this.findRendezvousParents(rendezvous.getId());
-	//		Collection<Comment> comments = rendezvous.getComments();
-	//		
-	//		if(!comments.isEmpty()){
-	//			
-	//			for(Comment c: comments){
-	//				commentService.delete(c);
-	//				
-	//			}
-	//			
-	//			
-	//
-	//		}
-	//		System.out.println("llego aqui 4");
-	//		
-	//	
-	//		
-	//		
-	//		
-	//		
-	//		
-	//		
-	//		if (!rendezvouses.isEmpty())
-	//			for (final Rendezvous r : rendezvouses)
-	//				r.getRendezvouses().remove(rendezvous);
-	//		
-	//		System.out.println("llego aqui 5");
-	//
-	//		if (!questions.isEmpty())
-	//			for (final Question q : questions)
-	//				this.questionService.deleteByAdmin(q);
-	//		
-	//		System.out.println("llego aqui 6");
-	//
-	//		if (!announcements.isEmpty())
-	//			for (final Announcement a : announcements)
-	//				this.announcementService.delete(a);
-	//
-	//		
-	//		System.out.println("llego aqui 7");
-	//		if (!attendants.isEmpty())
-	//			for (final User u : attendants)
-	//				u.getAttendances().remove(rendezvous);
-	//		
-	//		System.out.println("llego aqui 8");
-	//
-	//		this.rendezvousRepository.delete(rendezvous);
-	//
-	//	}
->>>>>>> 28f23406f3b6e37caddac138e75b5b5a665379aa
+
 
 	public Collection<Rendezvous> findAll() {
 		final Collection<Rendezvous> result = this.rendezvousRepository.findAll();
@@ -302,7 +236,7 @@ public class RendezvousService {
 		return result;
 	}
 
-<<<<<<< HEAD
+
 	//	public Double ratioUsersSinRendezvous() {
 	//		final Double res = this.rendezvousRepository.ratioUsersSinRendezvous();
 	//		return res;
@@ -310,8 +244,7 @@ public class RendezvousService {
 
 
 
-=======
->>>>>>> 28f23406f3b6e37caddac138e75b5b5a665379aa
+
 	//	public Double ratioUsersSinRendezvous() {
 	//		final Double res = this.rendezvousRepository.ratioUsersSinRendezvous();
 	//		return res;
