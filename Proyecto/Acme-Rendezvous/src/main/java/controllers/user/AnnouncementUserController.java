@@ -84,12 +84,13 @@ public class AnnouncementUserController extends AbstractController {
 	}
 	//Save --------------------------------------------------
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Announcement announcement, @RequestParam final Integer rendezvousId, final BindingResult binding) {
+	public ModelAndView save(@RequestParam final Integer rendezvousId, @Valid final Announcement announcement, final BindingResult binding) {
 		ModelAndView result;
 
 		if (binding.hasErrors()) {
 			System.out.println(binding.getAllErrors().toString());
 			result = this.createEditModelAndView(announcement);
+			result.addObject("rendezvousId", rendezvousId);
 		} else
 			try {
 				final Announcement a = this.announcementService.save(announcement);

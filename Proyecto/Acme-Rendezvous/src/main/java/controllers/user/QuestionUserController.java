@@ -139,17 +139,29 @@ public class QuestionUserController extends AbstractController {
 		public ModelAndView answerQuestions(@Valid AnswerQuestions answerQuestions, BindingResult binding) {
 
 			ModelAndView result;
+			Question question = (Question) answerQuestions.getQuestions().toArray()[0];
+			Rendezvous rendezvous = question.getRendezvous();
+			
 
 			if (binding.hasErrors())
 				result = this.createEditModelAndViewAnswer(answerQuestions);
 			else
 
 				try {
-						for(Answer s : answerQuestions.getAnswers()){
-							Assert.notNull(s.getWritten(), "You must answer every question");
+					Boolean enBlanco = false;	
+					for(Answer s : answerQuestions.getAnswers()){
+						if(s.getWritten()==null || s.getWritten()==""){
+							enBlanco = true;
+							break;
 						}
+					}
+					if(enBlanco){
+						result = this.createEditModelAndViewAnswer(answerQuestions, "answer.commit.error");
+					}else{
 						this.answerService.saveAll(answerQuestions.getAnswers(), answerQuestions.getQuestions());
 						result = new ModelAndView("redirect:/welcome/index.do");
+					}
+						
 					
 				}
 

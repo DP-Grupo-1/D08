@@ -60,15 +60,17 @@ public class CommentUserController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Comment comment,
-			@RequestParam final Integer rendezvousId,
+	public ModelAndView save(@RequestParam final Integer rendezvousId,
+			@Valid final Comment comment,
 			final BindingResult binding) {
 
 		ModelAndView result;
 		Collection<Comment> comments = new ArrayList<Comment>();
 
-		if (binding.hasErrors())
+		if (binding.hasErrors()){
 			result = this.createEditModelAndView(comment);
+			result.addObject("rendezvousId", rendezvousId);
+		}
 		else {
 
 			try {
