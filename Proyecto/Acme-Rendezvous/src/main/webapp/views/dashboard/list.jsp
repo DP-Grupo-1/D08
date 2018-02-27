@@ -28,7 +28,7 @@
 
 <table class="dashboard">
 	<tr> <td><spring:message code="dashboard.1.1" /></td> <td><jstl:out value="${avgRendezvousPerUser}"/></td>	</tr>
-	<tr> <td><spring:message code="dashboard.1.2" /> <td></td>	</tr>
+	<tr> <td><spring:message code="dashboard.1.2" /> <td> <jstl:out value="${stddevRendezvousPerUser}"></jstl:out></td>	</tr>
 	<tr> <td><spring:message code="dashboard.2.1" /> <td><jstl:out value="${ratioCreators}"></jstl:out></td>	</tr>
 	<tr> <td><spring:message code="dashboard.2.2" /> <td><jstl:out value="${ratioUsersSinRendezvous }"></jstl:out></td>	</tr>
 	<tr> <td><spring:message code="dashboard.3.1" /> </td> <td> <jstl:out value="${avgUsersPerRendezvous}"/> </td> </tr>
