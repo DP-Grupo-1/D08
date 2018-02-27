@@ -21,7 +21,8 @@
 	
 	<input type="submit" name="save"
 	value="<spring:message code="question.save" />" />&nbsp; 
-	
+	<input type="submit" name="delete"
+		value="<spring:message code="question.delete" />" />&nbsp; 
 	<input type="button" name="cancel"
 		value="<spring:message code="question.cancel" />"
 		onclick="location.href = ('welcome/index.do');" />
