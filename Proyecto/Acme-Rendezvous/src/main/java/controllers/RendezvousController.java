@@ -66,11 +66,11 @@ public class RendezvousController extends AbstractController {
 			final UserAccount userAcc = LoginService.getPrincipal();
 			final User u = this.userService.findByUserAccount(userAcc);
 			Boolean hasUserRSVPd = false;
-			User user = this.userService.findByPrincipal();
-			if (user != null) {
+
+			if (u != null) {
 				//Rendezvouses a los que el usuario va a asistir (RSVPs)
-				final Collection<Rendezvous> rendezvouses = this.rendezvousService.findByUserId(user.getId());
-				rsvped = rendezvous.getAttendants().contains(user);
+				final Collection<Rendezvous> rendezvouses = this.rendezvousService.findByUserId(u.getId());
+				rsvped = rendezvous.getAttendants().contains(u);
 
 				for (final Rendezvous r : rendezvouses)
 					if (r.getId() == rendezvousId) {

@@ -50,6 +50,7 @@ public class RendezvousService {
 	@Autowired
 	private AnnouncementService		announcementService;
 
+
 	@Autowired
 	private Validator				validator;
 
@@ -168,6 +169,7 @@ public class RendezvousService {
 
 
 	}
+
 
 	public Collection<Rendezvous> findAll() {
 		final Collection<Rendezvous> result = this.rendezvousRepository.findAll();
