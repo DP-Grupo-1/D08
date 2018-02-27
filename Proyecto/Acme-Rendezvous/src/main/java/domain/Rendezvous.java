@@ -25,9 +25,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
-@Table(indexes = {
-	@Index(columnList = "creator_id")
-})
+//@Table(indexes = {
+//	@Index(columnList = "creator_id")
+//})
 public class Rendezvous extends DomainEntity {
 
 	//-------------------------------------Atributos--------------------------------------------

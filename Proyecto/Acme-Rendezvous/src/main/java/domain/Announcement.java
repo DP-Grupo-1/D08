@@ -17,9 +17,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
-@Table(indexes = {
-	@Index(columnList = "moment")
-})
+//@Table(indexes = {
+//	@Index(columnList = "moment")
+//})
 public class Announcement extends DomainEntity {
 
 	private Date	moment;

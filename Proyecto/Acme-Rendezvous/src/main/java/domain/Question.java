@@ -18,9 +18,9 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Access(AccessType.PROPERTY)
-@Table(indexes = {
-	@Index(columnList = "creator_id,rendezvous_id")
-})
+//@Table(indexes = {
+//	@Index(columnList = "creator_id,rendezvous_id")
+//})
 public class Question extends DomainEntity {
 
 	// Attributes -------------------------------------------------------------

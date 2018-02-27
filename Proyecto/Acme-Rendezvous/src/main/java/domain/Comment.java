@@ -22,9 +22,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
-@Table(indexes = {
-	@Index(columnList = "moment")
-})
+//@Table(indexes = {
+//	@Index(columnList = "moment")
+//})
 public class Comment extends DomainEntity {
 
 	private Date				moment;
