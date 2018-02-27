@@ -36,9 +36,8 @@ public class CommentUserController extends AbstractController {
 		ModelAndView result;
 		Comment comment;
 		Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
-	
+
 		comment = this.commentService.create(rendezvous);
-		
 
 		result = this.createEditModelAndView(comment);
 		result.addObject("rendezvousId", rendezvousId);
@@ -63,33 +62,34 @@ public class CommentUserController extends AbstractController {
 		ModelAndView result;
 		Collection<Comment> comments = new ArrayList<Comment>();
 
-		 if (binding.hasErrors())
-		 result = this.createEditModelAndView(comment);
-	 else
-		
-		 try {
+		if (binding.hasErrors()) {
+			result = this.createEditModelAndView(comment);
+		} else {
 
-		this.commentService.save(comment);
+			try {
 
-		Rendezvous r = this.rendezvousService.findOne(rendezvousId);
+				this.commentService.save(comment);
 
-		comments.addAll(r.getComments());
+				Rendezvous r = this.rendezvousService.findOne(rendezvousId);
 
-		comments.add(comment);
+				comments.addAll(r.getComments());
 
-		r.setComments(comments);
+				comments.add(comment);
 
-		this.rendezvousService.save(r);
+				r.setComments(comments);
 
-		result = new ModelAndView("redirect:/rendezvous/user/listRsvps.do");
+				this.rendezvousService.save(r);
 
-		 }
-		
-		 catch (final Throwable oops) {
-		 result = this.createEditModelAndView(comment,
-		 "comment.comit.error");
-		 }
+				result = new ModelAndView(
+						"redirect:/rendezvous/user/listRsvps.do");
 
+			}
+
+			catch (final Throwable oops) {
+				result = this.createEditModelAndView(comment,
+						"comment.comit.error");
+			}
+		}
 		return result;
 	}
 

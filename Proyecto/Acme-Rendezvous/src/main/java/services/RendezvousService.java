@@ -17,9 +17,7 @@ import domain.Administrator;
 import domain.Announcement;
 import domain.Comment;
 import domain.Flag;
-import domain.Question;
 import domain.Rendezvous;
-import domain.Reply;
 import domain.User;
 import forms.CreateRendezvous;
 
@@ -40,17 +38,6 @@ public class RendezvousService {
 	@Autowired
 	private AdministratorService	administratorService;
 
-	@Autowired
-	private QuestionService			questionService;
-	
-	@Autowired
-	private CommentService			commentService;
-	
-	@Autowired
-	private ReplyService			replyService;
-
-	@Autowired
-	private AnnouncementService		announcementService;
 
 	@Autowired
 	private Validator				validator;
@@ -166,67 +153,7 @@ public class RendezvousService {
 		this.onlySave(rendezvous);
 	}
 
-//	public void deleteByAdmin(final Rendezvous rendezvous) {
-//	
-//		Assert.notNull(rendezvous);
-//	
-//		final Collection<Question> questions = this.questionService.findAllByrendezvous(rendezvous.getId());
-//		final Collection<Announcement> announcements = rendezvous.getAnnouncements();
-//		final Collection<User> attendants = rendezvous.getAttendants();
-//		Assert.notNull(this.findOne(rendezvous.getId()));
-//		
-//		final Administrator admin = this.administratorService.findByPrincipal();
-//		Assert.notNull(admin);
-//		
-//		final Collection<Rendezvous> rendezvouses = this.findRendezvousParents(rendezvous.getId());
-//		Collection<Comment> comments = rendezvous.getComments();
-//		
-//		if(!comments.isEmpty()){
-//			
-//			for(Comment c: comments){
-//				commentService.delete(c);
-//				
-//			}
-//			
-//			
-//
-//		}
-//		System.out.println("llego aqui 4");
-//		
-//	
-//		
-//		
-//		
-//		
-//		
-//		
-//		if (!rendezvouses.isEmpty())
-//			for (final Rendezvous r : rendezvouses)
-//				r.getRendezvouses().remove(rendezvous);
-//		
-//		System.out.println("llego aqui 5");
-//
-//		if (!questions.isEmpty())
-//			for (final Question q : questions)
-//				this.questionService.deleteByAdmin(q);
-//		
-//		System.out.println("llego aqui 6");
-//
-//		if (!announcements.isEmpty())
-//			for (final Announcement a : announcements)
-//				this.announcementService.delete(a);
-//
-//		
-//		System.out.println("llego aqui 7");
-//		if (!attendants.isEmpty())
-//			for (final User u : attendants)
-//				u.getAttendances().remove(rendezvous);
-//		
-//		System.out.println("llego aqui 8");
-//
-//		this.rendezvousRepository.delete(rendezvous);
-//
-//	}
+
 
 	public Collection<Rendezvous> findAll() {
 		final Collection<Rendezvous> result = this.rendezvousRepository.findAll();
