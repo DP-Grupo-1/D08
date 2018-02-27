@@ -1,12 +1,14 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import repositories.AnswerRepository;
 import domain.Answer;
@@ -80,18 +82,33 @@ public class AnswerService {
 		}
 	}
 
-//	public Question saveQuestion(final Question question) {
-//
-//		final Question saved = this.questionRepository.save(question);
-//		return saved;
-//	}
-//
-//	public Collection<Question> findAllByPrincipalAndRendezvous(final int principalId, final int rendezvousId) {
-//		return this.questionRepository.findAllByPrincipalAndRendezvous(principalId, rendezvousId);
-//	}
-//
-//	public Collection<Question> findAllByrendezvous(final int rendezvousId) {
-//		return this.questionRepository.findAllByRendezvous(rendezvousId);
-//	}
+	public void delete(final Answer answer) {
+
+		Assert.notNull(answer);
+
+		final User user = this.userService.findByPrincipal();
+		Assert.notNull(user);
+		Assert.isTrue(answer.getAnswerer().equals(user));
+		this.answerRepository.delete(answer);
+	}
+	
+	public void deleteAll(final Collection<Answer> answers) {
+		
+		final User user = this.userService.findByPrincipal();
+		Assert.notNull(user);
+		this.answerRepository.delete(answers);
+	}
+	
+	public Collection<Answer> findAllByAnswerer(int userId){
+		Collection<Answer> answers = new ArrayList<Answer>();
+		answers = this.answerRepository.findAllByAnswerer(userId);
+		return answers;
+	}
+	
+	public Collection<Answer> findAllByrendezvous(int rendezvousId){
+		Collection<Answer> answers = new ArrayList<Answer>();
+		answers = this.answerRepository.findAllByRendezvous(rendezvousId);
+		return answers;
+	}
 
 }

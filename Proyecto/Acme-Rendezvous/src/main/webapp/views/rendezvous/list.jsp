@@ -33,24 +33,29 @@
 			<display:column>
 				<a href="rendezvous/display.do?rendezvousId=${row.id}">
 					<spring:message code="rendezvous.list.display" />
-				</a>
+				</a> <br/>
+				
+				<jstl:if test="${row.flag != 'DELETED'}">
 				  <jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
 		  			<a href="announcement/user/create.do?rendezvousId=${row.id}"><spring:message code="announcement.create" /></a>
    		 		</jstl:if>
-				
-			<jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
-			<jstl:if test="${row.finalMode == false}">
-				<a href="rendezvous/user/edit.do?rendezvousId=${row.id}"><spring:message code="rendezvous.edit"/></a>
+					<br/>
+				<jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
+				<jstl:if test="${row.finalMode == false}">
+					<a href="rendezvous/user/edit.do?rendezvousId=${row.id}"><spring:message code="rendezvous.edit"/></a>
+					</jstl:if>
 				</jstl:if>
 			</jstl:if>
 			
 			<security:authorize access="hasRole('ADMIN')">
-			<display:column>
-	   	<div>
-			<a href="rendezvous/administrator/delete.do?rendezvousId=${row.id}"><spring:message code="rendezvous.delete"/></a>
-		</div>
-		</display:column>
-    </security:authorize>
+			<jstl:if test="${row.flag != 'DELETED'}">
+				<display:column>
+				   	<div>
+						<a href="rendezvous/administrator/delete.do?rendezvousId=${row.id}"><spring:message code="rendezvous.delete"/></a>
+					</div>
+				</display:column>
+			</jstl:if>
+   			 </security:authorize>
     
 			</display:column>
 		
@@ -90,7 +95,7 @@
 		
 
 		
-		 <display:column >
+		 <display:column>
 			<a href="user/list.do?rendezvousId=${row.id}"><spring:message code="rendezvous.attendants" /></a>
         </display:column>
         
@@ -130,20 +135,24 @@
 				// 13:30
 				//horas[0] = 13, horas[1] = 30
 				var horas = campos[1].split(":");
+			
 				
-				if(dates[0] > ano){
-					actualFlag[i].innerHTML = "ACTIVE";
-				} else if((dates[0] == ano) && dates[1] > mes){
-					actualFlag[i].innerHTML = "ACTIVE";
-				} else if((dates[0] == ano) && (dates[1] == mes) && dates[2] > dia){
-					actualFlag[i].innerHTML = "ACTIVE";
-				} else if((dates[0] == ano) && (dates[1] == mes) && (dates[2] == dia) && horas[0] > hora){
-					actualFlag[i].innerHTML = "ACTIVE";
-			} else if((dates[0] == ano) && (dates[1] == mes) && (dates[2] == dia) && (horas[0] == hora) && (horas[1] > minutos)){
-					actualFlag[i].innerHTML = "ACTIVE";
-				} else {
-					actualFlag[i].innerHTML = "PASSED";
+				if(actualFlag[i].textContent != "DELETED"){
+						if(dates[0] > ano){
+							actualFlag[i].innerHTML = "ACTIVE";
+						} else if((dates[0] == ano) && dates[1] > mes){
+							actualFlag[i].innerHTML = "ACTIVE";
+						} else if((dates[0] == ano) && (dates[1] == mes) && dates[2] > dia){
+							actualFlag[i].innerHTML = "ACTIVE";
+						} else if((dates[0] == ano) && (dates[1] == mes) && (dates[2] == dia) && horas[0] > hora){
+							actualFlag[i].innerHTML = "ACTIVE";
+					} else if((dates[0] == ano) && (dates[1] == mes) && (dates[2] == dia) && (horas[0] == hora) && (horas[1] > minutos)){
+							actualFlag[i].innerHTML = "ACTIVE";
+						} else {
+							actualFlag[i].innerHTML = "PASSED";
+						}
 				}
+				
 			}
 			
 
@@ -159,4 +168,5 @@
 		  <a href="rendezvous/user/create.do"><spring:message code="rendezvous.create" /></a>
 	   </div>
     </security:authorize>
+    
     

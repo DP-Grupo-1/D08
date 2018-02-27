@@ -38,15 +38,25 @@ public class CommentUserController extends AbstractController {
 	// Creation--------------------------
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create(@RequestParam final Integer rendezvousId) {
-		ModelAndView result;
+		ModelAndView result = null;
 		Comment comment;
+<<<<<<< HEAD
 		final Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
 
+=======
+		Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
+		try {
+>>>>>>> 1e6661ab45b47c2cc938b9c180f90614b66b7289
 		comment = this.commentService.create(rendezvous);
 
 		result = this.createEditModelAndView(comment);
 		result.addObject("rendezvousId", rendezvousId);
-
+		}
+		
+	 catch (final Throwable oops) {
+		result = new ModelAndView("redirect:/");
+		System.out.println(oops);
+	}
 		return result;
 	}
 
@@ -60,6 +70,7 @@ public class CommentUserController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+<<<<<<< HEAD
 	public ModelAndView save(@Valid Comment comment, @RequestParam final Integer rendezvousId, final BindingResult binding) {
 
 		ModelAndView result;
@@ -97,6 +108,45 @@ public class CommentUserController extends AbstractController {
 				System.out.println("llega aqui2");
 
 			}
+=======
+	public ModelAndView save(@RequestParam final Integer rendezvousId,
+			@Valid final Comment comment,
+			final BindingResult binding) {
+
+		ModelAndView result;
+		Collection<Comment> comments = new ArrayList<Comment>();
+
+		if (binding.hasErrors()){
+			result = this.createEditModelAndView(comment);
+			result.addObject("rendezvousId", rendezvousId);
+		}
+		else {
+
+			try {
+
+				this.commentService.save(comment);
+
+				Rendezvous r = this.rendezvousService.findOne(rendezvousId);
+
+				comments.addAll(r.getComments());
+
+				comments.add(comment);
+
+				r.setComments(comments);
+
+				this.rendezvousService.save(r);
+
+				result = new ModelAndView(
+						"redirect:/rendezvous/user/listRsvps.do");
+
+			}
+
+			catch (final Throwable oops) {
+				result = this.createEditModelAndView(comment,
+						"comment.commit.error");
+			}
+		}
+>>>>>>> 1e6661ab45b47c2cc938b9c180f90614b66b7289
 		return result;
 	}
 
@@ -114,7 +164,12 @@ public class CommentUserController extends AbstractController {
 		}
 
 		catch (final Throwable oops) {
+<<<<<<< HEAD
 			result = this.createEditModelAndView(comment, "comment.comit.error");
+=======
+			result = this
+					.createEditModelAndView(comment, "comment.commit.error");
+>>>>>>> 1e6661ab45b47c2cc938b9c180f90614b66b7289
 
 		}
 		return result;
@@ -127,12 +182,17 @@ public class CommentUserController extends AbstractController {
 		return result;
 	}
 
+<<<<<<< HEAD
 	protected ModelAndView createEditModelAndView(final Comment comment, final String messageCode) {
+=======
+	protected ModelAndView createEditModelAndView(final Comment comment,
+			final String message) {
+>>>>>>> 1e6661ab45b47c2cc938b9c180f90614b66b7289
 		ModelAndView result;
 
 		result = new ModelAndView("comment/user/edit");
 		result.addObject("comment", comment);
-		result.addObject("message", messageCode);
+		result.addObject("message", message);
 		return result;
 	}
 

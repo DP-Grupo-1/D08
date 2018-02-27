@@ -83,6 +83,16 @@ public class QuestionService {
 		this.questionRepository.delete(question);
 	}
 
+	public void deleteByUser(final Question question) {
+
+		Assert.notNull(question);
+
+		final User user = this.userService.findByPrincipal();
+		Assert.notNull(user);
+		Assert.isTrue(question.getCreator().equals(user));
+		this.questionRepository.delete(question);
+	}
+	
 	public Collection<Question> findAllByPrincipalAndRendezvous(final int principalId, final int rendezvousId) {
 
 		Collection<Question> questions = new ArrayList<Question>();

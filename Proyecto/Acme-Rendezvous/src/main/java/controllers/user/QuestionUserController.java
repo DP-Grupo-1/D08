@@ -88,6 +88,45 @@ public class QuestionUserController extends AbstractController {
 				}
 				result = new ModelAndView("redirect:/welcome/index.do");
 
+<<<<<<< HEAD
+=======
+			return result;
+		}
+		
+		@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
+		public ModelAndView delete(@Valid Question question, BindingResult binding) {
+
+			ModelAndView result;
+
+			if (binding.hasErrors()) {
+				result = createEditModelAndViewQuestion(question);
+			} else {
+				try {
+					questionService.deleteByUser(question);
+					result = new ModelAndView("redirect:/welcome/index.do");
+				} catch (Throwable oops) {
+					result = createEditModelAndViewQuestion(question, "question.commit.error");
+				}
+			}
+			return result;
+		}
+		
+		//Edit----------------------------------------------------------------------
+		@RequestMapping(value = "/answerQuestions", method = RequestMethod.GET)
+		public ModelAndView answerQuestions(@RequestParam final int rendezvousId) {
+
+			ModelAndView result;
+			Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
+			Collection<Question> questions = questionService.findAllByRendezvous(rendezvousId);
+			User principal = this.userService.findByPrincipal();
+			Assert.isTrue(!(rendezvous.getCreator().equals(principal)));
+			Assert.isTrue(!(rendezvous.getAttendants().contains(principal)));
+			List<Answer> answers = new ArrayList<Answer>();
+			for(int i=0;i<questions.size();i++){
+				Answer ans = new Answer();
+				ans.setAnswerer(principal);
+				answers.add(ans);
+>>>>>>> 1e6661ab45b47c2cc938b9c180f90614b66b7289
 			}
 
 			catch (final Throwable oops) {
@@ -116,15 +155,42 @@ public class QuestionUserController extends AbstractController {
 		answerQuestions.setQuestions(questions);
 		answerQuestions.setAnswers(answers);
 
+<<<<<<< HEAD
 		result = this.createEditModelAndViewAnswer(answerQuestions);
 		result.addObject("answerQuestions", answerQuestions);
 		result.addObject("requestURI", "question/user/answerQuestions.do?rendezvousId=" + rendezvousId);
+=======
+			ModelAndView result;
+			Question question = (Question) answerQuestions.getQuestions().toArray()[0];
+			Rendezvous rendezvous = question.getRendezvous();
+			
+>>>>>>> 1e6661ab45b47c2cc938b9c180f90614b66b7289
 
 		return result;
 	}
 
+<<<<<<< HEAD
 	@RequestMapping(value = "/answerQuestions", method = RequestMethod.POST, params = "save")
 	public ModelAndView answerQuestions(@Valid final AnswerQuestions answerQuestions, final BindingResult binding) {
+=======
+				try {
+					Boolean enBlanco = false;	
+					for(Answer s : answerQuestions.getAnswers()){
+						if(s.getWritten()==null || s.getWritten()==""){
+							enBlanco = true;
+							break;
+						}
+					}
+					if(enBlanco){
+						result = this.createEditModelAndViewAnswer(answerQuestions, "answer.commit.error");
+					}else{
+						this.answerService.saveAll(answerQuestions.getAnswers(), answerQuestions.getQuestions());
+						result = new ModelAndView("redirect:/welcome/index.do");
+					}
+						
+					
+				}
+>>>>>>> 1e6661ab45b47c2cc938b9c180f90614b66b7289
 
 		ModelAndView result;
 
@@ -173,6 +239,7 @@ public class QuestionUserController extends AbstractController {
 	protected ModelAndView createEditModelAndViewAnswer(final AnswerQuestions answerQuestions, final String messageCode) {
 		ModelAndView result;
 
+<<<<<<< HEAD
 		result = new ModelAndView("question/user/answerQuestions");
 		result.addObject("answerQuestions", answerQuestions);
 		result.addObject("message", messageCode);
@@ -214,4 +281,6 @@ public class QuestionUserController extends AbstractController {
 		return result;
 	}
 
+=======
+>>>>>>> 1e6661ab45b47c2cc938b9c180f90614b66b7289
 }

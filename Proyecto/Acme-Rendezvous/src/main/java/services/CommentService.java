@@ -32,8 +32,7 @@ public class CommentService {
 
 	@Autowired
 	private AdministratorService	administratorService;
-	@Autowired
-	private ReplyService			replyService;
+
 	@Autowired
 	private RendezvousService		rendezvousService;
 

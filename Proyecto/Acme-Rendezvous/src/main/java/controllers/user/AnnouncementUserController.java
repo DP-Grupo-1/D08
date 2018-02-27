@@ -6,7 +6,7 @@
  * TDG Licence, a copy of which you may download from
  * http://www.tdg-seville.info/License.html */
 
-package controllers;
+package controllers.user;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import controllers.AbstractController;
 
 import security.LoginService;
 import security.UserAccount;
@@ -82,18 +84,22 @@ public class AnnouncementUserController extends AbstractController {
 	}
 	//Save --------------------------------------------------
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Announcement announcement, @RequestParam final Integer rendezvousId, final BindingResult binding) {
+	public ModelAndView save(@RequestParam final Integer rendezvousId, @Valid final Announcement announcement, final BindingResult binding) {
 		ModelAndView result;
 
 		if (binding.hasErrors()) {
 			System.out.println(binding.getAllErrors().toString());
 			result = this.createEditModelAndView(announcement);
+			result.addObject("rendezvousId", rendezvousId);
 		} else
 			try {
 				final Announcement a = this.announcementService.save(announcement);
 
 				final Rendezvous r = this.rendezvousService.findOne(rendezvousId);
-				r.getAnnouncements().add(a);
+				Collection<Announcement> announcements = new ArrayList<Announcement>();
+				announcements = r.getAnnouncements();
+				announcements.add(a);
+				r.setAnnouncements(announcements);
 
 				this.rendezvousService.save(r);
 
