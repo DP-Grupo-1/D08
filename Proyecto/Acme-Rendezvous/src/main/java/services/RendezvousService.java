@@ -38,8 +38,6 @@ public class RendezvousService {
 	@Autowired
 	private AdministratorService	administratorService;
 
-<<<<<<< HEAD
-=======
 	@Autowired
 	private QuestionService			questionService;
 
@@ -51,7 +49,6 @@ public class RendezvousService {
 
 	@Autowired
 	private AnnouncementService		announcementService;
->>>>>>> a23fc55c6ab95bfbca6cebf171e06f02cd25679d
 
 	@Autowired
 	private Validator				validator;
@@ -149,9 +146,7 @@ public class RendezvousService {
 		this.onlySave(rendezvous);
 	}
 
-
 	public void deleteByAdmin(final Rendezvous rendezvous) {
-
 
 		Assert.notNull(rendezvous);
 
@@ -165,18 +160,11 @@ public class RendezvousService {
 			rendezvous.setFlag(Flag.DELETED);
 			this.onlySave(rendezvous);
 
-		} catch(final Exception oops) {
+		} catch (final Exception oops) {
 			System.out.println(oops.getMessage());
 		}
 
-
 	}
-
-
-<<<<<<< HEAD
-=======
-
->>>>>>> a23fc55c6ab95bfbca6cebf171e06f02cd25679d
 
 	public Collection<Rendezvous> findAll() {
 		final Collection<Rendezvous> result = this.rendezvousRepository.findAll();
@@ -242,14 +230,10 @@ public class RendezvousService {
 		return result;
 	}
 
-
 	//	public Double ratioUsersSinRendezvous() {
 	//		final Double res = this.rendezvousRepository.ratioUsersSinRendezvous();
 	//		return res;
 	//	}
-
-
-
 
 	//	public Double ratioUsersSinRendezvous() {
 	//		final Double res = this.rendezvousRepository.ratioUsersSinRendezvous();

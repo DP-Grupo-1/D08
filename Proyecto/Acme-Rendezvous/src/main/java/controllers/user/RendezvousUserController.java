@@ -39,8 +39,8 @@ public class RendezvousUserController extends AbstractController {
 	//Listing ----------------------------------------------------
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
-		
-		Date actualMoment = new Date(System.currentTimeMillis() - 1000);
+
+		final Date actualMoment = new Date(System.currentTimeMillis() - 1000);
 		ModelAndView result;
 		Collection<Rendezvous> rendezvouses = new ArrayList<Rendezvous>();
 		final User logged = this.userService.findByPrincipal();
@@ -131,12 +131,12 @@ public class RendezvousUserController extends AbstractController {
 
 		ModelAndView result;
 
-	//try {
-			this.rendezvousService.deleteByUser(rendezvous);
-			result = new ModelAndView("redirect:../display.do?rendezvousId=" + rendezvous.getId());
-//		} catch (final Throwable oops) {
-//			result = this.createEditModelAndView(rendezvous, "rendezvous.commit.error");
-//		}
+		//try {
+		this.rendezvousService.deleteByUser(rendezvous);
+		result = new ModelAndView("redirect:../display.do?rendezvousId=" + rendezvous.getId());
+		//		} catch (final Throwable oops) {
+		//			result = this.createEditModelAndView(rendezvous, "rendezvous.commit.error");
+		//		}
 		return result;
 	}
 
@@ -228,7 +228,7 @@ public class RendezvousUserController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/link", method = RequestMethod.GET)
-	public ModelAndView qualify(@RequestParam final int rendezvousId, @RequestParam final int rendezvousLinkId, final RedirectAttributes redirectAttrs) {
+	public ModelAndView link(@RequestParam final int rendezvousId, @RequestParam final int rendezvousLinkId, final RedirectAttributes redirectAttrs) {
 		ModelAndView result;
 		try {
 			final Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
