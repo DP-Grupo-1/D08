@@ -194,6 +194,8 @@ public class RendezvousUserController extends AbstractController {
 				Question question = this.questionService.findQuestionByAnswer(a, rendezvousId);
 				Collection<Answer> answers = question.getAnswers();
 				answers.remove(a);
+				question.setAnswers(answers);
+				this.questionService.save(question);
 				this.answerService.delete(a);
 			}
 			this.answerService.deleteAll(answersRendezvous);
