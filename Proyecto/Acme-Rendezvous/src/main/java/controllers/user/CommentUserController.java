@@ -33,15 +33,20 @@ public class CommentUserController extends AbstractController {
 	// Creation--------------------------
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create(@RequestParam final Integer rendezvousId) {
-		ModelAndView result;
+		ModelAndView result = null;
 		Comment comment;
 		Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
-
+		try {
 		comment = this.commentService.create(rendezvous);
 
 		result = this.createEditModelAndView(comment);
 		result.addObject("rendezvousId", rendezvousId);
-
+		}
+		
+	 catch (final Throwable oops) {
+		result = new ModelAndView("redirect:/");
+		System.out.println(oops);
+	}
 		return result;
 	}
 
@@ -62,9 +67,9 @@ public class CommentUserController extends AbstractController {
 		ModelAndView result;
 		Collection<Comment> comments = new ArrayList<Comment>();
 
-		if (binding.hasErrors()) {
+		if (binding.hasErrors())
 			result = this.createEditModelAndView(comment);
-		} else {
+		else {
 
 			try {
 
@@ -87,7 +92,7 @@ public class CommentUserController extends AbstractController {
 
 			catch (final Throwable oops) {
 				result = this.createEditModelAndView(comment,
-						"comment.comit.error");
+						"comment.commit.error");
 			}
 		}
 		return result;
@@ -109,7 +114,7 @@ public class CommentUserController extends AbstractController {
 
 		catch (final Throwable oops) {
 			result = this
-					.createEditModelAndView(comment, "comment.comit.error");
+					.createEditModelAndView(comment, "comment.commit.error");
 
 		}
 		return result;
@@ -123,12 +128,12 @@ public class CommentUserController extends AbstractController {
 	}
 
 	protected ModelAndView createEditModelAndView(final Comment comment,
-			final String messageCode) {
+			final String message) {
 		ModelAndView result;
 
 		result = new ModelAndView("comment/user/edit");
 		result.addObject("comment", comment);
-		result.addObject("message", messageCode);
+		result.addObject("message", message);
 		return result;
 	}
 

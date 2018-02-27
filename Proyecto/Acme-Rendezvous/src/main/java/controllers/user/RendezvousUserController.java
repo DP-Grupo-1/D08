@@ -17,13 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import services.AnswerService;
-import services.QuestionService;
 import services.RendezvousService;
 import services.UserService;
 import controllers.AbstractController;
-import domain.Answer;
-import domain.Question;
 import domain.Rendezvous;
 import domain.User;
 
@@ -38,12 +34,6 @@ public class RendezvousUserController extends AbstractController {
 
 	@Autowired
 	private UserService			userService;
-	
-	@Autowired
-	private AnswerService			answerService;
-	
-	@Autowired
-	private QuestionService			questionService;
 
 
 	//Listing ----------------------------------------------------
@@ -141,12 +131,12 @@ public class RendezvousUserController extends AbstractController {
 
 		ModelAndView result;
 
-	//try {
+		try {
 			this.rendezvousService.deleteByUser(rendezvous);
 			result = new ModelAndView("redirect:../display.do?rendezvousId=" + rendezvous.getId());
-//		} catch (final Throwable oops) {
-//			result = this.createEditModelAndView(rendezvous, "rendezvous.commit.error");
-//		}
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndView(rendezvous, "rendezvous.commit.error");
+		}
 		return result;
 	}
 
@@ -187,24 +177,21 @@ public class RendezvousUserController extends AbstractController {
 
 			final User user = this.userService.findByPrincipal();
 			final Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
-			Collection<Answer> answersRendezvous = this.answerService.findAllByrendezvous(rendezvousId);
-			Collection<Answer> answersUser = this.answerService.findAllByAnswerer(user.getId());
-			answersRendezvous.retainAll(answersUser);
-			for(Answer a : answersRendezvous){
-				Question question = this.questionService.findQuestionByAnswer(a, rendezvousId);
-				Collection<Answer> answers = question.getAnswers();
-				answers.remove(a);
-				this.answerService.delete(a);
-			}
-			this.answerService.deleteAll(answersRendezvous);
+
 			Assert.notNull(user);
 			Assert.notNull(rendezvous);
 
-			user.getAttendances().remove(rendezvous);
-			this.userService.save(user);
-
-			rendezvous.getAttendants().remove(user);
-			this.rendezvousService.save(rendezvous);
+			Collection<Rendezvous> attendances = new ArrayList<Rendezvous>();
+			attendances = user.getAttendances();
+			attendances.remove(rendezvous);
+			user.setAttendances(attendances);
+			this.userService.onlySave(user);
+			
+			Collection<User> attendants = new ArrayList<User>();
+			attendants = rendezvous.getAttendants();
+			attendants.remove(user);
+			rendezvous.setAttendants(attendants);
+			this.rendezvousService.onlySave(rendezvous);
 
 			redirectAttrs.addFlashAttribute("message", "rendezvous.commit.ok");
 			redirectAttrs.addFlashAttribute("msgType", "success");
@@ -249,22 +236,26 @@ public class RendezvousUserController extends AbstractController {
 	@RequestMapping(value = "/link", method = RequestMethod.GET)
 	public ModelAndView qualify(@RequestParam final int rendezvousId, @RequestParam final int rendezvousLinkId, final RedirectAttributes redirectAttrs) {
 		ModelAndView result;
-		try {
+		
+//		try {
 			final Rendezvous rendezvous = this.rendezvousService.findOne(rendezvousId);
 			Assert.notNull(rendezvous);
 			final Rendezvous rendezvousLink = this.rendezvousService.findOne(rendezvousLinkId);
 			Assert.notNull(rendezvousLink);
-			rendezvous.getRendezvouses().add(rendezvousLink);
-			this.rendezvousService.save(rendezvous);
+			Collection<Rendezvous> rendezvouses = new ArrayList<Rendezvous>();
+			rendezvouses = rendezvous.getRendezvouses();
+			rendezvouses.add(rendezvousLink);
+			rendezvous.setRendezvouses(rendezvouses);
+			this.rendezvousService.onlySave(rendezvous);
 
 			redirectAttrs.addFlashAttribute("message", "rendezvous.commit.ok");
 			redirectAttrs.addFlashAttribute("msgType", "success");
-		} catch (final Throwable oops) {
-			System.out.println(oops.getMessage());
-			System.out.println(oops.getLocalizedMessage());
-			redirectAttrs.addFlashAttribute("message", "rendezvous.commit.error");
-			redirectAttrs.addFlashAttribute("msgType", "danger");
-		}
+//		} catch (final Throwable oops) {
+//			System.out.println(oops.getMessage());
+//			System.out.println(oops.getLocalizedMessage());
+//			redirectAttrs.addFlashAttribute("message", "rendezvous.commit.error");
+//			redirectAttrs.addFlashAttribute("msgType", "danger");
+//		}
 
 		result = new ModelAndView("redirect:list.do");
 		return result;
@@ -278,8 +269,11 @@ public class RendezvousUserController extends AbstractController {
 			Assert.notNull(rendezvous);
 			final Rendezvous rendezvousLink = this.rendezvousService.findOne(rendezvousLinkedId);
 			Assert.notNull(rendezvousLink);
-			rendezvous.getRendezvouses().remove(rendezvousLink);
-			this.rendezvousService.save(rendezvous);
+			Collection<Rendezvous> rendezvouses = new ArrayList<Rendezvous>();
+			rendezvouses = rendezvous.getRendezvouses();
+			rendezvouses.remove(rendezvousLink);
+			rendezvous.setRendezvouses(rendezvouses);
+			this.rendezvousService.onlySave(rendezvous);
 
 			redirectAttrs.addFlashAttribute("message", "rendezvous.commit.ok");
 			redirectAttrs.addFlashAttribute("msgType", "success");

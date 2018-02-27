@@ -37,7 +37,8 @@
 	</display:column>
 
     <spring:message code="rendezvous.moment" var="momentHeader" />
-	<display:column property="moment" title="${momentHeader}" sortable="true">
+    <spring:message code="rendezvous.moment.format" var="rendezvousMomentFormat" />
+	<display:column property="moment" title="${momentHeader}" class="fecha" sortable="true" format="{0,date,${rendezvousMomentFormat}}">
 	</display:column>
 
 	<spring:message code="rendezvous.picture" var="pictureHeader" />
@@ -62,7 +63,7 @@
 		<display:column property="adultOnly" title="${adultOnlyHeader}" sortable="true" />
 	
 	<spring:message code="rendezvous.flag" var="flagHeader" />
-	<display:column property="flag" title="${flagHeader}" sortable="true">
+	<display:column property="flag" class="indicador" title="${flagHeader}" sortable="true">
 	</display:column>
 	
 	<spring:message code="rendezvous.creator" var="creatorHeader" />
@@ -86,58 +87,138 @@
  		</a>	
     </display:column> 
     
-    <security:authorize access="hasRole('USER')">
+<security:authorize access="hasRole('USER')">
+
+	
+	   
     <jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
-	<display:column >
-		<a  href="rendezvous/user/rendezvouses.do?rendezvousId=${row.id}"><spring:message code="rendezvous.link" /></a>
-	</display:column>
-	</jstl:if>
-       <display:column>
+	
+		<%-- <jstl:if test="${row.flag != 'DELETED'}"> --%>
+		
+			
+			
+		
+			<display:column >
+			<a  href="rendezvous/user/rendezvouses.do?rendezvousId=${row.id}"><spring:message code="rendezvous.link" /></a>
+			</display:column>
+		
+		</jstl:if>
+			       <display:column>
 			<a href="question/list.do?rendezvousId=${row.id}"><spring:message code="question.list"/></a>
 			
 		</display:column>
-		<jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
+    		
+			
+			<%-- </jstl:if> --%>
+			
+			
+			<jstl:if test="${row.creator.userAccount.username eq pageContext.request.userPrincipal.name}">
 			<display:column>
 				<a href="question/user/create.do?rendezvousId=${row.id}"><spring:message code="question.create"/></a>
 			</display:column>
-		</jstl:if>
+			</jstl:if>
+			
+
 		 <jstl:if test="${row.creator.userAccount.username != pageContext.request.userPrincipal.name}">
-		
-		
-			<jstl:if test="${noQuestions eq false && rsvped eq false}">
+		 
+		 <jstl:if test="${noQuestions eq false && rsvped eq false}">
 			<display:column>
 				<a href="question/user/answerQuestions.do?rendezvousId=${row.id}"><spring:message code="rsvp.create"/></a>
 			</display:column>
 			</jstl:if>
-			
-			<jstl:if test="${noQuestions eq true && rsvped eq false}">
+		 
+		 <jstl:if test="${noQuestions eq true && rsvped eq false}">
 			<display:column>
 				<a href="rendezvous/user/attend.do?rendezvousId=${row.id}">
 		  	<spring:message code="rsvp.create" />
 				</a>
 			</display:column>
 			</jstl:if>
+			
+	
 		</jstl:if>
+		
+		
 	</security:authorize>
+	
+	
+	   
 
 </display:table>
-
+<jstl:if test="${row.creator.userAccount.username != pageContext.request.userPrincipal.name}">
 <security:authorize access="hasRole('USER')">
-	<jstl:if test="${hasUserRSVPd==true}">
+	<jstl:if test="${rsvped==true}">
 	  	<a href="rendezvous/user/noAttend.do?rendezvousId=${row.id}">
 		  	<spring:message code="rendezvous.noAttend" />
 		</a>
 	</jstl:if>		
 	<br>
-</security:authorize> 
-
-
-<security:authorize access="hasRole('ADMIN')">
-         <a href="rendezvous/administrator/edit.do?rendezvousId=${row.id}">
-           <spring:message code="rendezvous.edit" />
-         </a>
-         <br>
 </security:authorize>
+</jstl:if>
+
+<script>	
+		window.onload = function prueba() {
+			
+			var actualFlag = document.getElementsByClassName("indicador");
+			var rendezvousDate = document.getElementsByClassName("fecha");
+			
+			
+			var d = new Date();
+			
+			var minutos = d.getMinutes();
+			var hora = d.getHours();
+			
+			var dia = d.getDate();
+			var mes = d.getMonth() +1;
+			var ano = d.getFullYear().toString().substr(-2);
+			
+			var i;
+			
+			
+			for (i = 0; i < actualFlag.length; i++) {
+				
+			if(actualFlag[i].textContent != "DELETED"){
+				var campos = rendezvousDate[i].textContent.split(' ');
+				
+				// 18/05/23
+				//dates[0] = 18, dates[1] = 05, dates[2] = 23
+				var dates = campos[0].split("/");
+				
+				// 13:30
+				//horas[0] = 13, horas[1] = 30
+				var horas = campos[1].split(":");
+				
+				if(dates[0] > ano){
+					actualFlag[i].innerHTML = "ACTIVE";
+				} else if((dates[0] == ano) && dates[1] > mes){
+					actualFlag[i].innerHTML = "ACTIVE";
+				} else if((dates[0] == ano) && (dates[1] == mes) && dates[2] > dia){
+					actualFlag[i].innerHTML = "ACTIVE";
+				} else if((dates[0] == ano) && (dates[1] == mes) && (dates[2] == dia) && horas[0] > hora){
+					actualFlag[i].innerHTML = "ACTIVE";
+			} else if((dates[0] == ano) && (dates[1] == mes) && (dates[2] == dia) && (horas[0] == hora) && (horas[1] > minutos)){
+					actualFlag[i].innerHTML = "ACTIVE";
+				} else {
+					actualFlag[i].innerHTML = "PASSED";
+				}
+			}
+			
+			}
+		};
+		</script>
+
+
+
+ 
+
+<jstl:if test="${row.flag != 'DELETED'}">
+	<security:authorize access="hasRole('ADMIN')">
+			 <a href="rendezvous/administrator/delete.do?rendezvousId=${row.id}">
+			   <spring:message code="rendezvous.delete" />
+			 </a>
+			 <br>
+	</security:authorize>
+
 
 
 <security:authorize access="hasRole('USER')">
@@ -147,10 +228,9 @@
            <spring:message code="rendezvous.edit" />
          </a>
          </jstl:if>
-       </jstl:if>
-       
-       
+       </jstl:if>    
 </security:authorize>
+</jstl:if>
 
 
 <!-- 							 Rendezvouses linked										-->
@@ -177,29 +257,31 @@
 	
 	<spring:message code="rendezvous.moment" var="rendezvousMomentHeader" />
     <spring:message code="rendezvous.moment.format" var="rendezvousMomentFormat" />
-	<display:column property="moment" title="${rendezvousMomentHeader}" 
+	<display:column property="moment" class="fecha" title="${rendezvousMomentHeader}" 
 	    titleKey="rendezvous.moment"
 		sortable="true" format="{0,date,${rendezvousMomentFormat }}" />
-
+		
+	<spring:message code="rendezvous.adultOnly" var="rendezvousAdultOnlyHeader" />
+	<display:column property="adultOnly" title="${rendezvousAdultOnlyHeader}" sortable="true" />
+			
+	<spring:message code="rendezvous.flag" var="rendezvousFlagHeader" />
+	<display:column property="flag" class="indicador" title="${rendezvousFlagHeader}" sortable="true" />
+	
 	<spring:message code="rendezvous.creator" var="rendezvousCreatorHeader" />
     <display:column title="${rendezvousCreatorHeader}" sortable="true">
     <a href="profile/user/display.do?userId=<jstl:out value="${row.creator.id}"/>">
     <jstl:out value="${row.creator.name} ${row.creator.surname}"/></a>
     </display:column> 
    	    
-   	<display:column >
+   	<display:column>
    	<a  href="user/list.do?rendezvousId=${row.id}"><spring:message code="rendezvous.attendants" /></a>
     </display:column>
     
-      <display:column >
+      <display:column>
 	<a href="announcement/list.do?rendezvousId=${row.id}"><spring:message code="rendezvous.announcements" /></a>
     </display:column>
 
-	<spring:message code="rendezvous.adultOnly" var="rendezvousAdultOnlyHeader" />
-	<display:column property="adultOnly" title="${rendezvousAdultOnlyHeader}" sortable="true" />
-			
-	<spring:message code="rendezvous.flag" var="rendezvousFlagHeader" />
-	<display:column property="flag" title="${rendezvousFlagHeader}" sortable="true" />
+
 	
 	<security:authorize access="hasRole('USER')">
 	<jstl:if test="${rendezvous.creator.userAccount.username eq pageContext.request.userPrincipal.name}">

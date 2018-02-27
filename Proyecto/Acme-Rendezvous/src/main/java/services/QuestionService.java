@@ -82,7 +82,7 @@ public class QuestionService {
 		Assert.notNull(administrator);
 		this.questionRepository.delete(question);
 	}
-	
+
 	public void deleteByUser(final Question question) {
 
 		Assert.notNull(question);
@@ -92,7 +92,7 @@ public class QuestionService {
 		Assert.isTrue(question.getCreator().equals(user));
 		this.questionRepository.delete(question);
 	}
-
+	
 	public Collection<Question> findAllByPrincipalAndRendezvous(final int principalId, final int rendezvousId) {
 
 		Collection<Question> questions = new ArrayList<Question>();
@@ -109,10 +109,6 @@ public class QuestionService {
 
 	public Double avgQuestionsPerRendezvous() {
 		return this.questionRepository.avgQuestionsPerRendezvous();
-	}
-	
-	public Question findQuestionByAnswer(Answer answer, int rendezvousId){
-		return this.questionRepository.findQuestionByAnswer(answer, rendezvousId);
 	}
 
 	//Requisito 22.1 punto 1: La desviación estándar de preguntas creadas por rendezvous.

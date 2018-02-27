@@ -11,21 +11,27 @@
 
 <display:table pagesize="10" class="displaytag" keepStatus="true"
 	name="questions" requestURI="${requestURI}" id="row">
-	<security:authentication property="principal" var ="loggedactor"/>
+	<%-- <security:authentication property="principal" var ="loggedactor"/> --%>
 	
 	<spring:message code="question.questionToAnswer" var="questionToAnswerHeader" />
 	<display:column property="questionToAnswer" title="${questionToAnswerHeader}" sortable="true" />
-	<security:authorize access="hasRole('USER')">
-		<display:column>
-		<jstl:if test="${row.creator.userAccount.username==loggedactor.username}">
-			<a href="question/user/edit.do?questionId=${row.id}"><spring:message code="question.edit"/></a>
-		</jstl:if>
-		
-		</display:column>	
-	</security:authorize>
+	
+	<jstl:if test="${row.creator.userAccount.username==loggedactor.username}">
 	<display:column>
+	
+		<a href="question/user/edit.do?questionId=${row.id}"><spring:message code="question.edit"/></a>
+	
+	
+	</display:column>
+	</jstl:if>	
+	
+	
+	<display:column>
+	
 		<a href="question/answers.do?questionId=${row.id}"><spring:message code="question.answers"/></a>
 	
+	
 	</display:column>	
+	
 
 </display:table>

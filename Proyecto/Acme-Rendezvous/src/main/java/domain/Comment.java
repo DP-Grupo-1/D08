@@ -17,6 +17,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -45,7 +46,7 @@ public class Comment extends DomainEntity {
 	public void setMoment(final Date moment) {
 		this.moment = moment;
 	}
-
+	
 	@NotBlank
 	public String getText() {
 		return this.text;
@@ -53,7 +54,7 @@ public class Comment extends DomainEntity {
 	public void setText(final String text) {
 		this.text = text;
 	}
-
+	
 	@URL
 	@NotBlank
 	public String getPicture() {

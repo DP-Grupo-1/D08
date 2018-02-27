@@ -81,7 +81,7 @@ public class AnswerService {
 			this.save(created, question);
 		}
 	}
-	
+
 	public void delete(final Answer answer) {
 
 		Assert.notNull(answer);
@@ -110,19 +110,5 @@ public class AnswerService {
 		answers = this.answerRepository.findAllByRendezvous(rendezvousId);
 		return answers;
 	}
-
-//	public Question saveQuestion(final Question question) {
-//
-//		final Question saved = this.questionRepository.save(question);
-//		return saved;
-//	}
-//
-//	public Collection<Question> findAllByPrincipalAndRendezvous(final int principalId, final int rendezvousId) {
-//		return this.questionRepository.findAllByPrincipalAndRendezvous(principalId, rendezvousId);
-//	}
-//
-//	public Collection<Question> findAllByrendezvous(final int rendezvousId) {
-//		return this.questionRepository.findAllByRendezvous(rendezvousId);
-//	}
 
 }
