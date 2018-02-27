@@ -60,9 +60,7 @@ public class RendezvousController extends AbstractController {
 		result = new ModelAndView("rendezvous/display");
 
 		try {
-			final UserAccount userAcc = LoginService.getPrincipal();
-			final User u = this.userService.findByUserAccount(userAcc);
-
+		
 			Boolean hasUserRSVPd = false;
 
 			if (u != null) {
