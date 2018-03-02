@@ -95,7 +95,7 @@
 		
 
 		
-		 <display:column >
+		 <display:column>
 			<a href="user/list.do?rendezvousId=${row.id}"><spring:message code="rendezvous.attendants" /></a>
         </display:column>
         
@@ -168,4 +168,5 @@
 		  <a href="rendezvous/user/create.do"><spring:message code="rendezvous.create" /></a>
 	   </div>
     </security:authorize>
+    
     

@@ -40,7 +40,7 @@
 	
 	<!-- Attributes -->
 	<spring:message code="announcement.moment" var="momentHeader" />
-	<display:column property="moment" format="{0,date,yyyy/MM/dd HH:mm}" title="${momentHeader}" sortable="true" />
+	<display:column property="moment" format="{0,date,yyyy/MM/dd HH:mm}" title="${momentHeader}"  />
 
 	
 

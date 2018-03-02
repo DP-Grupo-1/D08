@@ -28,14 +28,30 @@
 <acme:textbox code="user.phoneNumber" path="phoneNumber"/>
 <acme:textbox code="user.email" path="email"/>
 <br>
-<a href="document/display.do"><spring:message code="user.document"/> </a>
-<br>
-<spring:message code="user.accept" />
-	<input type="checkbox" name="accept" 
 
-		value="true" />
-	<br>
+    <form:label path="accept" >
+		<spring:message code="user.terms" />
+	</form:label>
+	<form:checkbox path="accept" id="terms" onchange="javascript: toggleSubmit()"/>
+	<form:errors path="accept" cssClass="error" />
+	
+	<br/>
 
-   <input type="submit" name="save" value="<spring:message code='user.save' />" >
-<acme:cancel url="welcome/index.do" code="user.cancel"/>
+   <button type="submit" name="save" class="btn btn-primary" id="save" disabled>
+		<spring:message code="user.save" />
+	</button>
+	
+	<acme:cancel url="index.do" code="user.cancel"/>
+
+    <script type="text/javascript">
+		function toggleSubmit() {
+			var accepted = document.getElementById("terms");
+			if(accepted.checked){
+				document.getElementById("save").disabled = false;
+			} else{
+				document.getElementById("save").disabled = true;
+			}
+		}
+    </script>
+
 </form:form>

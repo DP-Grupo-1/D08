@@ -23,7 +23,6 @@
 
 <security:authorize access="hasRole('USER')">
 <form:form action="rendezvous/user/edit.do" modelAttribute="rendezvous">
-
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	<form:hidden path="flag" />
@@ -32,6 +31,7 @@
 	<form:hidden path="rendezvouses" />
 	<form:hidden path="comments" />
 	<form:hidden path="announcements" />
+
 	
 	<script>
 	function tester(moment) {
@@ -108,7 +108,7 @@
 	<jstl:if test="${rendezvous.finalMode==false || rendezvous.flag!=Flag.DELETED}">
 		<input type="submit" name="save"
 			value="<spring:message code="rendezvous.save"/>" onclick="return tester(this.form.momentId.value)"
-			/>&nbsp;
+/>&nbsp;
 	<input type="submit" name="delete"
 			value="<spring:message code="rendezvous.delete"/>" />&nbsp;
     </jstl:if> 
@@ -116,59 +116,6 @@
 	<input type="button" name="cancel"
 		value="<spring:message code="rendezvous.cancel" />"
 		onclick="javascript: relativeRedir('rendezvous/user/list.do');" />
-	<br />
-
-</form:form>
-</security:authorize>
-
-<security:authorize access="hasRole('ADMIN')">
-<form:form action="rendezvous/administrator/edit.do" modelAttribute="rendezvous">
-
-    <form:hidden path="id" />
-	<form:hidden path="version" />
-	<form:hidden path="flag" />
-	<form:hidden path="creator" />
-	<form:hidden path="attendants" />
-	<form:hidden path="rendezvouses" />
-	<form:hidden path="comments" />
-	<form:hidden path="announcements" />
-
-    <acme:textbox code="rendezvous.name" disabled="true" path="name"/>
-    
-    <acme:textbox code="rendezvous.description" disabled="true" path="description"/>
-    
-    <acme:textbox code="rendezvous.moment" disabled="true" path="moment"/>
-    
-    <acme:textbox code="rendezvous.picture" disabled="true" path="picture"/>
-    
-    <acme:textbox code="rendezvous.locationLatitude" disabled="true" path="locationLatitude"/>
-    
-    <acme:textbox code="rendezvous.locationLongitude" disabled="true" path="locationLongitude"/>
-	
-	<spring:message code="rendezvous.finalMode" />:
-	<input type="checkbox" disabled="disabled" name="finalMode"
-		<jstl:if test="${rendezvous.finalMode==true}">
-			checked
-		</jstl:if> 
-		value="true" />
-	<br>
-	
-	<spring:message code="rendezvous.adultOnly" />:
-	<input type="checkbox" disabled="disabled" name="adultOnly"
-		<jstl:if test="${rendezvous.adultOnly==true}">
-			checked
-		</jstl:if> 
-		value="true" />
-	<br>
-	
-	<input type="submit" name="save"
-		value="<spring:message code="rendezvous.save"/>" />&nbsp;
-	<input type="submit" name="delete"
-		value="<spring:message code="rendezvous.delete"/>" />&nbsp; 
-
-	<input type="button" name="cancel"
-		value="<spring:message code="rendezvous.cancel" />"
-		onclick="javascript: relativeRedir('rendezvous/user/list.do'); checkFuture()" />
 	<br />
 
 </form:form>

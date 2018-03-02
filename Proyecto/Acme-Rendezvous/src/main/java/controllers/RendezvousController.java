@@ -52,49 +52,48 @@ public class RendezvousController extends AbstractController {
 		return result;
 	}
 
-	//Display ------------------------------------------------------------
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView Display(@RequestParam final Integer rendezvousId) {                                                        //Listeo de viajes
-		ModelAndView result;
-		Rendezvous rendezvous;
-		rendezvous = this.rendezvousService.findOne(rendezvousId);
-		Boolean rsvped = true;
-		result = new ModelAndView("rendezvous/display");
+    public ModelAndView Display(@RequestParam final Integer rendezvousId) {                                                        //Listeo de viajes
+        ModelAndView result;
+        Rendezvous rendezvous;
+        rendezvous = this.rendezvousService.findOne(rendezvousId);
+        Boolean rsvped = true;
+        result = new ModelAndView("rendezvous/display");
 
-		try {
+        try {
 
-			final UserAccount userAcc = LoginService.getPrincipal();
-			final User u = this.userService.findByUserAccount(userAcc);
-			Boolean hasUserRSVPd = false;
+            final UserAccount userAcc = LoginService.getPrincipal();
+            final User u = this.userService.findByUserAccount(userAcc);
+            Boolean hasUserRSVPd = false;
 
-			if (u != null) {
-				//Rendezvouses a los que el usuario va a asistir (RSVPs)
-				final Collection<Rendezvous> rendezvouses = this.rendezvousService.findByUserId(u.getId());
-				rsvped = rendezvous.getAttendants().contains(u);
+            if (u != null) {
+                //Rendezvouses a los que el usuario va a asistir (RSVPs)
+                final Collection<Rendezvous> rendezvouses = this.rendezvousService.findByUserId(u.getId());
+                rsvped = rendezvous.getAttendants().contains(u);
 
-				for (final Rendezvous r : rendezvouses)
-					if (r.getId() == rendezvousId) {
-						hasUserRSVPd = true;
-						break;
-					}
+                for (final Rendezvous r : rendezvouses)
+                    if (r.getId() == rendezvousId) {
+                        hasUserRSVPd = true;
+                        break;
+                    }
 
-			}
-			result.addObject("hasUserRSVPd", hasUserRSVPd);
+            }
+            result.addObject("hasUserRSVPd", hasUserRSVPd);
 
-		} catch (final Throwable oops) {
-		}
+        } catch (final Throwable oops) {
+        }
 
-		final Collection<Rendezvous> rendezvouses = this.rendezvousService.findAll();
-		final Collection<Question> questions = this.questionService.findAllByRendezvous(rendezvousId);
-		final Boolean noQuestions = questions.isEmpty();
-		result.addObject("rendezvous", rendezvous);
-		result.addObject("rendezvouses", rendezvouses);
-		result.addObject("noQuestions", noQuestions);
-		result.addObject("rsvped", rsvped);
-		result.addObject("requestURI", "rendezvous/display.do");
+        final Collection<Rendezvous> rendezvouses = this.rendezvousService.findAll();
+        final Collection<Question> questions = this.questionService.findAllByRendezvous(rendezvousId);
+        final Boolean noQuestions = questions.isEmpty();
+        result.addObject("rendezvous", rendezvous);
+        result.addObject("rendezvouses", rendezvouses);
+        result.addObject("noQuestions", noQuestions);
+        result.addObject("rsvped", rsvped);
+        result.addObject("requestURI", "rendezvous/display.do");
 
-		return result;
-	}
+        return result;
+    }
 
 	//Display from Announcement ------------------------------------------------------------
 	@RequestMapping(value = "/display2", method = RequestMethod.GET)

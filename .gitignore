@@ -12,3 +12,4 @@ buildNumber.properties
 !/.mvn/wrapper/maven-wrapper.jar
 Proyecto/Acme-Rendezvous/src/main/resources/PopulateDatabase.xml
 Proyecto/Acme-Rendezvous/src/main/resources/Entities.map
+Proyecto/Acme-Rendezvous/src/main/webapp/views/rendezvous/display.jsp

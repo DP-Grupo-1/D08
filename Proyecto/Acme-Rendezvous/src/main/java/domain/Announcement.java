@@ -6,13 +6,12 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.Index;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -37,7 +36,7 @@ public class Announcement extends DomainEntity {
 	public void setMoment(final Date moment) {
 		this.moment = moment;
 	}
-
+	
 	@NotBlank
 	public String getTitle() {
 		return this.title;
@@ -45,7 +44,7 @@ public class Announcement extends DomainEntity {
 	public void setTitle(final String title) {
 		this.title = title;
 	}
-
+	
 	@NotBlank
 	public String getDescription() {
 		return this.description;

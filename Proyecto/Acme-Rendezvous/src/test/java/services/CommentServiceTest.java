@@ -29,11 +29,19 @@ public class CommentServiceTest extends AbstractTest {
 	private CommentService	commentService;
 	@Autowired
 	private ReplyService	replyService;
-	@Autowired
-	private UserService		userService;
 
+
+	//	@Autowired
+	//	private UserService		userService;
 
 	//Tests------------------------------------------------------------------------
+	@Test
+	public void testCreate() {
+		super.authenticate("user1");
+
+		super.authenticate(null);
+	}
+
 	@Test
 	public void testDelete() {
 		super.authenticate("admin");
@@ -59,5 +67,11 @@ public class CommentServiceTest extends AbstractTest {
 		final Comment comment = comments.get(0);
 		System.out.println(comment.getText());
 
+	}
+	@Test
+	public void testSave() {
+		super.authenticate("user1");
+
+		super.authenticate(null);
 	}
 }
